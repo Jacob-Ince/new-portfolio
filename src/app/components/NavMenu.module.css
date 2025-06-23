@@ -246,12 +246,8 @@
     overflow: hidden;
   }
 
-  /* Add styles to prevent body scrolling when menu is active */
-  :global(body.menu-open) {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-  }
+  /* Remove the problematic global selector */
+  /* The body styles will be handled via JavaScript */
 
   .navbarLink {
     font-size: 24px;
