@@ -1,0 +1,34 @@
+.marqueeContainer {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  background: transparent;
+}
+
+.marqueeContent {
+  display: flex;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee var(--marquee-speed) linear infinite;
+}
+
+.marqueeGroup {
+  display: flex;
+  gap: 2rem;
+  flex-shrink: 0;
+  padding-right: 2rem;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-50% - 1rem));
+  }
+}
+
+/* Pause animation on hover */
+.marqueeContent:hover {
+  animation-play-state: paused;
+}
