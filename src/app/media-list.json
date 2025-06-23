@@ -2,8 +2,8 @@
   {
     "id": 1,
     "type": "video",
-    "src": "/videos/715-rock.mp4",
-    "alt": "715-rock.mp4",
+    "src": "/videos/715-rock (1).mp4",
+    "alt": "715-rock (1).mp4",
     "width": 1280,
     "height": 720
   },
@@ -210,8 +210,8 @@
   {
     "id": 27,
     "type": "video",
-    "src": "/videos/face-mesh-trimmed.mp4",
-    "alt": "face-mesh-trimmed.mp4",
+    "src": "/videos/face-mesh-compressed.mp4",
+    "alt": "face-mesh-compressed.mp4",
     "width": 1280,
     "height": 720
   },
@@ -266,8 +266,8 @@
   {
     "id": 34,
     "type": "video",
-    "src": "/videos/net-mesh.mp4",
-    "alt": "net-mesh.mp4",
+    "src": "/videos/net-mesh-compressed.mp4",
+    "alt": "net-mesh-compressed.mp4",
     "width": 1280,
     "height": 720
   },
