@@ -26,7 +26,7 @@ export default function AboutPage() {
                 {/* <div className={styles.textContent}>
                     <h1 className={styles.aboutTitle}>Brands:</h1>
                     <ul>
-                    <li>Levi's</li>
+                    <li>Levi&apos;s</li>
                     <li>CNN</li>
                     <li>Boots</li>
                     <li>UAL: Central Saint Martins</li>
@@ -51,7 +51,7 @@ export default function AboutPage() {
                     </li>
                     <li>Design Studio</li>
                     <li>OMSE</li>
-                    <li>Levi's</li>
+                    <li>Levi&apos;s</li>
                     <li>CNN</li>
                     <li>Boots</li>
                     <li>Peter &amp; Paul</li>
