@@ -65,8 +65,8 @@ export default function ContactPage() {
                 <div className={styles.textContent}>
                   <h1 className={styles.contactTitle}>Contact</h1>
                   <p>
-                    I'm always open to discussing new projects, creative ideas
-                    or opportunities to be part of your visions.
+                    I&apos;m always open to discussing new projects, creative
+                    ideas or opportunities to be part of your visions.
                   </p>
                 </div>
                 {/* <div className={styles.textContent}>
@@ -156,7 +156,8 @@ export default function ContactPage() {
                   </button>
                   {status.submitted && (
                     <p className={styles.successMessage}>
-                      Thank you for your message! I'll get back to you soon.
+                      Thank you for your message! I&apos;ll get back to you
+                      soon.
                     </p>
                   )}
                   {status.error && (
@@ -170,7 +171,7 @@ export default function ContactPage() {
             <Marquee speed={30}>
               <div className={styles.marqueeItem}>Get in Touch</div>
               <div className={styles.marqueeItem}>•</div>
-              <div className={styles.marqueeItem}>Let's Connect</div>
+              <div className={styles.marqueeItem}>Let&apos;s Connect</div>
               <div className={styles.marqueeItem}>•</div>
               <div className={styles.marqueeItem}>Start a Conversation</div>
               <div className={styles.marqueeItem}>•</div>

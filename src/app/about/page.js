@@ -54,7 +54,7 @@ export default function AboutPage() {
                     <li>Levi's</li>
                     <li>CNN</li>
                     <li>Boots</li>
-                    <li>Peter & Paul</li>
+                    <li>Peter &amp; Paul</li>
                     <li>SharpEnd</li>
                     <li>IO.TT</li>
                     <li>Vector Digital</li>
