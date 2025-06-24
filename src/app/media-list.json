@@ -66,8 +66,8 @@
   {
     "id": 9,
     "type": "video",
-    "src": "/videos/floppy-disk.mp4",
-    "alt": "floppy-disk.mp4",
+    "src": "/videos/715 SHOWREEL.mp4",
+    "alt": "715 SHOWREEL.mp4",
     "width": 1280,
     "height": 720
   },
@@ -81,6 +81,14 @@
   },
   {
     "id": 11,
+    "type": "video",
+    "src": "/videos/bolt.mp4",
+    "alt": "bolt.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 12,
     "type": "image",
     "src": "/images/me-3d.jpg",
     "alt": "me-3d.jpg",
@@ -88,20 +96,12 @@
     "height": 600
   },
   {
-    "id": 12,
-    "type": "image",
-    "src": "/images/me.jpg",
-    "alt": "me.jpg",
-    "width": 800,
-    "height": 600
-  },
-  {
     "id": 13,
-    "type": "image",
-    "src": "/images/orange-symbols.png",
-    "alt": "orange-symbols.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/videos/face-mesh-compressed.mp4",
+    "alt": "face-mesh-compressed.mp4",
+    "width": 1280,
+    "height": 720
   },
   {
     "id": 14,
@@ -113,11 +113,11 @@
   },
   {
     "id": 15,
-    "type": "image",
-    "src": "/images/portrait-layers.png",
-    "alt": "portrait-layers.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/videos/hoop.mp4",
+    "alt": "hoop.mp4",
+    "width": 1280,
+    "height": 720
   },
   {
     "id": 16,
@@ -129,118 +129,6 @@
   },
   {
     "id": 17,
-    "type": "image",
-    "src": "/images/b&w-3D-blob.png",
-    "alt": "b&w-3D-blob.png",
-    "width": 800,
-    "height": 600
-  },
-  {
-    "id": 18,
-    "type": "image",
-    "src": "/images/tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
-    "alt": "tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
-    "width": 800,
-    "height": 600
-  },
-  {
-    "id": 19,
-    "type": "video",
-    "src": "/videos/715 SHOWREEL.mp4",
-    "alt": "715 SHOWREEL.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 20,
-    "type": "video",
-    "src": "/videos/715-BOA-squares.mp4",
-    "alt": "715-BOA-squares.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 21,
-    "type": "image",
-    "src": "/images/3D-blob-dots.png",
-    "alt": "3D-blob-dots.png",
-    "width": 800,
-    "height": 600
-  },
-  {
-    "id": 22,
-    "type": "video",
-    "src": "/videos/BOA-TEST.mp4",
-    "alt": "BOA-TEST.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 23,
-    "type": "video",
-    "src": "/videos/Linear-Cards.mp4",
-    "alt": "Linear-Cards.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 24,
-    "type": "video",
-    "src": "/videos/bolt.mp4",
-    "alt": "bolt.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 25,
-    "type": "video",
-    "src": "/videos/concrete.MP4",
-    "alt": "concrete.MP4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 26,
-    "type": "video",
-    "src": "/videos/cursor-animation.mp4",
-    "alt": "cursor-animation.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 27,
-    "type": "video",
-    "src": "/videos/face-mesh-compressed.mp4",
-    "alt": "face-mesh-compressed.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 28,
-    "type": "image",
-    "src": "/images/files.jpg",
-    "alt": "files.jpg",
-    "width": 800,
-    "height": 600
-  },
-  {
-    "id": 29,
-    "type": "video",
-    "src": "/videos/hoop.mp4",
-    "alt": "hoop.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 30,
-    "type": "video",
-    "src": "/videos/midnight-blue-blob.mp4",
-    "alt": "midnight-blue-blob.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 31,
     "type": "video",
     "src": "/videos/modern-solutions.mp4",
     "alt": "modern-solutions.mp4",
@@ -248,31 +136,15 @@
     "height": 720
   },
   {
-    "id": 32,
-    "type": "video",
-    "src": "/videos/modulink-b&w.mp4",
-    "alt": "modulink-b&w.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 33,
+    "id": 18,
     "type": "image",
-    "src": "/images/blue-poster.png",
-    "alt": "blue-poster.png",
+    "src": "/images/b&w-3D-blob.png",
+    "alt": "b&w-3D-blob.png",
     "width": 800,
     "height": 600
   },
   {
-    "id": 34,
-    "type": "video",
-    "src": "/videos/net-mesh-compressed.mp4",
-    "alt": "net-mesh-compressed.mp4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 35,
+    "id": 19,
     "type": "video",
     "src": "/videos/nike-ar.mp4",
     "alt": "nike-ar.mp4",
@@ -280,20 +152,148 @@
     "height": 720
   },
   {
-    "id": 36,
+    "id": 20,
+    "type": "image",
+    "src": "/images/blue-poster.png",
+    "alt": "blue-poster.png",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 21,
     "type": "video",
-    "src": "/videos/pixelate.mp4",
-    "alt": "pixelate.mp4",
+    "src": "/videos/net-mesh-compressed.mp4",
+    "alt": "net-mesh-compressed.mp4",
     "width": 1280,
     "height": 720
   },
   {
-    "id": 37,
+    "id": 22,
     "type": "image",
     "src": "/images/boxer.PNG",
     "alt": "boxer.PNG",
     "width": 800,
     "height": 600
+  },
+  {
+    "id": 23,
+    "type": "video",
+    "src": "/videos/floppy-disk.mp4",
+    "alt": "floppy-disk.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 24,
+    "type": "image",
+    "src": "/images/me.jpg",
+    "alt": "me.jpg",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 25,
+    "type": "video",
+    "src": "/videos/715-BOA-squares.mp4",
+    "alt": "715-BOA-squares.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 26,
+    "type": "image",
+    "src": "/images/3D-blob-dots.png",
+    "alt": "3D-blob-dots.png",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 27,
+    "type": "video",
+    "src": "/videos/BOA-TEST.mp4",
+    "alt": "BOA-TEST.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 28,
+    "type": "image",
+    "src": "/images/orange-symbols.png",
+    "alt": "orange-symbols.png",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 29,
+    "type": "video",
+    "src": "/videos/Linear-Cards.mp4",
+    "alt": "Linear-Cards.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 30,
+    "type": "image",
+    "src": "/images/portrait-layers.png",
+    "alt": "portrait-layers.png",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 31,
+    "type": "video",
+    "src": "/videos/concrete.MP4",
+    "alt": "concrete.MP4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 32,
+    "type": "image",
+    "src": "/images/tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
+    "alt": "tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 33,
+    "type": "video",
+    "src": "/videos/cursor-animation.mp4",
+    "alt": "cursor-animation.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 34,
+    "type": "image",
+    "src": "/images/files.jpg",
+    "alt": "files.jpg",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": 35,
+    "type": "video",
+    "src": "/videos/midnight-blue-blob.mp4",
+    "alt": "midnight-blue-blob.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 36,
+    "type": "video",
+    "src": "/videos/modulink-b&w.mp4",
+    "alt": "modulink-b&w.mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 37,
+    "type": "video",
+    "src": "/videos/pixelate.mp4",
+    "alt": "pixelate.mp4",
+    "width": 1280,
+    "height": 720
   },
   {
     "id": 38,
