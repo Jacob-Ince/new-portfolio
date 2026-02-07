@@ -8,7 +8,11 @@ import NavMenu from "./components/NavMenu";
 import PageTransition from "./components/PageTransition";
 import Link from "next/link";
 import { getAllMediaAssets, transformSanityMedia } from "../lib/sanity";
-import CircularCarousel from "./components/CircularCarousel";
+import dynamic from "next/dynamic";
+
+const CircularCarousel = dynamic(() => import("./components/CircularCarousel"), {
+  ssr: false,
+});
 
 const projectTypeClassMap = {
   dev: "typeDotDev",
