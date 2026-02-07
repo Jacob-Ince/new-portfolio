@@ -13,7 +13,7 @@
     "@barba/core": "^2.10.3",
     "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^9.106.0",
-    "@react-three/fiber": "^9.5.0",
+    "@react-three/fiber": "^8.18.0",
     "@sanity/client": "^7.14.0",
     "@sanity/image-url": "^1.2.0",
     "@sanity/orderable-document-list": "^1.4.2",
