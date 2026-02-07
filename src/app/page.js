@@ -2,17 +2,49 @@
 
 import Image from "next/image";
 import styles from "./page.module.css";
-import photosData from "./media-list.json";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import NavMenu from "./components/NavMenu";
 import PageTransition from "./components/PageTransition";
+import Link from "next/link";
+import { getAllMediaAssets, transformSanityMedia } from "../lib/sanity";
+import CircularCarousel from "./components/CircularCarousel";
+
+const projectTypeClassMap = {
+  dev: "typeDotDev",
+  design: "typeDotDesign",
+  motion: "typeDotMotion",
+  "3d": "typeDot3d",
+};
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [loadedItems, setLoadedItems] = useState(new Set());
   const [isMobile, setIsMobile] = useState(false);
+  const [photosData, setPhotosData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState("grid");
   const videoRefs = useRef({});
+  const observerRef = useRef(null);
+
+  // Fetch media assets from Sanity
+  useEffect(() => {
+    async function fetchMediaAssets() {
+      try {
+        const assets = await getAllMediaAssets();
+        const transformed = assets.map(transformSanityMedia).filter(Boolean);
+        setPhotosData(transformed);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching media assets:", error);
+        // Fallback to empty array or handle error
+        setPhotosData([]);
+        setLoading(false);
+      }
+    }
+
+    fetchMediaAssets();
+  }, []);
 
   // Initial setup effect
   useEffect(() => {
@@ -25,50 +57,147 @@ export default function Home() {
     window.addEventListener("resize", checkMobile);
     setMounted(true);
 
-    return () => window.removeEventListener("resize", checkMobile);
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
   // Setup intersection observer for videos
   useEffect(() => {
     if (!mounted) return;
 
-    const observer = new IntersectionObserver(
+    // Create observer
+    observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const videoId = entry.target.dataset.videoId;
-          const video = videoRefs.current[videoId];
+          const video = entry.target;
+          const videoId = video.dataset.videoId;
 
-          if (video) {
-            if (entry.isIntersecting) {
-              video.play().catch(() => {
-                // Handle autoplay failure silently
-              });
-            } else {
+          if (entry.isIntersecting) {
+            console.log(
+              `Video ${videoId} is intersecting, readyState:`,
+              video.readyState
+            );
+
+            // Start loading video data immediately when it comes into view
+            if (video.preload === "metadata") {
+              video.preload = "auto";
+            }
+
+            // Try to play the video if it's ready
+            if (video.readyState >= 2) {
+              console.log(
+                `Video ${videoId} ready to play, attempting playback`
+              );
+              playVideo(videoId);
+            }
+          } else {
+            // Only pause if video is significantly out of view
+            const rect = video.getBoundingClientRect();
+            const isSignificantlyOutOfView =
+              rect.bottom < -300 || rect.top > window.innerHeight + 300;
+
+            if (isSignificantlyOutOfView) {
+              console.log(`Video ${videoId} paused - out of view`);
               video.pause();
             }
           }
         });
       },
       {
-        rootMargin: "50px 0px",
+        rootMargin: "100px 0px",
         threshold: 0.1,
       }
     );
 
-    // Observe all video elements
-    Object.values(videoRefs.current).forEach((video) => {
-      if (video) {
-        observer.observe(video);
+    // Pause all videos when page becomes hidden
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        Object.values(videoRefs.current).forEach((video) => {
+          if (video && !video.paused) {
+            video.pause();
+          }
+        });
       }
-    });
+    };
+
+    // Additional safety measure: pause videos that are out of view on scroll
+    const handleScroll = () => {
+      Object.values(videoRefs.current).forEach((video) => {
+        if (video && !video.paused) {
+          const rect = video.getBoundingClientRect();
+          const isSignificantlyOutOfView =
+            rect.bottom < -100 || rect.top > window.innerHeight + 100;
+
+          if (isSignificantlyOutOfView) {
+            video.pause();
+          }
+        }
+      });
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      observer.disconnect();
+      // Pause all videos on cleanup
+      Object.values(videoRefs.current).forEach((video) => {
+        if (video && !video.paused) {
+          video.pause();
+        }
+      });
+
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+        observerRef.current = null;
+      }
+
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [mounted]);
 
-  // Don't render anything until after hydration
-  if (!mounted) {
+  // Function to observe a video element
+  const observeVideo = useCallback((videoElement) => {
+    if (observerRef.current && videoElement) {
+      observerRef.current.observe(videoElement);
+    }
+  }, []);
+
+  // Function to safely play a video with retry logic
+  const playVideo = useCallback((videoId, retryCount = 0) => {
+    const video = videoRefs.current[videoId];
+    if (!video) return;
+
+    if (video.readyState >= 2) {
+      video
+        .play()
+        .then(() => {
+          console.log(`Video ${videoId} playing successfully`);
+        })
+        .catch((error) => {
+          console.warn(
+            `Failed to play video ${videoId} (attempt ${retryCount + 1}):`,
+            error
+          );
+
+          // Retry after a short delay if we haven't exceeded max retries
+          if (retryCount < 3) {
+            setTimeout(() => {
+              playVideo(videoId, retryCount + 1);
+            }, 1000);
+          }
+        });
+    } else if (retryCount < 3) {
+      // Video not ready yet, retry after a delay
+      setTimeout(() => {
+        playVideo(videoId, retryCount + 1);
+      }, 500);
+    }
+  }, []);
+
+  // Don't render anything until after hydration and data is loaded
+  if (!mounted || loading) {
     return null;
   }
 
@@ -77,91 +206,119 @@ export default function Home() {
   };
 
   const renderMedia = (photo) => {
+    if (!photo?.src) return null;
     const isLoaded = loadedItems.has(photo.id);
+    const projectTypes = Array.isArray(photo.projectTypes)
+      ? photo.projectTypes
+      : [];
+    const displayName = photo.displayName || photo.name;
+    const getVideoMimeType = (src) => {
+      if (!src) return undefined;
+      const ext = src.split(".").pop()?.toLowerCase();
+      if (!ext) return undefined;
+      if (ext === "mp4") return "video/mp4";
+      if (ext === "m4v") return "video/x-m4v";
+      if (ext === "webm") return "video/webm";
+      if (ext === "mov") return "video/quicktime";
+      return undefined;
+    };
+    const videoType =
+      photo.type === "video" ? getVideoMimeType(photo.src) : undefined;
 
-    if (photo.type === "video") {
-      return (
+    return (
+      <Link href={`/project/${photo.name}`} key={photo.id}>
         <div
           className={styles.gridItem}
           style={{
             opacity: isLoaded ? 1 : 0,
             transition: "opacity 0.3s ease-in-out",
+            cursor: "pointer",
           }}
         >
-          <div className={styles.mediaWrapper}>
-            <video
-              ref={(el) => {
-                if (el) {
-                  videoRefs.current[photo.id] = el;
+          {photo.type === "video" ? (
+            <div className={styles.mediaWrapper}>
+              <video
+                ref={(el) => {
+                  if (el) {
+                    videoRefs.current[photo.id] = el;
+                    observeVideo(el);
+                  }
+                }}
+                data-video-id={photo.id}
+                muted
+                playsInline
+                autoPlay
+                loop
+                preload={photo.id <= 4 ? "auto" : "metadata"}
+                onLoadedData={() => {
+                  handleLoad(photo.id);
+                }}
+                onCanPlay={() => {
+                  playVideo(photo.id);
+                }}
+                onTouchStart={() => {
+                  playVideo(photo.id);
+                }}
+                onPointerDown={() => {
+                  playVideo(photo.id);
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  filter: photo.invertColor ? "invert(1)" : "none",
+                }}
+              >
+                <source src={photo.src} type={videoType} />
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          ) : (
+            <div className={styles.mediaWrapper}>
+              <Image
+                src={photo.src}
+                alt={photo.alt || "Image"}
+                width={photo.width}
+                height={photo.height}
+                onLoad={() => {
+                  handleLoad(photo.id);
+                }}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  filter: photo.invertColor ? "invert(1)" : "none",
+                }}
+                loading={photo.id <= 4 ? undefined : "lazy"}
+                quality={isMobile ? 50 : 75}
+                priority={photo.id <= 4}
+                sizes={
+                  isMobile
+                    ? "(max-width: 350px) 100vw, (max-width: 600px) 100vw"
+                    : "(max-width: 350px) 100vw, (max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 25vw"
                 }
-              }}
-              data-video-id={photo.id}
-              muted
-              playsInline
-              loop
-              preload="none"
-              onLoadedData={() => handleLoad(photo.id)}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                opacity: isLoaded ? 1 : 0,
-                transition: "opacity 0.3s ease-in-out",
-              }}
-            >
-              <source src={photo.src} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            {!isLoaded && (
-              <div className={styles.loadingPlaceholder}>
-                <div className={styles.loadingSpinner} />
+              />
+            </div>
+          )}
+          <div className={styles.mediaMeta}>
+            <p className={styles.mediaText}>{displayName}</p>
+            {projectTypes.length > 0 && (
+              <div className={styles.typeDots} aria-hidden="true">
+                {projectTypes
+                  .filter((type) => projectTypeClassMap[type])
+                  .map((type) => (
+                    <span
+                      key={`${photo.id}-${type}`}
+                      className={`${styles.typeDot} ${
+                        styles[projectTypeClassMap[type]]
+                      }`}
+                    />
+                  ))}
               </div>
             )}
           </div>
-          <p className={styles.mediaText}>{photo.title}</p>
         </div>
-      );
-    }
-
-    return (
-      <div
-        className={styles.gridItem}
-        style={{
-          opacity: isLoaded ? 1 : 0,
-          transition: "opacity 0.3s ease-in-out",
-        }}
-      >
-        <div className={styles.mediaWrapper}>
-          <Image
-            src={photo.src}
-            alt={photo.alt || "Image"}
-            width={photo.width}
-            height={photo.height}
-            onLoad={() => handleLoad(photo.id)}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              opacity: isLoaded ? 1 : 0,
-              transition: "opacity 0.3s ease-in-out",
-            }}
-            loading={photo.id <= 4 ? undefined : "lazy"}
-            quality={isMobile ? 50 : 75}
-            priority={photo.id <= 4} // Prioritize loading first 4 items
-            sizes={
-              isMobile
-                ? "(max-width: 350px) 100vw, (max-width: 600px) 100vw"
-                : "(max-width: 350px) 100vw, (max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 25vw"
-            }
-          />
-          {!isLoaded && (
-            <div className={styles.loadingPlaceholder}>
-              <div className={styles.loadingSpinner} />
-            </div>
-          )}
-        </div>
-        <p className={styles.mediaText}>{photo.title}</p>
-      </div>
+      </Link>
     );
   };
 
@@ -181,34 +338,38 @@ export default function Home() {
     return "";
   };
 
-  // Sort photos by id
+  // Sort photos by orderRank (string like "a0", "a1", etc.)
   const sortedPhotos = [...photosData]
-    .filter((photo) => !photo.src.includes("portrait-layers"))
-    .sort((a, b) => a.id - b.id);
+    .filter((photo) => photo?.src)
+    .sort((a, b) => {
+      // orderRank is a string, so we can sort lexicographically
+      const orderA = a.orderRank || a.id || "a0";
+      const orderB = b.orderRank || b.id || "a0";
+      return orderA.localeCompare(orderB);
+    });
 
   return (
-    <NavMenu>
+    <NavMenu viewMode={viewMode} onViewModeChange={setViewMode}>
       <PageTransition>
         <main className={styles.main}>
-          <ResponsiveMasonry
-            columnsCountBreakPoints={{
-              350: 1,
-              600: 2,
-              900: 3,
-              1200: 4,
-            }}
-          >
-            <Masonry gutter="12px">
-              {sortedPhotos.map((photo) => (
-                <div
-                  key={photo.id}
-                  className={`${styles.gridItemWrapper} ${getSizeClass(photo)}`}
-                >
-                  {renderMedia(photo)}
-                </div>
-              ))}
-            </Masonry>
-          </ResponsiveMasonry>
+          {viewMode === "grid" ? (
+            <ResponsiveMasonry
+              columnsCountBreakPoints={{
+                0: 2,
+                600: 2,
+                900: 3,
+                1200: 4,
+              }}
+            >
+              <Masonry gutter="12px">
+                {sortedPhotos.map((photo) => renderMedia(photo))}
+              </Masonry>
+            </ResponsiveMasonry>
+          ) : (
+            <div className={styles.carouselContainer}>
+              <CircularCarousel items={sortedPhotos} />
+            </div>
+          )}
         </main>
 
         <footer className={styles.footer}></footer>

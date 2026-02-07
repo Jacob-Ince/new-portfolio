@@ -83,11 +83,11 @@ export default function ContactPage() {
                   <ul>
                     <li>
                       <a
-                        href="https://github.com/jacobince"
+                        href="https://www.are.na/jacob-ince/channels"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        GitHub
+                        Are.na
                       </a>
                     </li>
                     <li>
@@ -101,11 +101,11 @@ export default function ContactPage() {
                     </li>
                     <li>
                       <a
-                        href="https://twitter.com/jacobince"
+                        href="https://www.instagram.com/aka_goblin/"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Twitter
+                        Instagram
                       </a>
                     </li>
                   </ul>

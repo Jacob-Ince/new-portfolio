@@ -13,7 +13,7 @@ const videosDir = path.join(publicDir, "videos");
 const outputFile = path.join(__dirname, "..", "src", "app", "media-list.json");
 
 // --- IMPORTANT: Placeholder for image/video dimensions ---
-// You\'ll need a more robust way to get actual dimensions.
+// You'll need a more robust way to get actual dimensions.
 // For images, libraries like 'image-size' can be used.
 // For videos, 'ffprobe' (from ffmpeg) or other video libraries are needed.
 // For now, we use placeholders.
@@ -45,6 +45,9 @@ async function getMediaList() {
     existingMediaList.map((item) => [item.src, item])
   );
 
+  // Track used IDs to prevent duplicates
+  const usedIds = new Set();
+
   try {
     // Process images
     const imageFiles = await fs.readdir(imagesDir);
@@ -53,14 +56,29 @@ async function getMediaList() {
       if ([".jpg", ".jpeg", ".png", ".gif", ".webp"].includes(ext)) {
         const src = `/images/${file}`;
         const existingItem = existingItems.get(src);
+
+        // Generate a unique ID
+        let newId;
+        if (existingItem && existingItem.id && !usedIds.has(existingItem.id)) {
+          newId = existingItem.id;
+        } else {
+          // Find the next available ID
+          while (usedIds.has(idCounter)) {
+            idCounter++;
+          }
+          newId = idCounter++;
+        }
+
+        usedIds.add(newId);
         const dimensions = getDefaultDimensions(
           ext === ".gif" ? "gif" : "image"
         );
 
         mediaList.push({
-          id: existingItem?.id || idCounter++,
+          id: newId,
           type: ext === ".gif" ? "gif" : "image",
-          src,
+          src: encodeURI(src),
+          name: file,
           alt: file,
           ...dimensions,
         });
@@ -80,12 +98,27 @@ async function getMediaList() {
       if ([".mp4", ".webm", ".ogg"].includes(ext)) {
         const src = `/videos/${file}`;
         const existingItem = existingItems.get(src);
+
+        // Generate a unique ID
+        let newId;
+        if (existingItem && existingItem.id && !usedIds.has(existingItem.id)) {
+          newId = existingItem.id;
+        } else {
+          // Find the next available ID
+          while (usedIds.has(idCounter)) {
+            idCounter++;
+          }
+          newId = idCounter++;
+        }
+
+        usedIds.add(newId);
         const dimensions = getDefaultDimensions("video");
 
         mediaList.push({
-          id: existingItem?.id || idCounter++,
+          id: newId,
           type: "video",
-          src,
+          src: encodeURI(src),
+          name: file,
           alt: file,
           ...dimensions,
         });

@@ -9,33 +9,71 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding: 2rem;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  text-transform: uppercase;
+  padding: 0 0.5rem;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  /* text-transform: uppercase; */
 }
 
 .navbar {
-  width: 100%;
+  width: 100vw;
+  left: 0;
+  right: 0;
   /* max-width: 1400px; */
-  padding: 1rem 4rem 1rem 0;
-  display: flex;
-  justify-content: space-between;
+  padding: 2.5rem 0.5rem 0.5rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  border-bottom: 1px solid black;
   align-items: center;
   background-color: white;
   backdrop-filter: blur(8px);
   position: fixed;
   top: 0;
   z-index: 100;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+}
+
+/* Match grid responsive breakpoints */
+@media (min-width: 600px) {
+  .navbar {
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 900px) {
+  .navbar {
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbar {
+    grid-template-columns: auto 1fr auto;
+    gap: 14px;
+  }
 }
 
 .navbarLogo {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   text-decoration: none;
   color: inherit;
   letter-spacing: -0.5px;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   color: black;
   position: relative;
   overflow: visible;
@@ -44,61 +82,58 @@
   transition: transform 0.3s ease;
   line-height: 1;
   height: 1em;
-}
-
-.navbarLogo .originalText {
-  display: inline-block;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform-origin: center;
-  backface-visibility: hidden;
-  position: relative;
-  z-index: 1;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-.navbarLogo.hovering .originalText {
-  transform: translateY(-100%) rotateX(-90deg);
-  opacity: 0;
-}
-
-.navbarLogo .chomskyText {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  font-family: "Chomsky", serif;
-  font-size: 22px;
-  transform: translateY(100%) rotateX(90deg);
-  opacity: 0;
-  animation: slideUp 0.3s ease forwards;
-  transform-origin: center;
-  backface-visibility: hidden;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  white-space: nowrap;
-  font-weight: 400;
 }
 
 .navbarLinks {
-  display: flex;
-  gap: 36px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
   align-items: center;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   color: black;
 }
 
+.mobileMenu {
+  display: none;
+}
+
+/* Match grid responsive breakpoints - spread links across more columns */
+@media (min-width: 600px) {
+  .navbarLinks {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (min-width: 900px) {
+  .navbarLinks {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 36px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .navbarLinks {
+    grid-template-columns: repeat(16, 1fr);
+    gap: 48px;
+  }
+}
+
 .navbarLink {
-  font-size: 16px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 400;
   text-decoration: none;
   color: inherit;
   letter-spacing: -0.5px;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   color: black;
   position: relative;
   overflow: visible;
@@ -109,58 +144,93 @@
   height: 1em;
 }
 
-.navbarLink.active {
+/* Spread links across grid - positioned at different column starts */
+.linkLogo {
+  grid-column: 1;
+}
+
+.linkWork {
+  grid-column: 2;
+}
+
+.linkInfo {
+  grid-column: 3;
+}
+
+.linkContact {
+  grid-column: 4;
+}
+
+/* Spread them out more on larger screens */
+@media (min-width: 600px) {
+  .linkLogo {
+    grid-column: 1;
+  }
+
+  .linkWork {
+    grid-column: 3;
+  }
+
+  .linkInfo {
+    grid-column: 5;
+  }
+
+  .linkContact {
+    grid-column: 7;
+  }
+}
+
+@media (min-width: 900px) {
+  .linkLogo {
+    grid-column: 1;
+  }
+
+  .linkWork {
+    grid-column: 4;
+  }
+
+  .linkInfo {
+    grid-column: 7;
+  }
+
+  .linkContact {
+    grid-column: 10;
+  }
+}
+
+@media (min-width: 1200px) {
+  .linkLogo {
+    grid-column: 1;
+  }
+
+  .linkWork {
+    grid-column: 5;
+  }
+
+  .linkInfo {
+    grid-column: 9;
+  }
+
+  .linkContact {
+    grid-column: 13;
+  }
+}
+
+/* .navbarLink.active {
   color: #ff89c6;
+} */
+
+.navbarLogo .originalText {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
+  padding: 0rem;
 }
 
 .originalText {
   display: inline-block;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  transform-origin: center;
-  backface-visibility: hidden;
-  position: relative;
-  z-index: 1;
   line-height: 1;
   white-space: nowrap;
-}
-
-.navbarLink.hovering .originalText {
-  transform: translateY(-100%) rotateX(-90deg);
-  opacity: 0;
-}
-
-.chomskyText {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  font-family: "Chomsky", serif;
-  font-size: 20px;
-  transform: translateY(100%) rotateX(90deg);
-  opacity: 0;
-  animation: slideUp 0.3s ease forwards;
-  transform-origin: center;
-  backface-visibility: hidden;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  white-space: nowrap;
-  font-weight: 400;
-  margin-top: 5px;
-}
-
-@keyframes slideUp {
-  0% {
-    transform: translateY(100%) rotateX(90deg);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0) rotateX(0);
-    opacity: 1;
-  }
 }
 
 .navbarLink:hover {
@@ -169,87 +239,216 @@
 
 .menuButton {
   display: none;
+  width: 22px;
+  height: 22px;
   background: transparent;
-  border: none;
+  border: 1.5px solid black;
   cursor: pointer;
   padding: 0;
   z-index: 101;
-  font-size: 48px;
-  font-family: "Chomsky", serif;
   color: black;
   transition: opacity 0.3s ease-in-out;
   line-height: 1;
+  align-items: center;
+  justify-content: center;
 }
 
 .menuButton:hover {
-  opacity: 0.7;
+  opacity: 1;
 }
 
 .menuButton.active {
+  opacity: 1;
+  background: black;
+}
+
+.menuButtonSquare {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.navbarControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconButton {
+  width: 14px;
+  height: 14px;
+  border: 1px solid black;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease;
+}
+
+.iconButtonActive {
+  background: black;
+}
+
+.iconButton:hover {
   opacity: 0.7;
-  font-size: 36px;
+}
+
+.squareButton {
+  border-radius: 0px;
+}
+
+.circleButton {
+  border-radius: 999px;
+}
+
+.scrollPercentage {
+  font-size: 13.5px;
+  font-weight: 400;
+  text-decoration: none;
+  color: inherit;
+  letter-spacing: -0.5px;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  color: black;
+  position: relative;
+  overflow: visible;
+  display: inline-block;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+  line-height: 1;
+  height: 1em;
+  min-width: 40px;
+  text-align: right;
+}
+
+.scrollPercentage .originalText {
+  display: inline-block;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 @media (max-width: 600px) {
-  .page {
-    padding: 0;
-  }
-
   .navbar {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    padding: 0.5rem 15px 0.5rem 15px;
+    padding: 1rem;
     background-color: rgba(255, 255, 255, 0.98);
+    z-index: 200;
   }
 
   /* Add padding to the page to account for fixed navbar */
   .page {
-    padding-top: 60px;
+    padding: 0 1rem;
+    padding-top: 40px;
   }
 
   .menuButton {
     display: flex;
   }
 
+  .navbarControls {
+    display: none;
+  }
+
   .navbarLogo {
     font-size: 22px;
   }
 
-  .navbarLogo .chomskyText {
-    font-size: 26px;
+  .navbarLinks {
+    display: flex;
+    align-items: center;
+    position: static;
+    width: auto;
   }
 
-  .navbarLinks {
+  .navbarLinks .linkLogo {
+    position: static;
+    transform: none;
+    grid-column: auto;
+  }
+
+  .navbarLinks .linkWork,
+  .navbarLinks .linkInfo,
+  .navbarLinks .linkContact {
+    display: none;
+  }
+
+  .mobileMenu {
+    display: flex;
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     background-color: #ffffff;
     backdrop-filter: blur(8px);
     flex-direction: column;
     justify-content: center;
-    gap: 36px;
-    transition: right 0.3s ease-in-out;
-    z-index: 100;
-    padding: 0;
+    gap: 14px;
+    z-index: 150;
+    padding: 1rem;
     margin: 0;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    transform: translateY(-100%);
+    transition: transform 0.35s ease;
+    visibility: hidden;
+    pointer-events: none;
   }
 
-  .navbarLinks.active {
-    right: 0;
-    position: fixed;
-    overflow: hidden;
+  .mobileMenu .linkWork,
+  .mobileMenu .linkInfo,
+  .mobileMenu .linkContact {
+    display: block;
+  }
+
+  .mobileMenuOpen {
+    transform: translateY(0);
+    visibility: visible;
+    pointer-events: auto;
+    justify-content: start;
+    margin-top: 60px;
+    padding: 0;
+    gap: 0;
+  }
+
+  .mobileMenuClosing {
+    transform: translateY(-100%);
+    visibility: visible;
+    pointer-events: auto;
   }
 
   /* Remove the problematic global selector */
   /* The body styles will be handled via JavaScript */
 
   .navbarLink {
-    font-size: 24px;
+    font-size: 18px;
+    border-bottom: 1px solid black;
+    margin: 0.5rem 0;
+    height: 55px;
+  }
+
+  .mobileMenu .navbarLink {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .mobileMenu .navbarLink .originalText {
+    padding: 0;
+    line-height: 1;
   }
 }

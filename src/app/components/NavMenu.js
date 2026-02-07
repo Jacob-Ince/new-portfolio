@@ -1,13 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./NavMenu.module.css";
+import { createLogoGlitch } from "./animations";
 
-export default function NavMenu({ children }) {
+export default function NavMenu({
+  children,
+  viewMode = "grid",
+  onViewModeChange,
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuClosing, setIsMenuClosing] = useState(false);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
   const pathname = usePathname();
+  const closeTimeoutRef = useRef(null);
+  const logoRef = useRef(null);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -29,112 +38,185 @@ export default function NavMenu({ children }) {
       document.body.style.position = "";
       document.body.style.width = "";
       document.body.style.top = "";
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+        closeTimeoutRef.current = null;
+      }
     };
   }, [isMenuOpen]);
 
+  useEffect(() => {
+    const logoElement = logoRef.current;
+    if (!logoElement) return undefined;
+
+    const originalTextClass = styles.originalText || "originalText";
+    const originalTextElement =
+      logoElement.querySelector(`.${originalTextClass}`) ||
+      logoElement.querySelector('[class*="originalText"]') ||
+      logoElement.querySelector("span");
+    const originalText = originalTextElement?.textContent || "jac.ob";
+
+    const stopGlitch = createLogoGlitch(logoElement, originalText, styles, {
+      minInterval: 1200,
+      maxInterval: 2600,
+      glitchDuration: 450,
+      glitchCycles: 4,
+      intensity: 0.4,
+    });
+
+    return () => {
+      stopGlitch?.();
+    };
+  }, []);
+
+  // Track scroll percentage
+  useEffect(() => {
+    const calculateScrollPercentage = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollableHeight = documentHeight - windowHeight;
+      const percentage =
+        scrollableHeight > 0
+          ? Math.round((scrollTop / scrollableHeight) * 100)
+          : 0;
+      setScrollPercentage(percentage);
+    };
+
+    // Calculate on mount
+    calculateScrollPercentage();
+
+    // Listen to scroll events
+    window.addEventListener("scroll", calculateScrollPercentage, {
+      passive: true,
+    });
+    window.addEventListener("resize", calculateScrollPercentage, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", calculateScrollPercentage);
+      window.removeEventListener("resize", calculateScrollPercentage);
+    };
+  }, []);
+
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-    if (!isMenuOpen) {
-      document.body.style.position = "fixed";
-      document.body.style.width = "100%";
-      document.body.style.top = `-${window.scrollY}px`;
+    if (isMenuOpen) {
+      setIsMenuClosing(true);
+      closeTimeoutRef.current = setTimeout(() => {
+        setIsMenuOpen(false);
+        setIsMenuClosing(false);
+        closeTimeoutRef.current = null;
+      }, 350);
     } else {
-      const scrollY = document.body.style.top;
-      document.body.style.position = "";
-      document.body.style.width = "";
-      document.body.style.top = "";
-      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+      setIsMenuOpen(true);
+      setIsMenuClosing(false);
     }
-  };
-
-  const handleLinkHover = (e) => {
-    const link = e.currentTarget;
-    const originalText = link.querySelector(
-      `.${styles.originalText}`
-    ).textContent;
-
-    // Remove any existing Chomsky text first
-    const existingChomsky = link.querySelector(`.${styles.chomskyText}`);
-    if (existingChomsky) {
-      existingChomsky.remove();
-    }
-
-    const chomskyText = document.createElement("span");
-    chomskyText.className = styles.chomskyText;
-    chomskyText.textContent = originalText;
-    link.appendChild(chomskyText);
-
-    // Force a reflow to ensure the animation starts
-    void chomskyText.offsetWidth;
-
-    link.classList.add(styles.hovering);
-  };
-
-  const handleLinkLeave = (e) => {
-    const link = e.currentTarget;
-    const chomskyText = link.querySelector(`.${styles.chomskyText}`);
-    if (chomskyText) {
-      chomskyText.remove();
-    }
-    link.classList.remove(styles.hovering);
   };
 
   return (
     <div className={styles.page}>
       <nav className={styles.navbar}>
-        <Link
-          href="/"
-          className={styles.navbarLogo}
-          onMouseEnter={handleLinkHover}
-          onMouseLeave={handleLinkLeave}
-        >
-          <span className={styles.originalText}>jac.ob</span>
-        </Link>
         <button
           className={`${styles.menuButton} ${isMenuOpen ? styles.active : ""}`}
           onClick={toggleMenu}
           aria-label="Toggle menu"
         >
-          {isMenuOpen ? "x" : "M"}
+          <span className={styles.menuButtonSquare} aria-hidden="true" />
         </button>
-        <div
-          className={`${styles.navbarLinks} ${isMenuOpen ? styles.active : ""}`}
-        >
+        <div className={styles.navbarLinks}>
           <Link
             href="/"
-            className={`${styles.navbarLink} ${
+            ref={logoRef}
+            className={`${styles.navbarLogo} ${styles.linkLogo}`}
+          >
+            <span className={styles.originalText}>jac.ob</span>
+          </Link>
+          <Link
+            href="/"
+            className={`${styles.navbarLink} ${styles.linkWork} ${
               pathname === "/" ? styles.active : ""
             }`}
             onClick={() => setIsMenuOpen(false)}
-            onMouseEnter={handleLinkHover}
-            onMouseLeave={handleLinkLeave}
           >
-            <span className={styles.originalText}>Work</span>
+            <span className={styles.originalText}>work</span>
           </Link>
           <Link
             href="/about"
-            className={`${styles.navbarLink} ${
+            className={`${styles.navbarLink} ${styles.linkInfo} ${
               pathname === "/about" ? styles.active : ""
             }`}
             onClick={() => setIsMenuOpen(false)}
-            onMouseEnter={handleLinkHover}
-            onMouseLeave={handleLinkLeave}
           >
-            <span className={styles.originalText}>About</span>
+            <span className={styles.originalText}>information</span>
           </Link>
           <Link
             href="/contact"
-            className={`${styles.navbarLink} ${
+            className={`${styles.navbarLink} ${styles.linkContact} ${
               pathname === "/contact" ? styles.active : ""
             }`}
             onClick={() => setIsMenuOpen(false)}
-            onMouseEnter={handleLinkHover}
-            onMouseLeave={handleLinkLeave}
           >
-            <span className={styles.originalText}>Contact</span>
+            <span className={styles.originalText}>contact</span>
           </Link>
         </div>
+        <div className={styles.navbarControls}>
+          <button
+            type="button"
+            className={`${styles.iconButton} ${styles.squareButton} ${
+              viewMode === "grid" ? styles.iconButtonActive : ""
+            }`}
+            aria-label="Square icon"
+            aria-pressed={viewMode === "grid"}
+            onClick={() => onViewModeChange?.("grid")}
+          />
+          <button
+            type="button"
+            className={`${styles.iconButton} ${styles.circleButton} ${
+              viewMode === "carousel" ? styles.iconButtonActive : ""
+            }`}
+            aria-label="Circle icon"
+            aria-pressed={viewMode === "carousel"}
+            onClick={() => onViewModeChange?.("carousel")}
+          />
+          <div className={styles.scrollPercentage}>
+            <span className={styles.originalText}>{scrollPercentage}%</span>
+          </div>
+        </div>
       </nav>
+      <div
+        className={`${styles.mobileMenu} ${
+          isMenuOpen ? styles.mobileMenuOpen : ""
+        } ${isMenuClosing ? styles.mobileMenuClosing : ""}`}
+      >
+        <Link
+          href="/"
+          className={`${styles.navbarLink} ${styles.linkWork} ${
+            pathname === "/" ? styles.active : ""
+          }`}
+          onClick={toggleMenu}
+        >
+          <span className={styles.originalText}>work</span>
+        </Link>
+        <Link
+          href="/about"
+          className={`${styles.navbarLink} ${styles.linkInfo} ${
+            pathname === "/about" ? styles.active : ""
+          }`}
+          onClick={toggleMenu}
+        >
+          <span className={styles.originalText}>information</span>
+        </Link>
+        <Link
+          href="/contact"
+          className={`${styles.navbarLink} ${styles.linkContact} ${
+            pathname === "/contact" ? styles.active : ""
+          }`}
+          onClick={toggleMenu}
+        >
+          <span className={styles.originalText}>contact</span>
+        </Link>
+      </div>
       {children}
     </div>
   );

@@ -88,6 +88,11 @@
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
+    order: -1; /* This will position the image above the text on mobile */
+  }
+
+  .textContainer {
+    order: 1; /* This will position the text below the image on mobile */
   }
 
   .textContent {

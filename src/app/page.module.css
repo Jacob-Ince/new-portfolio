@@ -10,16 +10,35 @@
   flex-direction: column;
   min-height: 100vh;
   padding: 15px 20px 20px 20px;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   text-transform: uppercase;
 }
 
 .main {
   flex: 1;
   width: 100%;
-  /* max-width: 1400px; */
-  margin: 0.5rem auto;
-  /* outline: 1px solid red; */
+  margin: 2rem auto;
+
+  @media (max-width: 768px) {
+    margin: 0rem auto;
+  }
+}
+
+.carouselContainer {
+  width: 100%;
+  height: calc(100vh - 140px);
+  min-height: 420px;
+}
+
+@media (max-width: 768px) {
+  .carouselContainer {
+    height: calc(100vh - 110px);
+    min-height: 320px;
+  }
 }
 
 .main li:not(:last-of-type) {
@@ -27,7 +46,11 @@
 }
 
 .main code {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   background: var(--gray-alpha-100);
   padding: 2px 4px;
   border-radius: 4px;
@@ -57,7 +80,9 @@
   position: relative;
   overflow: visible;
   background-color: transparent;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   margin-bottom: 12px;
   display: flex;
   flex-direction: column;
@@ -85,7 +110,9 @@
   align-items: center;
   justify-content: center;
   transform: translateY(20px);
-  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  transition:
+    opacity 0.4s ease-out,
+    transform 0.4s ease-out;
 }
 
 .gridItem.visible {
@@ -125,8 +152,8 @@
   grid-row: span 2;
 }
 
-.mediaText {
-  padding: 6px 0 0 0;
+.mediaMeta {
+  padding: 6px 0 0 6px;
   margin: 0;
   font-size: 12px;
   color: black;
@@ -135,10 +162,71 @@
   background: transparent;
   position: relative;
   z-index: 2;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: lowercase;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mediaText {
+  margin: 0;
+  font-size: 12px;
+  color: inherit;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.typeDots {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.typeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+  background: #000;
+}
+
+.typeDotDev {
+  background: #6aff00;
+}
+
+.typeDotDesign {
+  background: #ff7d20;
+}
+
+.typeDotMotion {
+  background: #0062ff;
+}
+
+.typeDot3d {
+  background: #ff91c8;
+}
+
+/* Hide mediaText by default, reveal on hover from top down */
+@media (hover: hover) and (pointer: fine) {
+  .mediaMeta {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 0.3s ease-out;
+  }
+
+  .gridItem:hover .mediaMeta {
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 .footer {
@@ -280,7 +368,11 @@
   }
 
   .mediaText {
-    font-size: 11px;
+    display: none;
+  }
+
+  .mediaMeta {
+    display: none;
   }
 }
 
