@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run generate-media && next dev",
-    "build": "npm run generate-media && next build",
+    "build": "npm run generate-media && next build --webpack",
     "start": "next start",
     "lint": "next lint",
     "generate-media": "node scripts/generate-media-list.mjs"
