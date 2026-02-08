@@ -37,7 +37,7 @@ export default function AboutPage() {
                     </ul>
                 </div> */}
                 <div className={styles.textContent}>
-                  <h1 className={styles.aboutTitle}>Worked With</h1>
+                  <h1 className={styles.aboutTitle}>Worked With:</h1>
                   <ul>
                     <li>
                       <a href="https://midnight.agency/" target="_blank">
@@ -52,6 +52,7 @@ export default function AboutPage() {
                     <li>Design Studio</li>
                     <li>OMSE</li>
                     <li>Levi&apos;s</li>
+                    <li>office of overview</li>
                     <li>CNN</li>
                     <li>Boots</li>
                     <li>Peter &amp; Paul</li>
@@ -78,7 +79,7 @@ export default function AboutPage() {
               </div>
               <div className={styles.imageWrapper}>
                 <Image
-                  src="/images/portrait-layers-v2.png"
+                  src="/images/me.jpg"
                   alt="Jacob Ince"
                   width={400}
                   height={600}

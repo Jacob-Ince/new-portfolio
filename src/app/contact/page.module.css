@@ -1,17 +1,22 @@
 .contactMain {
   min-height: 100vh;
-  padding: 3rem 4rem 4rem 4rem;
+  padding: 5rem 2rem 4rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  text-transform: uppercase;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  text-transform: lowercase;
   color: black;
   position: relative;
 
   @media (max-width: 768px) {
-    padding: 1rem;
+    padding: 1rem 0;
+    margin-top: 2rem;
   }
 }
 
@@ -35,17 +40,21 @@
   gap: 3rem;
   margin-top: 2rem;
   line-height: 1.6;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: black;
   flex: 0 0 300px;
 
   @media (max-width: 768px) {
     min-width: 0;
     padding-right: 1rem;
-    gap: 1rem;
+    gap: 0rem;
   }
 }
 
@@ -56,17 +65,25 @@
 
   @media (max-width: 768px) {
     margin-top: 0;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
 }
 
 .contactTitle {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: black;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .textContent p {
@@ -113,9 +130,13 @@
   padding: 0.75rem;
   border: 1px solid #000000;
   background: transparent;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: black;
   transition: border-color 0.3s ease;
 }
@@ -135,10 +156,14 @@
   padding: 0.75rem 1.5rem;
   background: transparent;
   border: 1px solid black;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: black;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -168,23 +193,33 @@
 @media (max-width: 768px) {
   .contactContent {
     flex-direction: column;
-    gap: 2rem;
+    gap: 0rem;
   }
 
   .textContainer {
     flex: none;
     width: 100%;
+    display: contents;
   }
 
   .formContainer {
     width: 100%;
     max-width: none;
+    order: 2;
   }
 
   .textContent {
     gap: 1rem;
     margin-top: 0;
     margin-bottom: 2rem;
+  }
+
+  .textContent:first-child {
+    order: 1;
+  }
+
+  .textContent:last-child {
+    order: 3;
   }
 
   .contactForm {
@@ -203,10 +238,14 @@
 }
 
 .marqueeItem {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
   font-weight: 700;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: black;
   padding: 0 1rem;
   white-space: nowrap;

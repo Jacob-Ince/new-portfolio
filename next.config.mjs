@@ -45,6 +45,9 @@ const nextConfig = {
 
     return config;
   },
+
+  // Silence Turbopack+webpack config error in Next 16
+  turbopack: {},
 };
 
 export default nextConfig;

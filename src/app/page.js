@@ -8,17 +8,19 @@ import NavMenu from "./components/NavMenu";
 import PageTransition from "./components/PageTransition";
 import Link from "next/link";
 import { getAllMediaAssets, transformSanityMedia } from "../lib/sanity";
-import dynamic from "next/dynamic";
-
-const CircularCarousel = dynamic(() => import("./components/CircularCarousel"), {
-  ssr: false,
-});
 
 const projectTypeClassMap = {
   dev: "typeDotDev",
   design: "typeDotDesign",
   motion: "typeDotMotion",
   "3d": "typeDot3d",
+};
+
+const projectTypeTitleMap = {
+  dev: "Development",
+  design: "Design",
+  motion: "Motion",
+  "3d": "3D",
 };
 
 export default function Home() {
@@ -209,6 +211,17 @@ export default function Home() {
     setLoadedItems((prev) => new Set([...prev, id]));
   };
 
+  const getVideoMimeType = (src) => {
+    if (!src) return undefined;
+    const ext = src.split(".").pop()?.toLowerCase();
+    if (!ext) return undefined;
+    if (ext === "mp4") return "video/mp4";
+    if (ext === "m4v") return "video/x-m4v";
+    if (ext === "webm") return "video/webm";
+    if (ext === "mov") return "video/quicktime";
+    return undefined;
+  };
+
   const renderMedia = (photo) => {
     if (!photo?.src) return null;
     const isLoaded = loadedItems.has(photo.id);
@@ -216,21 +229,11 @@ export default function Home() {
       ? photo.projectTypes
       : [];
     const displayName = photo.displayName || photo.name;
-    const getVideoMimeType = (src) => {
-      if (!src) return undefined;
-      const ext = src.split(".").pop()?.toLowerCase();
-      if (!ext) return undefined;
-      if (ext === "mp4") return "video/mp4";
-      if (ext === "m4v") return "video/x-m4v";
-      if (ext === "webm") return "video/webm";
-      if (ext === "mov") return "video/quicktime";
-      return undefined;
-    };
     const videoType =
       photo.type === "video" ? getVideoMimeType(photo.src) : undefined;
 
     return (
-      <Link href={`/project/${photo.name}`} key={photo.id}>
+      <Link href={`/project/${encodeURIComponent(photo.name)}`} key={photo.id}>
         <div
           className={styles.gridItem}
           style={{
@@ -307,22 +310,75 @@ export default function Home() {
           <div className={styles.mediaMeta}>
             <p className={styles.mediaText}>{displayName}</p>
             {projectTypes.length > 0 && (
-              <div className={styles.typeDots} aria-hidden="true">
-                {projectTypes
-                  .filter((type) => projectTypeClassMap[type])
-                  .map((type) => (
-                    <span
-                      key={`${photo.id}-${type}`}
-                      className={`${styles.typeDot} ${
-                        styles[projectTypeClassMap[type]]
-                      }`}
-                    />
-                  ))}
+              <div className={styles.listMetaExtras}>
+                <div className={styles.listTypeList} aria-hidden="true">
+                  {projectTypes
+                    .filter((type) => projectTypeClassMap[type])
+                    .map((type) => (
+                      <span
+                        key={`${photo.id}-${type}`}
+                        className={styles.listTypeItem}
+                      >
+                        <span
+                          className={`${styles.typeDot} ${
+                            styles[projectTypeClassMap[type]]
+                          }`}
+                        />
+                        <span className={styles.listHoverTitle}>
+                          {projectTypeTitleMap[type] || type}
+                        </span>
+                      </span>
+                    ))}
+                </div>
               </div>
             )}
           </div>
         </div>
       </Link>
+    );
+  };
+
+  const renderListItem = (photo) => {
+    if (!photo?.src) return null;
+    const projectTypes = Array.isArray(photo.projectTypes)
+      ? photo.projectTypes
+      : [];
+    const displayName = photo.displayName || photo.name;
+
+    return (
+      <li key={photo.id} className={styles.listItem}>
+        <Link
+          href={`/project/${encodeURIComponent(photo.name)}`}
+          className={styles.listLink}
+        >
+          <div className={styles.listMeta}>
+            <p className={styles.listTitle}>{displayName}</p>
+            {projectTypes.length > 0 && (
+              <div className={styles.listMetaExtras}>
+                <div className={styles.listTypeList} aria-hidden="true">
+                  {projectTypes
+                    .filter((type) => projectTypeClassMap[type])
+                    .map((type) => (
+                      <span
+                        key={`${photo.id}-${type}`}
+                        className={styles.listTypeItem}
+                      >
+                        <span
+                          className={`${styles.typeDot} ${
+                            styles[projectTypeClassMap[type]]
+                          }`}
+                        />
+                        <span className={styles.listHoverTitle}>
+                          {projectTypeTitleMap[type] || type}
+                        </span>
+                      </span>
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </Link>
+      </li>
     );
   };
 
@@ -356,6 +412,35 @@ export default function Home() {
     <NavMenu viewMode={viewMode} onViewModeChange={setViewMode}>
       <PageTransition>
         <main className={styles.main}>
+          <div
+            className={styles.mobileViewToggle}
+            role="group"
+            aria-label="View mode"
+          >
+            <button
+              type="button"
+              className={`${styles.mobileViewButton} ${
+                viewMode === "grid" ? styles.mobileViewButtonActive : ""
+              }`}
+              aria-pressed={viewMode === "grid"}
+              onClick={() => setViewMode("grid")}
+            >
+              grid
+            </button>
+            <span className={styles.mobileViewDivider} aria-hidden="true">
+              /
+            </span>
+            <button
+              type="button"
+              className={`${styles.mobileViewButton} ${
+                viewMode === "list" ? styles.mobileViewButtonActive : ""
+              }`}
+              aria-pressed={viewMode === "list"}
+              onClick={() => setViewMode("list")}
+            >
+              list
+            </button>
+          </div>
           {viewMode === "grid" ? (
             <ResponsiveMasonry
               columnsCountBreakPoints={{
@@ -370,8 +455,10 @@ export default function Home() {
               </Masonry>
             </ResponsiveMasonry>
           ) : (
-            <div className={styles.carouselContainer}>
-              <CircularCarousel items={sortedPhotos} />
+            <div className={styles.listContainer}>
+              <ul className={styles.listView}>
+                {sortedPhotos.map((photo) => renderListItem(photo))}
+              </ul>
             </div>
           )}
         </main>

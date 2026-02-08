@@ -1,10 +1,14 @@
 .projectMain {
   min-height: 100vh;
-  padding: 2rem 0rem 0rem 4rem;
+  padding: 2rem 0rem 0rem 1rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   text-transform: uppercase;
   color: black;
 }
@@ -13,16 +17,18 @@
   max-width: 1400px;
   width: 100%;
   margin: 0 auto;
+  margin-top: 2rem;
 }
 
 .projectContent {
-  display: flex;
-  gap: 19rem;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 575px minmax(0, 1fr);
+  column-gap: 4rem;
+  align-items: start;
 }
 
 .mediaWrapper {
-  flex: 0 0 400px;
+  width: 440px;
   position: relative;
   margin-top: 2rem;
 }
@@ -36,24 +42,73 @@
 
 .textContent {
   display: flex;
-  flex-direction: row;
-  gap: 4rem;
+  flex-direction: column;
+  gap: 0.75rem;
   margin-top: 2rem;
   line-height: 1.6;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 12px;
   font-weight: 400;
-  text-transform: uppercase;
+  text-transform: lowercase;
   color: black;
 }
 
-.projectTitle {
-  flex: 0 0 100px;
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+.listMetaExtras {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.listTypeList {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.listTypeItem {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.listHoverTitle {
   font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
   color: black;
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+  position: static;
+  margin-left: 6px;
+  opacity: 1;
+  transform: none;
+  white-space: nowrap;
+}
+
+.typeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  display: inline-block;
+  background: #000;
+}
+
+.typeDotDev {
+  background: #6aff00;
+}
+
+.typeDotDesign {
+  background: #ff7d20;
+}
+
+.typeDotMotion {
+  background: #0062ff;
+}
+
+.typeDot3d {
+  background: #ff91c8;
 }
 
 .textContent p {
@@ -63,12 +118,11 @@
 
 @media (max-width: 768px) {
   .projectMain {
-    padding: 1rem;
+    padding: 0rem;
   }
 
   .projectContent {
-    flex-direction: column;
-    gap: 2rem;
+    grid-template-columns: 1fr;
   }
 
   .mediaWrapper {
@@ -80,12 +134,11 @@
 
   .textContent {
     flex-direction: column;
-    gap: 1rem;
-    margin-top: 0;
-    margin-bottom: 2rem;
+    gap: 0rem;
+    margin: 1rem 0 2rem 0;
   }
 
-  .projectTitle {
-    flex: 0 0 auto;
+  .textContent .projectDescription {
+    margin-top: 1rem;
   }
 }

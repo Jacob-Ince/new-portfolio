@@ -28,21 +28,206 @@
   }
 }
 
-.carouselContainer {
-  width: 100%;
-  height: calc(100vh - 140px);
-  min-height: 420px;
+.mobileViewToggle {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  margin: 2rem 0 0rem;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-@media (max-width: 768px) {
-  .carouselContainer {
-    height: calc(100vh - 110px);
-    min-height: 320px;
+.mobileViewButton {
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: black;
+  /* padding: 6px 10px; */
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  /* text-transform: uppercase; */
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.mobileViewButtonActive {
+  color: rgb(255, 148, 255);
+}
+
+.mobileViewDivider {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.mobileViewButton:focus-visible {
+  outline: 2px solid black;
+  outline-offset: 2px;
+}
+
+.listContainer {
+  width: 100%;
+  padding-top: 3rem;
+
+  @media (max-width: 768px) {
+    padding-top: 0.75rem;
   }
 }
 
-.main li:not(:last-of-type) {
-  margin-bottom: 8px;
+@media (max-width: 768px) {
+  .mobileViewToggle {
+    display: flex;
+  }
+}
+
+.listView {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .listView {
+    border-top: 1px solid rgba(0, 0, 0, 0.326);
+    gap: 0px;
+  }
+}
+
+.listItem {
+  width: 100%;
+}
+
+.listLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-decoration: none;
+  color: inherit;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.326);
+}
+
+.listMeta {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.listTitle {
+  margin: 0;
+  font-size: 14px;
+  color: black;
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+  flex: 1;
+  min-width: 0;
+  transition: transform 0.2s ease;
+  position: relative;
+}
+
+.listLink:hover .listTitle {
+  transform: translateX(12px);
+}
+
+.listTitle::before {
+  content: ">";
+  opacity: 0;
+  position: absolute;
+  left: -16px;
+  transform: translateX(-6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.listLink:hover .listTitle::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.listContainer .typeDots {
+  margin-right: 1rem;
+}
+
+.listMetaExtras {
+  margin-left: auto;
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  @media (max-width: 768px) {
+    margin-right: 0rem;
+  }
+}
+
+.listTypeList {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+  transition-delay: 0.2s;
+}
+
+.listTypeItem {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.listHoverTitle {
+  font-size: 12px;
+  color: black;
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+  position: absolute;
+  right: 100%;
+  margin-right: 6px;
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+  white-space: nowrap;
+}
+
+.gridItem .listHoverTitle {
+  transition-delay: 0s;
+}
+
+.gridItem:hover .listHoverTitle {
+  transition-delay: 0.3s;
+}
+
+.listLink:hover .listHoverTitle,
+.gridItem:hover .listHoverTitle {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.listLink:hover .listTypeList {
+  gap: 64px;
+  transition-delay: 0s;
+}
+
+.gridItem:hover .listTypeList {
+  gap: 64px;
+  transition-delay: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .listLink {
+    gap: 12px;
+  }
 }
 
 .main code {
@@ -86,9 +271,6 @@
   margin-bottom: 12px;
   display: flex;
   flex-direction: column;
-}
-
-.gridItemWrapper:hover {
 }
 
 @keyframes fadeIn {

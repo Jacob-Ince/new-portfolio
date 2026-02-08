@@ -7,10 +7,28 @@ import PageTransition from "../../components/PageTransition";
 import { use, useEffect, useState } from "react";
 import { getMediaAssetByName, transformSanityMedia } from "../../../lib/sanity";
 
+const projectTypeClassMap = {
+  dev: "typeDotDev",
+  design: "typeDotDesign",
+  motion: "typeDotMotion",
+  "3d": "typeDot3d",
+};
+
+const projectTypeTitleMap = {
+  dev: "Development",
+  design: "Design",
+  motion: "Motion",
+  "3d": "3D",
+};
+
 export default function ProjectPage({ params }) {
   const resolvedParams = use(params);
   const { slug } = resolvedParams;
-  const projectName = slug ? slug[0].replace(/%20/g, " ") : "";
+  const projectName = Array.isArray(slug)
+    ? decodeURIComponent(slug.join("/"))
+    : slug
+      ? decodeURIComponent(slug)
+      : "";
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -62,6 +80,9 @@ export default function ProjectPage({ params }) {
   }
 
   const displayName = project.displayName || project.name;
+  const projectTypes = Array.isArray(project.projectTypes)
+    ? project.projectTypes
+    : [];
 
   return (
     <NavMenu>
@@ -71,8 +92,37 @@ export default function ProjectPage({ params }) {
             <div className={styles.projectContent}>
               <div className={styles.textContainer}>
                 <div className={styles.textContent}>
-                  <h1 className={styles.projectTitle}>Project Title</h1>
                   <p>{displayName}</p>
+                  {projectTypes.length > 0 && (
+                    <div className={styles.listMetaExtras}>
+                      <div className={styles.listTypeList} aria-hidden="true">
+                        {projectTypes
+                          .filter((type) => projectTypeClassMap[type])
+                          .map((type) => (
+                            <span
+                              key={`${project.name}-${type}`}
+                              className={styles.listTypeItem}
+                            >
+                              <span
+                                className={`${styles.typeDot} ${
+                                  styles[projectTypeClassMap[type]]
+                                }`}
+                              />
+                              <span className={styles.listHoverTitle}>
+                                {projectTypeTitleMap[type] || type}
+                              </span>
+                            </span>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+                  <p className={styles.projectDescription}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing
+                    elit. Sed do eiusmod tempor incididunt ut labore et dolore
+                    magna aliqua
+                  </p>
                 </div>
               </div>
               <div className={styles.mediaWrapper}>
@@ -93,6 +143,10 @@ export default function ProjectPage({ params }) {
                     autoPlay
                     loop
                     muted
+                    playsInline
+                    controls={false}
+                    controlsList="nodownload noplaybackrate noremoteplayback"
+                    disablePictureInPicture
                     className={styles.projectMedia}
                     style={{
                       filter: project.invertColor ? "invert(1)" : "none",

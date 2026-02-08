@@ -172,12 +172,12 @@ export default function NavMenu({
           />
           <button
             type="button"
-            className={`${styles.iconButton} ${styles.circleButton} ${
-              viewMode === "carousel" ? styles.iconButtonActive : ""
+            className={`${styles.iconButton} ${styles.listButton} ${
+              viewMode === "list" ? styles.iconButtonActive : ""
             }`}
-            aria-label="Circle icon"
-            aria-pressed={viewMode === "carousel"}
-            onClick={() => onViewModeChange?.("carousel")}
+            aria-label="List view"
+            aria-pressed={viewMode === "list"}
+            onClick={() => onViewModeChange?.("list")}
           />
           <div className={styles.scrollPercentage}>
             <span className={styles.originalText}>{scrollPercentage}%</span>
