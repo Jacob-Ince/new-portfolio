@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./NavMenu.module.css";
-import { createLogoGlitch } from "./animations";
+import { createLogoGlitch, createHoverScramble } from "./animations";
 
 export default function NavMenu({
   children,
@@ -17,6 +17,7 @@ export default function NavMenu({
   const pathname = usePathname();
   const closeTimeoutRef = useRef(null);
   const logoRef = useRef(null);
+  const navLinkRefs = useRef([]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -66,6 +67,29 @@ export default function NavMenu({
 
     return () => {
       stopGlitch?.();
+    };
+  }, []);
+
+  useEffect(() => {
+    const cleanupFns = navLinkRefs.current
+      .filter(Boolean)
+      .map((linkElement) => {
+        const originalTextElement =
+          linkElement.querySelector(`.${styles.originalText}`) ||
+          linkElement.querySelector('[class*="originalText"]') ||
+          linkElement.querySelector("span");
+        const originalText = originalTextElement?.textContent?.trim() || "";
+
+        return createHoverScramble(linkElement, originalText, {
+          duration: 420,
+          frameDelay: 28,
+          intensity: 0.95,
+          lockWidth: true,
+        });
+      });
+
+    return () => {
+      cleanupFns.forEach((cleanup) => cleanup?.());
     };
   }, []);
 
@@ -137,15 +161,21 @@ export default function NavMenu({
             className={`${styles.navbarLink} ${styles.linkWork} ${
               pathname === "/" ? styles.active : ""
             }`}
+            ref={(element) => {
+              navLinkRefs.current[0] = element;
+            }}
             onClick={() => setIsMenuOpen(false)}
           >
-            <span className={styles.originalText}>work</span>
+            <span className={styles.originalText}>lab</span>
           </Link>
           <Link
             href="/about"
             className={`${styles.navbarLink} ${styles.linkInfo} ${
               pathname === "/about" ? styles.active : ""
             }`}
+            ref={(element) => {
+              navLinkRefs.current[1] = element;
+            }}
             onClick={() => setIsMenuOpen(false)}
           >
             <span className={styles.originalText}>information</span>
@@ -155,6 +185,9 @@ export default function NavMenu({
             className={`${styles.navbarLink} ${styles.linkContact} ${
               pathname === "/contact" ? styles.active : ""
             }`}
+            ref={(element) => {
+              navLinkRefs.current[2] = element;
+            }}
             onClick={() => setIsMenuOpen(false)}
           >
             <span className={styles.originalText}>contact</span>
@@ -194,27 +227,39 @@ export default function NavMenu({
           className={`${styles.navbarLink} ${styles.linkWork} ${
             pathname === "/" ? styles.active : ""
           }`}
+          ref={(element) => {
+            navLinkRefs.current[3] = element;
+          }}
           onClick={toggleMenu}
         >
-          <span className={styles.originalText}>work</span>
+          <span className={styles.originalText}>lab</span>
+          <span className={styles.mobileMenuNumber}>// 1</span>
         </Link>
         <Link
           href="/about"
           className={`${styles.navbarLink} ${styles.linkInfo} ${
             pathname === "/about" ? styles.active : ""
           }`}
+          ref={(element) => {
+            navLinkRefs.current[4] = element;
+          }}
           onClick={toggleMenu}
         >
           <span className={styles.originalText}>information</span>
+          <span className={styles.mobileMenuNumber}>// 2</span>
         </Link>
         <Link
           href="/contact"
           className={`${styles.navbarLink} ${styles.linkContact} ${
             pathname === "/contact" ? styles.active : ""
           }`}
+          ref={(element) => {
+            navLinkRefs.current[5] = element;
+          }}
           onClick={toggleMenu}
         >
           <span className={styles.originalText}>contact</span>
+          <span className={styles.mobileMenuNumber}>// 3</span>
         </Link>
       </div>
       {children}

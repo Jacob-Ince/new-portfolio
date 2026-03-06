@@ -153,3 +153,97 @@ export function createLogoGlitch(element, originalText, styles, options = {}) {
     isGlitching = false;
   };
 }
+
+/**
+ * Creates a hover scramble effect by randomizing characters and restoring
+ * the original text progressively while hovered.
+ * @param {HTMLElement} element
+ * @param {string} originalText
+ * @param {Object} options
+ */
+export function createHoverScramble(element, originalText, options = {}) {
+  const {
+    duration = 420,
+    frameDelay = 28,
+    intensity = 0.95,
+    lockWidth = true,
+  } = options;
+
+  const cleanText = originalText || "";
+  const originalChars = cleanText.split("");
+
+  let intervalId = null;
+  let animationProgress = 0;
+  let originalMinWidth = "";
+
+  const getRandomChar = () =>
+    SPECIAL_CHARS[Math.floor(Math.random() * SPECIAL_CHARS.length)];
+
+  const textElement = element?.querySelector("span");
+  if (!element || !textElement || !cleanText) {
+    return () => {};
+  }
+
+  const clearAnimation = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  };
+
+  const finish = () => {
+    clearAnimation();
+    textElement.textContent = cleanText;
+    if (lockWidth) {
+      element.style.minWidth = originalMinWidth || "";
+    }
+  };
+
+  const onMouseEnter = () => {
+    clearAnimation();
+    animationProgress = 0;
+
+    if (lockWidth) {
+      originalMinWidth = element.style.minWidth;
+      element.style.minWidth = `${element.offsetWidth}px`;
+    }
+
+    const totalFrames = Math.max(1, Math.floor(duration / frameDelay));
+
+    intervalId = setInterval(() => {
+      animationProgress += 1;
+      const revealCount = Math.floor(
+        (animationProgress / totalFrames) * originalChars.length
+      );
+
+      const scrambled = originalChars.map((char, index) => {
+        if (char === " " || char === ".") return char;
+        if (index < revealCount) return char;
+        return Math.random() < intensity ? getRandomChar() : char;
+      });
+
+      textElement.textContent = scrambled.join("");
+
+      if (animationProgress >= totalFrames) {
+        finish();
+      }
+    }, frameDelay);
+  };
+
+  const onMouseLeave = () => {
+    finish();
+  };
+
+  element.addEventListener("mouseenter", onMouseEnter);
+  element.addEventListener("mouseleave", onMouseLeave);
+
+  return () => {
+    clearAnimation();
+    element.removeEventListener("mouseenter", onMouseEnter);
+    element.removeEventListener("mouseleave", onMouseLeave);
+    textElement.textContent = cleanText;
+    if (lockWidth) {
+      element.style.minWidth = originalMinWidth || "";
+    }
+  };
+}

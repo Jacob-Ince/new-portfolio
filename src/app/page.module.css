@@ -200,6 +200,10 @@
   white-space: nowrap;
 }
 
+.preserveCase {
+  text-transform: none;
+}
+
 .gridItem .listHoverTitle {
   transition-delay: 0s;
 }
@@ -338,7 +342,7 @@
   padding: 6px 0 0 6px;
   margin: 0;
   font-size: 12px;
-  color: black;
+  color: rgb(0, 0, 0);
   text-align: start;
   width: 100%;
   background: transparent;

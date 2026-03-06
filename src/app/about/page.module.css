@@ -89,6 +89,7 @@
 .textContent li {
   margin: 0;
   padding: 0;
+  width: fit-content;
 }
 
 .textContent li a {

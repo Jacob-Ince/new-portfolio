@@ -21,6 +21,11 @@ const projectTypeTitleMap = {
   "3d": "3D",
 };
 
+const normalizeProjectType = (type) => {
+  if (typeof type !== "string") return "";
+  return type.trim().toLowerCase();
+};
+
 export default function ProjectPage({ params }) {
   const resolvedParams = use(params);
   const { slug } = resolvedParams;
@@ -81,7 +86,7 @@ export default function ProjectPage({ params }) {
 
   const displayName = project.displayName || project.name;
   const projectTypes = Array.isArray(project.projectTypes)
-    ? project.projectTypes
+    ? project.projectTypes.map(normalizeProjectType).filter(Boolean)
     : [];
 
   return (
@@ -108,7 +113,13 @@ export default function ProjectPage({ params }) {
                                   styles[projectTypeClassMap[type]]
                                 }`}
                               />
-                              <span className={styles.listHoverTitle}>
+                              <span
+                                className={`${styles.listHoverTitle} ${
+                                  (projectTypeTitleMap[type] || type) === "3D"
+                                    ? styles.preserveCase
+                                    : ""
+                                }`}
+                              >
                                 {projectTypeTitleMap[type] || type}
                               </span>
                             </span>
@@ -116,7 +127,9 @@ export default function ProjectPage({ params }) {
                       </div>
                     </div>
                   )}
-                  <p className={styles.projectDescription}>
+                  <p
+                    className={`${styles.projectDescription} ${styles.desktopOnlyDescription}`}
+                  >
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                     do eiusmod tempor incididunt ut labore et dolore magna
                     aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing
@@ -154,6 +167,14 @@ export default function ProjectPage({ params }) {
                   />
                 )}
               </div>
+              <p
+                className={`${styles.projectDescription} ${styles.mobileOnlyDescription}`}
+              >
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua
+              </p>
             </div>
           </div>
         </main>

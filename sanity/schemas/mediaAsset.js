@@ -97,7 +97,16 @@ export const mediaAssetSchema = defineType({
           },
         }),
       ],
-      validation: (Rule) => Rule.max(4).unique(),
+      validation: (Rule) =>
+        Rule.max(4)
+          .unique()
+          .custom((value) => {
+            if (!Array.isArray(value)) return true;
+            if (value.includes("3d")) {
+              return 'Use uppercase "3D" for this project type.';
+            }
+            return true;
+          }),
     }),
     orderRankField({ type: "mediaAsset" }),
   ],

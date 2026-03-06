@@ -63,6 +63,12 @@ export function transformSanityMedia(mediaAsset) {
   // For the id field, we can use a numeric representation or keep orderRank
   const orderValue = mediaAsset.orderRank || "a0";
 
+  const normalizeProjectType = (type) => {
+    if (typeof type !== "string") return type;
+    const normalized = type.trim();
+    return normalized.toLowerCase() === "3d" ? "3D" : normalized;
+  };
+
   return {
     id: orderValue, // Keep orderRank as id for sorting purposes
     type: mediaAsset.type,
@@ -73,7 +79,9 @@ export function transformSanityMedia(mediaAsset) {
     width: mediaAsset.width,
     height: mediaAsset.height,
     invertColor: mediaAsset.invertColor === "yes",
-    projectTypes: mediaAsset.projectTypes || [],
+    projectTypes: Array.isArray(mediaAsset.projectTypes)
+      ? mediaAsset.projectTypes.map(normalizeProjectType)
+      : [],
     orderRank: orderValue, // Also include orderRank for reference
   };
 }

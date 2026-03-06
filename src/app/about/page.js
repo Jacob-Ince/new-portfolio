@@ -56,6 +56,7 @@ export default function AboutPage() {
                     <li>CNN</li>
                     <li>Boots</li>
                     <li>Peter &amp; Paul</li>
+                    <li>Zandland</li>
                     <li>SharpEnd</li>
                     <li>IO.TT</li>
                     <li>Vector Digital</li>

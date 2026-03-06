@@ -23,6 +23,11 @@ const projectTypeTitleMap = {
   "3d": "3D",
 };
 
+const normalizeProjectType = (type) => {
+  if (typeof type !== "string") return "";
+  return type.trim().toLowerCase();
+};
+
 export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [loadedItems, setLoadedItems] = useState(new Set());
@@ -82,7 +87,7 @@ export default function Home() {
           if (entry.isIntersecting) {
             console.log(
               `Video ${videoId} is intersecting, readyState:`,
-              video.readyState
+              video.readyState,
             );
 
             // Start loading video data immediately when it comes into view
@@ -93,7 +98,7 @@ export default function Home() {
             // Try to play the video if it's ready
             if (video.readyState >= 2) {
               console.log(
-                `Video ${videoId} ready to play, attempting playback`
+                `Video ${videoId} ready to play, attempting playback`,
               );
               playVideo(videoId);
             }
@@ -113,7 +118,7 @@ export default function Home() {
       {
         rootMargin: "100px 0px",
         threshold: 0.1,
-      }
+      },
     );
 
     // Pause all videos when page becomes hidden
@@ -184,7 +189,7 @@ export default function Home() {
         .catch((error) => {
           console.warn(
             `Failed to play video ${videoId} (attempt ${retryCount + 1}):`,
-            error
+            error,
           );
 
           // Retry after a short delay if we haven't exceeded max retries
@@ -226,7 +231,7 @@ export default function Home() {
     if (!photo?.src) return null;
     const isLoaded = loadedItems.has(photo.id);
     const projectTypes = Array.isArray(photo.projectTypes)
-      ? photo.projectTypes
+      ? photo.projectTypes.map(normalizeProjectType).filter(Boolean)
       : [];
     const displayName = photo.displayName || photo.name;
     const videoType =
@@ -324,7 +329,13 @@ export default function Home() {
                             styles[projectTypeClassMap[type]]
                           }`}
                         />
-                        <span className={styles.listHoverTitle}>
+                        <span
+                          className={`${styles.listHoverTitle} ${
+                            (projectTypeTitleMap[type] || type) === "3D"
+                              ? styles.preserveCase
+                              : ""
+                          }`}
+                        >
                           {projectTypeTitleMap[type] || type}
                         </span>
                       </span>
@@ -341,7 +352,7 @@ export default function Home() {
   const renderListItem = (photo) => {
     if (!photo?.src) return null;
     const projectTypes = Array.isArray(photo.projectTypes)
-      ? photo.projectTypes
+      ? photo.projectTypes.map(normalizeProjectType).filter(Boolean)
       : [];
     const displayName = photo.displayName || photo.name;
 
@@ -368,7 +379,13 @@ export default function Home() {
                             styles[projectTypeClassMap[type]]
                           }`}
                         />
-                        <span className={styles.listHoverTitle}>
+                        <span
+                          className={`${styles.listHoverTitle} ${
+                            (projectTypeTitleMap[type] || type) === "3D"
+                              ? styles.preserveCase
+                              : ""
+                          }`}
+                        >
                           {projectTypeTitleMap[type] || type}
                         </span>
                       </span>
