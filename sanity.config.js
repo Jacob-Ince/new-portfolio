@@ -4,12 +4,21 @@ import { visionTool } from "@sanity/vision";
 import { mediaAssetSchema } from "./sanity/schemas/mediaAsset";
 import { structure } from "./sanity/structure";
 
+const projectId =
+  process.env.SANITY_STUDIO_PROJECT_ID ||
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ||
+  "run4fg82";
+const dataset =
+  process.env.SANITY_STUDIO_DATASET ||
+  process.env.NEXT_PUBLIC_SANITY_DATASET ||
+  "production";
+
 export default defineConfig({
   name: "default",
   title: "Grid Portfolio",
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "",
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
+  projectId,
+  dataset,
 
   basePath: "/studio",
 
