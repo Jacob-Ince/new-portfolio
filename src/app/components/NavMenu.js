@@ -14,10 +14,59 @@ export default function NavMenu({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuClosing, setIsMenuClosing] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const [shouldAnimateNavbar, setShouldAnimateNavbar] = useState(false);
   const pathname = usePathname();
   const closeTimeoutRef = useRef(null);
+  const navAnimationTimeoutRef = useRef(null);
   const logoRef = useRef(null);
   const navLinkRefs = useRef([]);
+
+  useEffect(() => {
+    const NAVBAR_ANIMATION_DELAY_MS = 220;
+
+    const startNavbarAnimation = () => {
+      setShouldAnimateNavbar(false);
+      if (navAnimationTimeoutRef.current) {
+        window.clearTimeout(navAnimationTimeoutRef.current);
+        navAnimationTimeoutRef.current = null;
+      }
+
+      navAnimationTimeoutRef.current = window.setTimeout(() => {
+        setShouldAnimateNavbar(true);
+        navAnimationTimeoutRef.current = null;
+      }, NAVBAR_ANIMATION_DELAY_MS);
+    };
+
+    if (document.documentElement.dataset.pageTransition === "active") {
+      const handleTransitionIdle = () => {
+        startNavbarAnimation();
+      };
+
+      window.addEventListener("page-transition-idle", handleTransitionIdle, {
+        once: true,
+      });
+
+      return () => {
+        window.removeEventListener(
+          "page-transition-idle",
+          handleTransitionIdle,
+        );
+        if (navAnimationTimeoutRef.current) {
+          window.clearTimeout(navAnimationTimeoutRef.current);
+          navAnimationTimeoutRef.current = null;
+        }
+      };
+    }
+
+    startNavbarAnimation();
+
+    return () => {
+      if (navAnimationTimeoutRef.current) {
+        window.clearTimeout(navAnimationTimeoutRef.current);
+        navAnimationTimeoutRef.current = null;
+      }
+    };
+  }, [pathname]);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -42,6 +91,10 @@ export default function NavMenu({
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
         closeTimeoutRef.current = null;
+      }
+      if (navAnimationTimeoutRef.current) {
+        clearTimeout(navAnimationTimeoutRef.current);
+        navAnimationTimeoutRef.current = null;
       }
     };
   }, [isMenuOpen]);
@@ -140,7 +193,11 @@ export default function NavMenu({
 
   return (
     <div className={styles.page}>
-      <nav className={styles.navbar}>
+      <nav
+        className={`${styles.navbar} ${
+          shouldAnimateNavbar ? styles.navbarAnimateIn : ""
+        }`}
+      >
         <button
           className={`${styles.menuButton} ${isMenuOpen ? styles.active : ""}`}
           onClick={toggleMenu}
@@ -179,18 +236,6 @@ export default function NavMenu({
             onClick={() => setIsMenuOpen(false)}
           >
             <span className={styles.originalText}>information</span>
-          </Link>
-          <Link
-            href="/contact"
-            className={`${styles.navbarLink} ${styles.linkContact} ${
-              pathname === "/contact" ? styles.active : ""
-            }`}
-            ref={(element) => {
-              navLinkRefs.current[2] = element;
-            }}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            <span className={styles.originalText}>contact</span>
           </Link>
         </div>
         <div className={styles.navbarControls}>
@@ -241,28 +286,51 @@ export default function NavMenu({
             pathname === "/about" ? styles.active : ""
           }`}
           ref={(element) => {
-            navLinkRefs.current[4] = element;
+            navLinkRefs.current[3] = element;
           }}
           onClick={toggleMenu}
         >
           <span className={styles.originalText}>information</span>
           <span className={styles.mobileMenuNumber}>// 2</span>
         </Link>
-        <Link
-          href="/contact"
-          className={`${styles.navbarLink} ${styles.linkContact} ${
-            pathname === "/contact" ? styles.active : ""
-          }`}
-          ref={(element) => {
-            navLinkRefs.current[5] = element;
-          }}
-          onClick={toggleMenu}
-        >
-          <span className={styles.originalText}>contact</span>
-          <span className={styles.mobileMenuNumber}>// 3</span>
-        </Link>
       </div>
       {children}
+      <footer className={styles.footer}>
+        <div className={styles.footerLeft}>
+          <p className={styles.footerTitle}>
+            {" "}
+            <b> get in touch</b>
+          </p>
+          <p className={styles.footerTitle}>hello@jacobince.com</p>
+          <p className={styles.footerTitle}>london, uk</p>
+        </div>
+        <div className={styles.footerLinks}>
+          <a
+            href="https://www.are.na/jacob-ince/channels"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.footerLink}
+          >
+            are.na
+          </a>
+          <a
+            href="https://linkedin.com/in/jacobince"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.footerLink}
+          >
+            linkedin
+          </a>
+          <a
+            href="https://www.instagram.com/aka_goblin/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.footerLink}
+          >
+            instagram
+          </a>
+        </div>
+      </footer>
     </div>
   );
 }

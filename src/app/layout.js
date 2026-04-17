@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import PageTransition from "./components/PageTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 const ubuntu = Inter({
@@ -17,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${inter.className} ${ubuntu.variable}`}>
-        {children}
+        <PageTransition>{children}</PageTransition>
       </body>
     </html>
   );

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import styles from "./page.module.css";
 import NavMenu from "../components/NavMenu";
-import PageTransition from "../components/PageTransition";
 import Marquee from "../components/Marquee";
 import emailjs from "@emailjs/browser";
 
@@ -41,7 +40,7 @@ export default function ContactPage() {
           message: formData.message,
           to_name: "Jacob Ince",
         },
-        "YOUR_PUBLIC_KEY" // Replace with your EmailJS public key
+        "YOUR_PUBLIC_KEY", // Replace with your EmailJS public key
       );
 
       setStatus({ submitting: false, submitted: true, error: null });
@@ -57,19 +56,18 @@ export default function ContactPage() {
 
   return (
     <NavMenu>
-      <PageTransition>
-        <main className={styles.contactMain}>
-          <div className={styles.contactContainer}>
-            <div className={styles.contactContent}>
-              <div className={styles.textContainer}>
-                <div className={styles.textContent}>
-                  <h1 className={styles.contactTitle}>Contact</h1>
-                  <p>
-                    I&apos;m always open to discussing new projects, creative
-                    ideas or opportunities to be part of your visions.
-                  </p>
-                </div>
-                {/* <div className={styles.textContent}>
+      <main className={styles.contactMain}>
+        <div className={styles.contactContainer}>
+          <div className={styles.contactContent}>
+            <div className={styles.textContainer}>
+              <div className={styles.textContent}>
+                <h1 className={styles.contactTitle}>Contact</h1>
+                <p>
+                  I&apos;m always open to discussing new projects, creative
+                  ideas or opportunities to be part of your visions.
+                </p>
+              </div>
+              {/* <div className={styles.textContent}>
                   <h1 className={styles.contactTitle}>Email</h1>
                   <a
                     href="mailto:hello@jacobince.com"
@@ -78,109 +76,107 @@ export default function ContactPage() {
                     hello@jacobince.com
                   </a>
                 </div> */}
-                <div className={styles.textContent}>
-                  <h1 className={styles.contactTitle}>Social</h1>
-                  <ul>
-                    <li>
-                      <a
-                        href="https://www.are.na/jacob-ince/channels"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Are.na
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://linkedin.com/in/jacobince"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        LinkedIn
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://www.instagram.com/aka_goblin/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Instagram
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className={styles.formContainer}>
-                <h1 className={styles.contactTitle}>Get in Touch</h1>
-                <form onSubmit={handleSubmit} className={styles.contactForm}>
-                  <div className={styles.formGroup}>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="Name"
-                      required
-                      className={styles.formInput}
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      placeholder="Email"
-                      required
-                      className={styles.formInput}
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Message"
-                      required
-                      className={styles.formTextarea}
-                      rows="6"
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    disabled={status.submitting}
-                    className={styles.submitButton}
-                  >
-                    {status.submitting ? "Sending..." : "Send Message"}
-                  </button>
-                  {status.submitted && (
-                    <p className={styles.successMessage}>
-                      Thank you for your message! I&apos;ll get back to you
-                      soon.
-                    </p>
-                  )}
-                  {status.error && (
-                    <p className={styles.errorMessage}>{status.error}</p>
-                  )}
-                </form>
+              <div className={styles.textContent}>
+                <h1 className={styles.contactTitle}>Social</h1>
+                <ul>
+                  <li>
+                    <a
+                      href="https://www.are.na/jacob-ince/channels"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Are.na
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://linkedin.com/in/jacobince"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      LinkedIn
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.instagram.com/aka_goblin/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Instagram
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
+            <div className={styles.formContainer}>
+              <h1 className={styles.contactTitle}>Get in Touch</h1>
+              <form onSubmit={handleSubmit} className={styles.contactForm}>
+                <div className={styles.formGroup}>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="Name"
+                    required
+                    className={styles.formInput}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="Email"
+                    required
+                    className={styles.formInput}
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="Message"
+                    required
+                    className={styles.formTextarea}
+                    rows="6"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={status.submitting}
+                  className={styles.submitButton}
+                >
+                  {status.submitting ? "Sending..." : "Send Message"}
+                </button>
+                {status.submitted && (
+                  <p className={styles.successMessage}>
+                    Thank you for your message! I&apos;ll get back to you soon.
+                  </p>
+                )}
+                {status.error && (
+                  <p className={styles.errorMessage}>{status.error}</p>
+                )}
+              </form>
+            </div>
           </div>
-          <div className={styles.marqueeWrapper}>
-            <Marquee speed={30}>
-              <div className={styles.marqueeItem}>Get in Touch</div>
-              <div className={styles.marqueeItem}>•</div>
-              <div className={styles.marqueeItem}>Let&apos;s Connect</div>
-              <div className={styles.marqueeItem}>•</div>
-              <div className={styles.marqueeItem}>Start a Conversation</div>
-              <div className={styles.marqueeItem}>•</div>
-              <div className={styles.marqueeItem}>Work Together</div>
-              <div className={styles.marqueeItem}>•</div>
-            </Marquee>
-          </div>
-        </main>
-      </PageTransition>
+        </div>
+        <div className={styles.marqueeWrapper}>
+          <Marquee speed={30}>
+            <div className={styles.marqueeItem}>Get in Touch</div>
+            <div className={styles.marqueeItem}>•</div>
+            <div className={styles.marqueeItem}>Let&apos;s Connect</div>
+            <div className={styles.marqueeItem}>•</div>
+            <div className={styles.marqueeItem}>Start a Conversation</div>
+            <div className={styles.marqueeItem}>•</div>
+            <div className={styles.marqueeItem}>Work Together</div>
+            <div className={styles.marqueeItem}>•</div>
+          </Marquee>
+        </div>
+      </main>
     </NavMenu>
   );
 }

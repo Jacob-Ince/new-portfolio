@@ -10,12 +10,12 @@
   },
   {
     "id": 2,
-    "type": "image",
-    "src": "/images/portrait-layers-v2.png",
-    "name": "portrait-layers-v2.png",
-    "alt": "portrait-layers-v2.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/videos/715-rock%20(1).mp4",
+    "name": "715-rock (1).mp4",
+    "alt": "715-rock (1).mp4",
+    "width": 1280,
+    "height": 720
   },
   {
     "id": 3,
@@ -70,15 +70,6 @@
     "alt": "XN-materials.png",
     "width": 800,
     "height": 600
-  },
-  {
-    "id": 9,
-    "type": "video",
-    "src": "/videos/715-rock%20(1).mp4",
-    "name": "715-rock (1).mp4",
-    "alt": "715-rock (1).mp4",
-    "width": 1280,
-    "height": 720
   },
   {
     "id": 10,
@@ -266,15 +257,6 @@
     "src": "/videos/mood=bored.MP4",
     "name": "mood=bored.MP4",
     "alt": "mood=bored.MP4",
-    "width": 1280,
-    "height": 720
-  },
-  {
-    "id": 33,
-    "type": "video",
-    "src": "/videos/net-mesh-compressed.mp4",
-    "name": "net-mesh-compressed.mp4",
-    "alt": "net-mesh-compressed.mp4",
     "width": 1280,
     "height": 720
   },

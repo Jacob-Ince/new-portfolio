@@ -31,6 +31,75 @@
   width: 440px;
   position: relative;
   margin-top: 2rem;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: mediaFadeInUp 550ms ease-out forwards;
+}
+
+@keyframes mediaFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes textFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes descriptionLineIn {
+  from {
+    opacity: 0;
+    transform: translateY(115%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mediaWrapper {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .textContent > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .descriptionLine {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .mobileSequenceDisplayName,
+  .mobileSequenceListMeta,
+  .mobileSequenceDescription,
+  .mobileSequenceMedia,
+  .mobileSequenceListTypeItem {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
 .projectMedia {
@@ -57,14 +126,46 @@
   color: black;
 }
 
+.textContent > * {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: textFadeInUp 550ms ease-out forwards;
+}
+
+.textContent > *:nth-child(1) {
+  animation-delay: 80ms;
+}
+
+.textContent > *:nth-child(2) {
+  animation-delay: 180ms;
+}
+
+.textContent > *:nth-child(3) {
+  animation-delay: 280ms;
+}
+
+.textContent > .desktopOnlyDescription {
+  opacity: 1;
+  transform: none;
+  animation: none;
+}
+
+.mobileSequenceDisplayName,
+.mobileSequenceListMeta,
+.mobileSequenceDescription,
+.mobileSequenceMedia,
+.mobileSequenceListTypeItem {
+  --mobile-enter-delay: 0ms;
+}
+
 .listMetaExtras {
   display: flex;
   align-items: center;
   gap: 8px;
 
-  @media (max-width: 768px) {
+  /* @media (max-width: 768px) {
     flex-direction: row-reverse;
-  }
+  } */
 }
 
 .listTypeList {
@@ -138,8 +239,47 @@
   color: black;
 }
 
+.descriptionLineMask {
+  display: block;
+  overflow: hidden;
+}
+
+.descriptionLine {
+  display: block;
+  opacity: 0;
+  transform: translateY(115%);
+  animation: descriptionLineIn 500ms ease-out forwards;
+  animation-delay: calc(
+    var(--description-line-delay-offset, 0ms) + 160ms + (var(--line-index, 0) * 90ms)
+  );
+}
+
+.descriptionHasOverlay {
+  position: relative;
+  color: transparent;
+}
+
+.descriptionOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: black;
+}
+
 .desktopOnlyDescription {
   display: block;
+  position: relative;
+}
+
+.descriptionMeasure {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.descriptionMeasureWord {
+  display: inline;
 }
 
 .mobileOnlyDescription {
@@ -160,12 +300,15 @@
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 
   .textContent {
     flex-direction: column;
-    gap: 0rem;
-    margin: 1rem 0 2rem 0;
+    gap: 0.5rem;
+    margin: 1rem 0;
   }
 
   .desktopOnlyDescription {
@@ -174,7 +317,30 @@
 
   .mobileOnlyDescription {
     display: block;
-    margin: 2rem auto 2rem;
+    margin: 0rem 0 1rem;
     max-width: 100%;
+  }
+
+  .textContent > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .mobileSequenceDisplayName,
+  .mobileSequenceListMeta,
+  .mobileSequenceDescription,
+  .mobileSequenceMedia {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: textFadeInUp 500ms ease-out forwards;
+    animation-delay: var(--mobile-enter-delay, 0ms);
+  }
+
+  .mobileSequenceListTypeItem {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: textFadeInUp 420ms ease-out forwards;
+    animation-delay: var(--mobile-list-item-delay, var(--mobile-enter-delay, 0ms));
   }
 }

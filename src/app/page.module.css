@@ -56,7 +56,7 @@
 }
 
 .mobileViewButtonActive {
-  color: rgb(255, 148, 255);
+  color: rgba(13, 255, 0, 0.9);
 }
 
 .mobileViewDivider {
@@ -312,12 +312,55 @@
   height: auto;
   object-fit: cover;
   display: block;
-  transition: filter 0.2s ease;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    filter 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.gridItem:hover img,
-.gridItem:hover video {
-  filter: invert(1);
+.gridItem:hover .mediaWrapper img,
+.gridItem:hover .mediaWrapper video {
+  filter: blur(6px) !important;
+  transform: scale(1.08) !important;
+}
+
+.gridItemInverted:hover .mediaWrapper img,
+.gridItemInverted:hover .mediaWrapper video {
+  filter: invert(1) blur(6px) !important;
+}
+
+.viewCursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate3d(-9999px, -9999px, 0);
+  padding: 4px 6px;
+  /* border-radius: 999px; */
+  background: rgba(13, 255, 0, 0.9);
+  color: #000000;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.18s ease-out;
+  z-index: 9999;
+}
+
+.viewCursorVisible {
+  opacity: 1;
+}
+
+.gridCursorArea {
+  width: 100%;
 }
 
 .gridItemWrapper.wide {
@@ -405,6 +448,11 @@
 
 /* Hide mediaText by default, reveal on hover from top down */
 @media (hover: hover) and (pointer: fine) {
+  .gridCursorArea:hover,
+  .gridCursorArea:hover * {
+    cursor: none !important;
+  }
+
   .mediaMeta {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 0.3s ease-out;
@@ -412,6 +460,12 @@
 
   .gridItem:hover .mediaMeta {
     clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .viewCursor {
+    display: none;
   }
 }
 

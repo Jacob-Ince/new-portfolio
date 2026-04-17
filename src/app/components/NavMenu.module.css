@@ -39,6 +39,25 @@
     Helvetica,
     Arial,
     sans-serif;
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.navbarAnimateIn {
+  animation: navbarDropIn 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform, opacity;
+  animation-fill-mode: forwards;
+}
+
+@keyframes navbarDropIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Match grid responsive breakpoints */
@@ -118,7 +137,7 @@
 
 @media (min-width: 1200px) {
   .navbarLinks {
-    grid-template-columns: repeat(16, 1fr);
+    grid-template-columns: repeat(14, 1fr);
     gap: 48px;
   }
 }
@@ -157,10 +176,6 @@
   grid-column: 3;
 }
 
-.linkContact {
-  grid-column: 4;
-}
-
 /* Spread them out more on larger screens */
 @media (min-width: 600px) {
   .linkLogo {
@@ -173,10 +188,6 @@
 
   .linkInfo {
     grid-column: 5;
-  }
-
-  .linkContact {
-    grid-column: 7;
   }
 }
 
@@ -192,10 +203,6 @@
   .linkInfo {
     grid-column: 7;
   }
-
-  .linkContact {
-    grid-column: 10;
-  }
 }
 
 @media (min-width: 1200px) {
@@ -209,10 +216,6 @@
 
   .linkInfo {
     grid-column: 9;
-  }
-
-  .linkContact {
-    grid-column: 13;
   }
 }
 
@@ -408,8 +411,7 @@
   }
 
   .navbarLinks .linkWork,
-  .navbarLinks .linkInfo,
-  .navbarLinks .linkContact {
+  .navbarLinks .linkInfo {
     display: none;
   }
 
@@ -441,8 +443,7 @@
   }
 
   .mobileMenu .linkWork,
-  .mobileMenu .linkInfo,
-  .mobileMenu .linkContact {
+  .mobileMenu .linkInfo {
     display: block;
   }
 
@@ -509,5 +510,67 @@
     font-size: 14px;
     line-height: 1;
     white-space: nowrap;
+  }
+}
+
+.footer {
+  margin-top: 2rem;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding: 1rem 0.5rem 1.25rem;
+  border-top: 1px solid black;
+  display: flex;
+  align-items: baseline;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.footerTitle {
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: -0.3px;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 0.25rem;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.footerLink {
+  font-size: 14px;
+  color: black;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.footerLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 600px) {
+  .footer {
+    gap: 0.75rem;
+    padding: 0.875rem 1rem 1rem;
+  }
+
+  .footerTitle,
+  .footerLink {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .navbarAnimateIn {
+    animation: none;
   }
 }

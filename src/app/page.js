@@ -5,7 +5,6 @@ import styles from "./page.module.css";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useEffect, useState, useRef, useCallback } from "react";
 import NavMenu from "./components/NavMenu";
-import PageTransition from "./components/PageTransition";
 import Link from "next/link";
 import { getAllMediaAssets, transformSanityMedia } from "../lib/sanity";
 
@@ -35,8 +34,13 @@ export default function Home() {
   const [photosData, setPhotosData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
+  const [isViewCursorVisible, setIsViewCursorVisible] = useState(false);
   const videoRefs = useRef({});
   const observerRef = useRef(null);
+  const viewCursorRef = useRef(null);
+  const cursorTargetPosRef = useRef({ x: 0, y: 0 });
+  const cursorCurrentPosRef = useRef({ x: 0, y: 0 });
+  const cursorRafRef = useRef(null);
 
   // Fetch media assets from Sanity
   useEffect(() => {
@@ -207,11 +211,6 @@ export default function Home() {
     }
   }, []);
 
-  // Don't render anything until after hydration and data is loaded
-  if (!mounted || loading) {
-    return null;
-  }
-
   const handleLoad = (id) => {
     setLoadedItems((prev) => new Set([...prev, id]));
   };
@@ -227,6 +226,89 @@ export default function Home() {
     return undefined;
   };
 
+  const applyViewCursorPosition = useCallback((x, y) => {
+    if (!viewCursorRef.current) return;
+    viewCursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+  }, []);
+
+  const animateViewCursor = useCallback(() => {
+    const smoothing = 0.15;
+    const target = cursorTargetPosRef.current;
+    const current = cursorCurrentPosRef.current;
+
+    current.x += (target.x - current.x) * smoothing;
+    current.y += (target.y - current.y) * smoothing;
+
+    applyViewCursorPosition(current.x, current.y);
+
+    const dx = Math.abs(target.x - current.x);
+    const dy = Math.abs(target.y - current.y);
+
+    if (dx < 0.1 && dy < 0.1) {
+      cursorRafRef.current = null;
+      return;
+    }
+
+    cursorRafRef.current = requestAnimationFrame(animateViewCursor);
+  }, [applyViewCursorPosition]);
+
+  const updateViewCursorPosition = useCallback(
+    (event) => {
+      cursorTargetPosRef.current = { x: event.clientX, y: event.clientY };
+
+      if (!cursorRafRef.current) {
+        cursorRafRef.current = requestAnimationFrame(animateViewCursor);
+      }
+    },
+    [animateViewCursor],
+  );
+
+  const handleGridCursorAreaMouseEnter = useCallback(
+    (event) => {
+      if (isMobile || viewMode !== "grid") return;
+      const nextPosition = { x: event.clientX, y: event.clientY };
+      cursorTargetPosRef.current = nextPosition;
+      cursorCurrentPosRef.current = nextPosition;
+      applyViewCursorPosition(nextPosition.x, nextPosition.y);
+      setIsViewCursorVisible(true);
+    },
+    [applyViewCursorPosition, isMobile, viewMode],
+  );
+
+  const handleGridCursorAreaMouseMove = useCallback(
+    (event) => {
+      if (isMobile || viewMode !== "grid") return;
+      updateViewCursorPosition(event);
+    },
+    [isMobile, updateViewCursorPosition, viewMode],
+  );
+
+  const handleGridCursorAreaMouseLeave = useCallback(() => {
+    setIsViewCursorVisible(false);
+    if (cursorRafRef.current) {
+      cancelAnimationFrame(cursorRafRef.current);
+      cursorRafRef.current = null;
+    }
+  }, []);
+
+  useEffect(() => {
+    if (viewMode !== "grid") {
+      setIsViewCursorVisible(false);
+      if (cursorRafRef.current) {
+        cancelAnimationFrame(cursorRafRef.current);
+        cursorRafRef.current = null;
+      }
+    }
+  }, [viewMode]);
+
+  useEffect(() => {
+    return () => {
+      if (cursorRafRef.current) {
+        cancelAnimationFrame(cursorRafRef.current);
+      }
+    };
+  }, []);
+
   const renderMedia = (photo) => {
     if (!photo?.src) return null;
     const isLoaded = loadedItems.has(photo.id);
@@ -240,11 +322,12 @@ export default function Home() {
     return (
       <Link href={`/project/${encodeURIComponent(photo.name)}`} key={photo.id}>
         <div
-          className={styles.gridItem}
+          className={`${styles.gridItem} ${
+            photo.invertColor ? styles.gridItemInverted : ""
+          }`}
           style={{
             opacity: isLoaded ? 1 : 0,
             transition: "opacity 0.3s ease-in-out",
-            cursor: "pointer",
           }}
         >
           {photo.type === "video" ? (
@@ -425,40 +508,50 @@ export default function Home() {
       return orderA.localeCompare(orderB);
     });
 
+  // Don't render anything until after hydration and data is loaded
+  if (!mounted || loading) {
+    return null;
+  }
+
   return (
     <NavMenu viewMode={viewMode} onViewModeChange={setViewMode}>
-      <PageTransition>
-        <main className={styles.main}>
-          <div
-            className={styles.mobileViewToggle}
-            role="group"
-            aria-label="View mode"
+      <main className={styles.main}>
+        <div
+          className={styles.mobileViewToggle}
+          role="group"
+          aria-label="View mode"
+        >
+          <button
+            type="button"
+            className={`${styles.mobileViewButton} ${
+              viewMode === "grid" ? styles.mobileViewButtonActive : ""
+            }`}
+            aria-pressed={viewMode === "grid"}
+            onClick={() => setViewMode("grid")}
           >
-            <button
-              type="button"
-              className={`${styles.mobileViewButton} ${
-                viewMode === "grid" ? styles.mobileViewButtonActive : ""
-              }`}
-              aria-pressed={viewMode === "grid"}
-              onClick={() => setViewMode("grid")}
-            >
-              grid
-            </button>
-            <span className={styles.mobileViewDivider} aria-hidden="true">
-              /
-            </span>
-            <button
-              type="button"
-              className={`${styles.mobileViewButton} ${
-                viewMode === "list" ? styles.mobileViewButtonActive : ""
-              }`}
-              aria-pressed={viewMode === "list"}
-              onClick={() => setViewMode("list")}
-            >
-              list
-            </button>
-          </div>
-          {viewMode === "grid" ? (
+            grid
+          </button>
+          <span className={styles.mobileViewDivider} aria-hidden="true">
+            /
+          </span>
+          <button
+            type="button"
+            className={`${styles.mobileViewButton} ${
+              viewMode === "list" ? styles.mobileViewButtonActive : ""
+            }`}
+            aria-pressed={viewMode === "list"}
+            onClick={() => setViewMode("list")}
+          >
+            list
+          </button>
+        </div>
+        {viewMode === "grid" ? (
+          <div
+            className={styles.gridCursorArea}
+            onMouseEnter={handleGridCursorAreaMouseEnter}
+            onMouseMove={handleGridCursorAreaMouseMove}
+            onMouseLeave={handleGridCursorAreaMouseLeave}
+          >
             <ResponsiveMasonry
               columnsCountBreakPoints={{
                 0: 2,
@@ -471,17 +564,24 @@ export default function Home() {
                 {sortedPhotos.map((photo) => renderMedia(photo))}
               </Masonry>
             </ResponsiveMasonry>
-          ) : (
-            <div className={styles.listContainer}>
-              <ul className={styles.listView}>
-                {sortedPhotos.map((photo) => renderListItem(photo))}
-              </ul>
-            </div>
-          )}
-        </main>
-
-        <footer className={styles.footer}></footer>
-      </PageTransition>
+          </div>
+        ) : (
+          <div className={styles.listContainer}>
+            <ul className={styles.listView}>
+              {sortedPhotos.map((photo) => renderListItem(photo))}
+            </ul>
+          </div>
+        )}
+      </main>
+      <div
+        ref={viewCursorRef}
+        className={`${styles.viewCursor} ${
+          isViewCursorVisible ? styles.viewCursorVisible : ""
+        }`}
+        aria-hidden="true"
+      >
+        view
+      </div>
     </NavMenu>
   );
 }
