@@ -2,9 +2,19 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./NavMenu.module.css";
 import { createLogoGlitch, createHoverScramble } from "./animations";
+
+const MOBILE_MENU_WORDMARK = "jac.ob";
+const MOBILE_MENU_SCATTER_POINTS = [
+  { left: "14%", top: "24%" },
+  { left: "83%", top: "20%" },
+  { left: "20%", top: "76%" },
+  { left: "79%", top: "74%" },
+  { left: "34%", top: "16%" },
+  { left: "63%", top: "82%" },
+];
 
 export default function NavMenu({
   children,
@@ -16,6 +26,10 @@ export default function NavMenu({
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [shouldAnimateNavbar, setShouldAnimateNavbar] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const isHomePage = pathname === "/";
+  const isGridViewActive = isHomePage && viewMode === "grid";
+  const isListViewActive = isHomePage && viewMode === "list";
   const closeTimeoutRef = useRef(null);
   const navAnimationTimeoutRef = useRef(null);
   const logoRef = useRef(null);
@@ -191,6 +205,32 @@ export default function NavMenu({
     }
   };
 
+  const handleViewModeButtonClick = (nextViewMode) => {
+    if (isHomePage) {
+      onViewModeChange?.(nextViewMode);
+      return;
+    }
+
+    router.push(`/?view=${nextViewMode}`);
+  };
+
+  const handleDesktopLabClick = (event) => {
+    setIsMenuOpen(false);
+
+    if (!isHomePage) return;
+
+    event.preventDefault();
+    onViewModeChange?.("grid");
+  };
+
+  const handleMobileLabClick = (event) => {
+    if (isHomePage) {
+      event.preventDefault();
+      onViewModeChange?.("grid");
+    }
+    toggleMenu();
+  };
+
   return (
     <div className={styles.page}>
       <nav
@@ -215,15 +255,28 @@ export default function NavMenu({
           </Link>
           <Link
             href="/"
-            className={`${styles.navbarLink} ${styles.linkWork} ${
+            data-no-transition={isHomePage ? "true" : undefined}
+            className={`${styles.navbarLink} ${styles.linkLab} ${
               pathname === "/" ? styles.active : ""
             }`}
             ref={(element) => {
               navLinkRefs.current[0] = element;
             }}
-            onClick={() => setIsMenuOpen(false)}
+            onClick={handleDesktopLabClick}
           >
             <span className={styles.originalText}>lab</span>
+          </Link>
+          <Link
+            href="/work"
+            className={`${styles.navbarLink} ${styles.linkWork} ${
+              pathname === "/work" ? styles.active : ""
+            }`}
+            ref={(element) => {
+              navLinkRefs.current[1] = element;
+            }}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <span className={styles.originalText}>work</span>
           </Link>
           <Link
             href="/about"
@@ -231,31 +284,31 @@ export default function NavMenu({
               pathname === "/about" ? styles.active : ""
             }`}
             ref={(element) => {
-              navLinkRefs.current[1] = element;
+              navLinkRefs.current[2] = element;
             }}
             onClick={() => setIsMenuOpen(false)}
           >
-            <span className={styles.originalText}>information</span>
+            <span className={styles.originalText}>about</span>
           </Link>
         </div>
         <div className={styles.navbarControls}>
           <button
             type="button"
             className={`${styles.iconButton} ${styles.squareButton} ${
-              viewMode === "grid" ? styles.iconButtonActive : ""
+              isGridViewActive ? styles.iconButtonActive : ""
             }`}
             aria-label="Square icon"
-            aria-pressed={viewMode === "grid"}
-            onClick={() => onViewModeChange?.("grid")}
+            aria-pressed={isGridViewActive}
+            onClick={() => handleViewModeButtonClick("grid")}
           />
           <button
             type="button"
             className={`${styles.iconButton} ${styles.listButton} ${
-              viewMode === "list" ? styles.iconButtonActive : ""
+              isListViewActive ? styles.iconButtonActive : ""
             }`}
             aria-label="List view"
-            aria-pressed={viewMode === "list"}
-            onClick={() => onViewModeChange?.("list")}
+            aria-pressed={isListViewActive}
+            onClick={() => handleViewModeButtonClick("list")}
           />
           <div className={styles.scrollPercentage}>
             <span className={styles.originalText}>{scrollPercentage}%</span>
@@ -269,16 +322,30 @@ export default function NavMenu({
       >
         <Link
           href="/"
-          className={`${styles.navbarLink} ${styles.linkWork} ${
+          data-no-transition={isHomePage ? "true" : undefined}
+          className={`${styles.navbarLink} ${styles.linkLab} ${
             pathname === "/" ? styles.active : ""
           }`}
           ref={(element) => {
             navLinkRefs.current[3] = element;
           }}
-          onClick={toggleMenu}
+          onClick={handleMobileLabClick}
         >
           <span className={styles.originalText}>lab</span>
           <span className={styles.mobileMenuNumber}>// 1</span>
+        </Link>
+        <Link
+          href="/work"
+          className={`${styles.navbarLink} ${styles.linkWork} ${
+            pathname === "/work" ? styles.active : ""
+          }`}
+          ref={(element) => {
+            navLinkRefs.current[4] = element;
+          }}
+          onClick={toggleMenu}
+        >
+          <span className={styles.originalText}>work</span>
+          <span className={styles.mobileMenuNumber}>// 2</span>
         </Link>
         <Link
           href="/about"
@@ -286,13 +353,69 @@ export default function NavMenu({
             pathname === "/about" ? styles.active : ""
           }`}
           ref={(element) => {
-            navLinkRefs.current[3] = element;
+            navLinkRefs.current[5] = element;
           }}
           onClick={toggleMenu}
         >
-          <span className={styles.originalText}>information</span>
-          <span className={styles.mobileMenuNumber}>// 2</span>
+          <span className={styles.originalText}>about</span>
+          <span className={styles.mobileMenuNumber}>// 3</span>
         </Link>
+        <div className={styles.mobileMenuSplash} aria-hidden="true">
+          {MOBILE_MENU_WORDMARK.split("").map((char, index) => {
+            const scatterPoint =
+              MOBILE_MENU_SCATTER_POINTS[index] ??
+              MOBILE_MENU_SCATTER_POINTS[0];
+
+            return (
+              <span
+                key={`mobile-splash-char-${index}`}
+                className={styles.mobileMenuSplashChar}
+                style={{
+                  "--char-index": index,
+                  "--scatter-left": scatterPoint.left,
+                  "--scatter-top": scatterPoint.top,
+                }}
+              >
+                {char}
+              </span>
+            );
+          })}
+        </div>
+        <div className={styles.mobileMenuFooter}>
+          <div className={styles.mobileMenuFooterLeft}>
+            <p className={styles.footerTitle}>
+              <b> get in touch</b>
+            </p>
+            <p className={styles.footerTitle}>hello@jacobince.com</p>
+            <p className={styles.footerTitle}>london, uk</p>
+          </div>
+          <div className={styles.mobileMenuFooterLinks}>
+            <a
+              href="https://www.are.na/jacob-ince/channels"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              are.na
+            </a>
+            <a
+              href="https://linkedin.com/in/jacobince"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              linkedin
+            </a>
+            <a
+              href="https://www.instagram.com/aka_goblin/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              instagram
+            </a>
+          </div>
+        </div>
       </div>
       {children}
       <footer className={styles.footer}>

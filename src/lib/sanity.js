@@ -31,6 +31,21 @@ export async function getMediaAssetByName(name) {
   }
 }
 
+// Fetch all work cards
+export async function getAllWorkCards() {
+  try {
+    const response = await fetch("/api/work-cards", { cache: "no-store" });
+    if (!response.ok) {
+      throw new Error(`Work cards request failed: ${response.status}`);
+    }
+    const data = await response.json();
+    return data || [];
+  } catch (error) {
+    console.error("Error fetching work cards:", error);
+    return [];
+  }
+}
+
 // Transform Sanity media asset to match the old media-list.json format
 export function transformSanityMedia(mediaAsset) {
   if (!mediaAsset) return null;
@@ -69,15 +84,34 @@ export function transformSanityMedia(mediaAsset) {
     return normalized.toLowerCase() === "3d" ? "3D" : normalized;
   };
 
+  const parsedAssetWidth = Number(mediaAsset.assetWidth);
+  const parsedAssetHeight = Number(mediaAsset.assetHeight);
+  const parsedDocWidth = Number(mediaAsset.width);
+  const parsedDocHeight = Number(mediaAsset.height);
+  const width =
+    Number.isFinite(parsedAssetWidth) && parsedAssetWidth > 0
+      ? parsedAssetWidth
+      : Number.isFinite(parsedDocWidth) && parsedDocWidth > 0
+        ? parsedDocWidth
+        : 800;
+  const height =
+    Number.isFinite(parsedAssetHeight) && parsedAssetHeight > 0
+      ? parsedAssetHeight
+      : Number.isFinite(parsedDocHeight) && parsedDocHeight > 0
+        ? parsedDocHeight
+        : 600;
+
   return {
-    id: orderValue, // Keep orderRank as id for sorting purposes
+    // Use Sanity document id as the stable identity for React keys/state.
+    // orderRank can change and may not be globally unique in all states.
+    id: mediaAsset._id || orderValue,
     type: mediaAsset.type,
     src: fileUrl || "",
     name: mediaAsset.name,
     alt: mediaAsset.alt || mediaAsset.name,
     displayName: mediaAsset.displayName || "",
-    width: mediaAsset.width,
-    height: mediaAsset.height,
+    width,
+    height,
     invertColor: mediaAsset.invertColor === "yes",
     projectTypes: Array.isArray(mediaAsset.projectTypes)
       ? mediaAsset.projectTypes.map(normalizeProjectType)

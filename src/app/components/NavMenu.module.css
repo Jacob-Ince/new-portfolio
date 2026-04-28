@@ -19,16 +19,17 @@
 }
 
 .navbar {
-  width: 100vw;
+  width: 100%;
   left: 0;
   right: 0;
   /* max-width: 1400px; */
   padding: 2.5rem 0.5rem 0.5rem;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   border-bottom: 1px solid black;
   align-items: center;
+  box-sizing: border-box;
   background-color: white;
   backdrop-filter: blur(8px);
   position: fixed;
@@ -63,21 +64,21 @@
 /* Match grid responsive breakpoints */
 @media (min-width: 600px) {
   .navbar {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr);
     gap: 10px;
   }
 }
 
 @media (min-width: 900px) {
   .navbar {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr);
     gap: 12px;
   }
 }
 
 @media (min-width: 1200px) {
   .navbar {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: minmax(0, 1fr);
     gap: 14px;
   }
 }
@@ -108,6 +109,9 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
   align-items: center;
+  width: 100%;
+  min-width: 0;
+  justify-self: stretch;
   font-family:
     Helvetica Neue,
     Helvetica,
@@ -118,28 +122,6 @@
 
 .mobileMenu {
   display: none;
-}
-
-/* Match grid responsive breakpoints - spread links across more columns */
-@media (min-width: 600px) {
-  .navbarLinks {
-    grid-template-columns: repeat(8, 1fr);
-    gap: 24px;
-  }
-}
-
-@media (min-width: 900px) {
-  .navbarLinks {
-    grid-template-columns: repeat(12, 1fr);
-    gap: 36px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .navbarLinks {
-    grid-template-columns: repeat(14, 1fr);
-    gap: 48px;
-  }
 }
 
 .navbarLink {
@@ -168,60 +150,17 @@
   grid-column: 1;
 }
 
-.linkWork {
+.linkLab {
   grid-column: 2;
 }
 
-.linkInfo {
+.linkWork {
   grid-column: 3;
 }
 
-/* Spread them out more on larger screens */
-@media (min-width: 600px) {
-  .linkLogo {
-    grid-column: 1;
-  }
-
-  .linkWork {
-    grid-column: 3;
-  }
-
-  .linkInfo {
-    grid-column: 5;
-  }
+.linkInfo {
+  grid-column: 4;
 }
-
-@media (min-width: 900px) {
-  .linkLogo {
-    grid-column: 1;
-  }
-
-  .linkWork {
-    grid-column: 4;
-  }
-
-  .linkInfo {
-    grid-column: 7;
-  }
-}
-
-@media (min-width: 1200px) {
-  .linkLogo {
-    grid-column: 1;
-  }
-
-  .linkWork {
-    grid-column: 5;
-  }
-
-  .linkInfo {
-    grid-column: 9;
-  }
-}
-
-/* .navbarLink.active {
-  color: #ff89c6;
-} */
 
 .navbarLogo .originalText {
   display: inline-block;
@@ -279,6 +218,9 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  position: absolute;
+  right: 0.5rem;
+  top: 2.5rem;
 }
 
 .iconButton {
@@ -295,8 +237,12 @@
   transition: opacity 0.2s ease;
 }
 
+.iconButtonActive {
+  border-color: rgb(12, 244, 0);
+}
+
 .iconButtonActive.squareButton {
-  background: black;
+  background: rgb(12, 244, 0);
 }
 
 .iconButton:hover {
@@ -329,10 +275,11 @@
 }
 
 .iconButtonActive.listButton::before {
-  background: black;
+  background: rgb(11, 228, 0);
   box-shadow:
-    0 4px 0 0 black,
-    0 8px 0 0 black;
+    0 4px 0 0 rgb(11, 228, 0),
+    0 8px 0 0 rgb(11, 228, 0);
+  filter: drop-shadow(0 0 0.3px rgba(0, 0, 0, 0.45));
 }
 
 .scrollPercentage {
@@ -376,7 +323,7 @@
     right: 0;
     padding: 1rem;
     background-color: rgba(255, 255, 255, 0.98);
-    z-index: 200;
+    z-index: 300;
   }
 
   /* Add padding to the page to account for fixed navbar */
@@ -410,6 +357,7 @@
     grid-column: auto;
   }
 
+  .navbarLinks .linkLab,
   .navbarLinks .linkWork,
   .navbarLinks .linkInfo {
     display: none;
@@ -418,12 +366,11 @@
   .mobileMenu {
     display: flex;
     position: fixed;
-    top: 60px;
+    top: 0;
     right: 0;
     left: 0;
     width: 100vw;
-    height: auto;
-    max-height: calc(100vh - 60px);
+    height: 100dvh;
     background-color: #ffffff;
     backdrop-filter: blur(8px);
     flex-direction: column;
@@ -432,37 +379,38 @@
     z-index: 150;
     padding: 0;
     margin: 0;
-    overflow-y: hidden;
-    transform: translateY(-12px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 4.25rem 0 1rem;
+    transform: translateX(100%);
     opacity: 0;
     transition:
       transform 0.35s ease,
       opacity 0.35s ease;
     visibility: hidden;
     pointer-events: none;
+    z-index: 250;
   }
 
+  .mobileMenu .linkLab,
   .mobileMenu .linkWork,
   .mobileMenu .linkInfo {
     display: block;
   }
 
   .mobileMenuOpen {
-    transform: translateY(0);
+    transform: translateX(0);
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
   }
 
   .mobileMenuClosing {
-    transform: translateY(-12px);
+    transform: translateX(100%);
     opacity: 0;
     visibility: visible;
     pointer-events: auto;
   }
-
-  /* Remove the problematic global selector */
-  /* The body styles will be handled via JavaScript */
 
   .navbarLink {
     font-size: 18px;
@@ -475,18 +423,19 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.5rem;
+    padding: 0.75rem 1rem;
     width: 100%;
     opacity: 0.6;
-    transform: translateY(22px);
+    transform: translateX(24px);
     transition:
       opacity 0.2s ease,
       transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   .mobileMenuOpen .navbarLink {
+    font-size: 18px;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 
   .mobileMenuOpen .navbarLink:nth-child(1) {
@@ -502,14 +451,99 @@
   }
 
   .mobileMenu .navbarLink .originalText {
+    font-size: 18px;
     padding: 0;
     line-height: 1;
   }
 
   .mobileMenuNumber {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1;
     white-space: nowrap;
+  }
+
+  .mobileMenuFooter {
+    border-top: 1px solid black;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .mobileMenuFooterLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .mobileMenuFooterLinks {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .mobileMenuFooter .footerTitle,
+  .mobileMenuFooter .footerLink {
+    font-size: 18px;
+  }
+
+  .mobileMenuSplash {
+    position: relative;
+    flex: 1;
+    min-height: 140px;
+    margin: 0.75rem 1rem 0;
+    overflow: hidden;
+  }
+
+  .mobileMenuSplashChar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    font-size: clamp(28px, 10vw, 52px);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    font-family:
+      Helvetica Neue,
+      Helvetica,
+      Arial,
+      sans-serif;
+    opacity: 1;
+    animation: mobileMenuSplashLoop 2.6s cubic-bezier(0.7, 0, 0.3, 1) infinite;
+    animation-delay: 0ms;
+    animation-direction: alternate;
+    will-change: transform, opacity;
+  }
+
+  @keyframes mobileMenuSplashLoop {
+    0%,
+    26% {
+      opacity: 1;
+      left: calc(50% + (var(--char-index, 0) - 2.5) * 0.66em);
+      top: 50%;
+      transform: translate(-50%, -50%) scale(0.86);
+    }
+    62% {
+      opacity: 1;
+      left: var(--scatter-left, 50%);
+      top: var(--scatter-top, 50%);
+      transform: translate(-50%, -50%) scale(1.16);
+    }
+    82% {
+      opacity: 1;
+      left: var(--scatter-left, 50%);
+      top: var(--scatter-top, 50%);
+      transform: translate(-50%, -50%) scale(1.14);
+    }
+    100% {
+      opacity: 1;
+      left: var(--scatter-left, 50%);
+      top: var(--scatter-top, 50%);
+      transform: translate(-50%, -50%) scale(1.16);
+    }
   }
 }
 
@@ -517,7 +551,7 @@
   margin-top: 2rem;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding: 1rem 0.5rem 1.25rem;
+  padding: 1rem 0.5rem 2.5rem;
   border-top: 1px solid black;
   display: flex;
   align-items: baseline;
@@ -552,15 +586,31 @@
   text-underline-offset: 3px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .footer {
-    gap: 0.75rem;
-    padding: 0.875rem 1rem 1rem;
+    padding: 1rem 1rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+
+  .footerLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .footerLinks {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
   }
 
   .footerTitle,
   .footerLink {
-    font-size: 13px;
+    font-size: 18px;
   }
 }
 
@@ -572,5 +622,15 @@
 
   .navbarAnimateIn {
     animation: none;
+  }
+
+  .mobileMenuSplashChar {
+    animation: none;
+    opacity: 1;
+    transform: translate(
+        calc(-50% + (var(--char-index, 0) - 2.5) * 0.66em),
+        -50%
+      )
+      scale(1);
   }
 }

@@ -50,6 +50,11 @@ export default function AboutPage() {
                   <li>Middle name</li>
                   <li>Platform 13</li>
                   <li>UAL: Central Saint Martins</li>
+                  <li>Madri</li>
+                  <li>Jameson</li>
+                  <li>Clinique</li>
+                  <li>Aperol</li>
+                  <li>Glen Grant</li>
                 </ul>
               </div>
             </div>

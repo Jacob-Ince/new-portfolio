@@ -1,0 +1,49 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #fff;
+  color: #000;
+  pointer-events: none;
+  transform: translateY(0%);
+  overflow: hidden;
+}
+
+.targetWord {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+  color: transparent;
+  pointer-events: none;
+}
+
+.targetChar,
+.char {
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: clamp(30px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 1;
+  text-transform: lowercase;
+  letter-spacing: 0.06em;
+  font-variant-ligatures: none;
+}
+
+.charLayer {
+  position: absolute;
+  inset: 0;
+}
+
+.char {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition-property: left, top, opacity;
+  transition-timing-function:
+    cubic-bezier(0.7, 0, 0.3, 1), cubic-bezier(0.7, 0, 0.3, 1), ease;
+}

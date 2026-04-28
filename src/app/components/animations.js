@@ -73,12 +73,16 @@ export function createLogoGlitch(element, originalText, styles, options = {}) {
       return;
     }
 
-    // Store the original width of the parent element to prevent layout shifts
-    const originalElementWidth = element.offsetWidth;
+    // Store inline width styles so we can restore them after animation
+    const lockedWidth = Math.ceil(element.getBoundingClientRect().width);
+    const originalElementWidth = element.style.width;
     const originalElementMinWidth = element.style.minWidth;
+    const originalElementMaxWidth = element.style.maxWidth;
 
-    // Set a fixed width on the parent element to prevent layout shifts
-    element.style.minWidth = `${originalElementWidth}px`;
+    // Lock width exactly so random glyph widths cannot push neighboring links
+    element.style.width = `${lockedWidth}px`;
+    element.style.minWidth = `${lockedWidth}px`;
+    element.style.maxWidth = `${lockedWidth}px`;
 
     // Store current text in case it's been modified
     const currentText = textElement.textContent;
@@ -91,8 +95,10 @@ export function createLogoGlitch(element, originalText, styles, options = {}) {
       if (element.classList.contains(hoveringClass)) {
         clearInterval(glitchInterval);
         textElement.textContent = originalText;
-        // Restore original min-width
+        // Restore original width styles
+        element.style.width = originalElementWidth || "";
         element.style.minWidth = originalElementMinWidth || "";
+        element.style.maxWidth = originalElementMaxWidth || "";
         isGlitching = false;
         return;
       }
@@ -121,8 +127,10 @@ export function createLogoGlitch(element, originalText, styles, options = {}) {
           if (!element.classList.contains(hoveringClass)) {
             textElement.textContent = originalText;
           }
-          // Restore original min-width
+          // Restore original width styles
+          element.style.width = originalElementWidth || "";
           element.style.minWidth = originalElementMinWidth || "";
+          element.style.maxWidth = originalElementMaxWidth || "";
           isGlitching = false;
         }, 50);
       }
@@ -174,7 +182,9 @@ export function createHoverScramble(element, originalText, options = {}) {
 
   let intervalId = null;
   let animationProgress = 0;
+  let originalWidth = "";
   let originalMinWidth = "";
+  let originalMaxWidth = "";
 
   const getRandomChar = () =>
     SPECIAL_CHARS[Math.floor(Math.random() * SPECIAL_CHARS.length)];
@@ -195,7 +205,9 @@ export function createHoverScramble(element, originalText, options = {}) {
     clearAnimation();
     textElement.textContent = cleanText;
     if (lockWidth) {
+      element.style.width = originalWidth || "";
       element.style.minWidth = originalMinWidth || "";
+      element.style.maxWidth = originalMaxWidth || "";
     }
   };
 
@@ -204,8 +216,13 @@ export function createHoverScramble(element, originalText, options = {}) {
     animationProgress = 0;
 
     if (lockWidth) {
+      const lockedWidth = Math.ceil(element.getBoundingClientRect().width);
+      originalWidth = element.style.width;
       originalMinWidth = element.style.minWidth;
-      element.style.minWidth = `${element.offsetWidth}px`;
+      originalMaxWidth = element.style.maxWidth;
+      element.style.width = `${lockedWidth}px`;
+      element.style.minWidth = `${lockedWidth}px`;
+      element.style.maxWidth = `${lockedWidth}px`;
     }
 
     const totalFrames = Math.max(1, Math.floor(duration / frameDelay));
@@ -243,7 +260,9 @@ export function createHoverScramble(element, originalText, options = {}) {
     element.removeEventListener("mouseleave", onMouseLeave);
     textElement.textContent = cleanText;
     if (lockWidth) {
+      element.style.width = originalWidth || "";
       element.style.minWidth = originalMinWidth || "";
+      element.style.maxWidth = originalMaxWidth || "";
     }
   };
 }

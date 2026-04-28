@@ -12,12 +12,15 @@ const ubuntu = Inter({
 export const metadata = {
   title: "JAC.OB",
   description: "A web development portfolio by jacob ince",
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} ${ubuntu.variable}`}>
+    <html lang="en" translate="no" className="notranslate">
+      <body className={`${inter.className} ${ubuntu.variable} notranslate`}>
         <PageTransition>{children}</PageTransition>
       </body>
     </html>

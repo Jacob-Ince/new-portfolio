@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function PageTransition({ children }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
   const overlayRef = useRef(null);
-  const previousPathnameRef = useRef(pathname);
+  const currentRouteKey = `${pathname}${searchParams.toString() ? `?${searchParams.toString()}` : ""}`;
+  const previousRouteKeyRef = useRef(currentRouteKey);
   const isTransitioningRef = useRef(false);
   const isAwaitingNavigationRef = useRef(false);
 
@@ -51,6 +53,7 @@ export default function PageTransition({ children }) {
       if (!anchor) return;
       if (anchor.target && anchor.target !== "_self") return;
       if (anchor.hasAttribute("download")) return;
+      if (anchor.dataset.noTransition === "true") return;
 
       const href = anchor.getAttribute("href");
       if (!href || href.startsWith("#")) return;
@@ -62,8 +65,14 @@ export default function PageTransition({ children }) {
 
       const nextPath = `${nextUrl.pathname}${nextUrl.search}${nextUrl.hash}`;
       const currentPath = `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`;
+      const nextRouteKey = `${nextUrl.pathname}${nextUrl.search}`;
+      const currentRouteKey = `${currentUrl.pathname}${currentUrl.search}`;
 
-      if (nextPath === currentPath || isTransitioningRef.current) {
+      if (
+        nextPath === currentPath ||
+        nextRouteKey === currentRouteKey ||
+        isTransitioningRef.current
+      ) {
         return;
       }
 
@@ -96,14 +105,13 @@ export default function PageTransition({ children }) {
       setTransitionState("idle");
     };
 
-    if (
-      pathname !== previousPathnameRef.current &&
-      isAwaitingNavigationRef.current
-    ) {
-      previousPathnameRef.current = pathname;
-      runReveal();
+    if (currentRouteKey !== previousRouteKeyRef.current) {
+      previousRouteKeyRef.current = currentRouteKey;
+      if (isAwaitingNavigationRef.current) {
+        runReveal();
+      }
     }
-  }, [pathname]);
+  }, [currentRouteKey]);
 
   return (
     <div
