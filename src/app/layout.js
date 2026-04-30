@@ -1,4 +1,5 @@
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import PageTransition from "./components/PageTransition";
 
@@ -21,7 +22,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" translate="no" className="notranslate">
       <body className={`${inter.className} ${ubuntu.variable} notranslate`}>
-        <PageTransition>{children}</PageTransition>
+        <Suspense>
+          <PageTransition>{children}</PageTransition>
+        </Suspense>
       </body>
     </html>
   );
