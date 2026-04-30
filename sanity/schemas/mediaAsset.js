@@ -52,6 +52,13 @@ export const mediaAssetSchema = defineType({
       description: "Project name shown in the grid and project view.",
     }),
     defineField({
+      name: "projectDescription",
+      title: "Project Description",
+      type: "text",
+      description: "Description shown on this project's detail page.",
+      rows: 5,
+    }),
+    defineField({
       name: "width",
       title: "Width",
       type: "number",

@@ -10,28 +10,28 @@
   },
   {
     "id": 2,
-    "type": "video",
-    "src": "/videos/715-rock%20(1).mp4",
-    "name": "715-rock (1).mp4",
-    "alt": "715-rock (1).mp4",
-    "width": 1280,
-    "height": 720
+    "type": "image",
+    "src": "/images/profile-zoomed.png",
+    "name": "profile-zoomed.png",
+    "alt": "profile-zoomed.png",
+    "width": 800,
+    "height": 600
   },
   {
     "id": 3,
     "type": "image",
-    "src": "/images/stacked-symbols.png",
-    "name": "stacked-symbols.png",
-    "alt": "stacked-symbols.png",
+    "src": "/images/profile.png",
+    "name": "profile.png",
+    "alt": "profile.png",
     "width": 800,
     "height": 600
   },
   {
     "id": 4,
     "type": "image",
-    "src": "/images/stone.png",
-    "name": "stone.png",
-    "alt": "stone.png",
+    "src": "/images/stacked-symbols.png",
+    "name": "stacked-symbols.png",
+    "alt": "stacked-symbols.png",
     "width": 800,
     "height": 600
   },
@@ -72,6 +72,15 @@
     "height": 600
   },
   {
+    "id": 9,
+    "type": "image",
+    "src": "/images/stone.png",
+    "name": "stone.png",
+    "alt": "stone.png",
+    "width": 800,
+    "height": 600
+  },
+  {
     "id": 10,
     "type": "image",
     "src": "/images/lab-tech.jpg",
@@ -91,6 +100,15 @@
   },
   {
     "id": 12,
+    "type": "video",
+    "src": "/videos/715-rock%20(1).mp4",
+    "name": "715-rock (1).mp4",
+    "alt": "715-rock (1).mp4",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "id": 13,
     "type": "video",
     "src": "/videos/bolt.mp4",
     "name": "bolt.mp4",

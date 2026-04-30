@@ -45,6 +45,17 @@ export const workCardSchema = defineType({
       description: "Accessibility text for uploaded media",
       hidden: ({ document }) => !document?.media,
     }),
+    defineField({
+      name: "url",
+      title: "Project URL",
+      type: "url",
+      description: "External URL opened when this card is clicked",
+      validation: (Rule) =>
+        Rule.required().uri({
+          scheme: ["http", "https"],
+          allowRelative: false,
+        }),
+    }),
     orderRankField({ type: "workCard" }),
   ],
   preview: {

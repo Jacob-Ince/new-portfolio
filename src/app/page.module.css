@@ -275,11 +275,13 @@
   white-space: nowrap;
 }
 
-.listLink .listTypeItem {
+.listLink .listTypeItem,
+.gridItem .listTypeItem {
   gap: 0;
 }
 
-.listLink .listHoverTitle {
+.listLink .listHoverTitle,
+.gridItem .listHoverTitle {
   position: static;
   margin-right: 0;
   max-width: 0;
@@ -314,16 +316,18 @@
   transition-delay: 0s;
 }
 
-.listLink:hover .listTypeItem {
+.listLink:hover .listTypeItem,
+.gridItem:hover .listTypeItem {
   gap: 6px;
 }
 
-.listLink:hover .listHoverTitle {
+.listLink:hover .listHoverTitle,
+.gridItem:hover .listHoverTitle {
   max-width: 120px;
 }
 
 .gridItem:hover .listTypeList {
-  gap: 64px;
+  gap: 12px;
   transition-delay: 0.3s;
 }
 

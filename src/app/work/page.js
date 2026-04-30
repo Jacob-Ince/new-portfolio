@@ -30,6 +30,8 @@ const fallbackCards = [
 
 export default function WorkPage() {
   const [cards, setCards] = useState([]);
+  const [hasEntered, setHasEntered] = useState(false);
+  const workTitleWords = ["Selected", "Work"];
 
   useEffect(() => {
     async function fetchCards() {
@@ -40,59 +42,119 @@ export default function WorkPage() {
     fetchCards();
   }, []);
 
+  useEffect(() => {
+    const frameId = window.requestAnimationFrame(() => {
+      setHasEntered(true);
+    });
+
+    return () => {
+      window.cancelAnimationFrame(frameId);
+    };
+  }, []);
+
   const cardsToRender = cards.length > 0 ? cards : fallbackCards;
+  const footerAnimationDelayMs =
+    950 + Math.max(cardsToRender.length - 1, 0) * 120 + 550 + 140;
   const isVideoMimeType = (mimeType) =>
     typeof mimeType === "string" && mimeType.toLowerCase().startsWith("video/");
+  const hasExternalUrl = (url) =>
+    typeof url === "string" && /^https?:\/\//i.test(url.trim());
 
   return (
-    <NavMenu>
+    <NavMenu
+      footerClassName={hasEntered ? styles.footerEnter : ""}
+      footerStyle={
+        hasEntered
+          ? { "--work-footer-delay": `${footerAnimationDelayMs}ms` }
+          : undefined
+      }
+    >
       <main className={styles.workMain}>
         <div className={styles.workContainer}>
-          <h1 className={styles.workTitle}>Work</h1>
-          <p className={styles.workCopy}>
-            Selected projects and the stories behind them.
-          </p>
-          <section className={styles.cardsGrid} aria-label="Work cards">
-            {cardsToRender.map((card) => (
-              <article key={card._id} className={styles.card}>
-                <div className={styles.cardMedia}>
-                  {card.mediaUrl ? (
-                    isVideoMimeType(card.mediaMimeType) ? (
-                      <video
-                        src={card.mediaUrl}
-                        className={styles.cardMediaAsset}
-                        muted
-                        playsInline
-                        autoPlay
-                        loop
-                      />
-                    ) : (
-                      <img
-                        src={card.mediaUrl}
-                        alt={card.mediaAlt || card.title || "Work card media"}
-                        className={styles.cardMediaAsset}
-                        loading="lazy"
-                      />
-                    )
-                  ) : null}
-                </div>
-                <div className={styles.cardContent}>
-                  <div className={styles.cardCategoryList}>
-                    {(Array.isArray(card.categories) ? card.categories : [])
-                      .filter(Boolean)
-                      .map((category) => (
-                        <span
-                          key={`${card._id}-${category}`}
-                          className={styles.cardCategory}
-                        >
-                          {category}
-                        </span>
-                      ))}
-                  </div>
-                  <h2 className={styles.cardTitle}>{card.title}</h2>
-                </div>
-              </article>
+          <h1
+            className={`${styles.workTitle} ${hasEntered ? styles.workTitleEnter : ""}`}
+          >
+            {workTitleWords.map((word, index) => (
+              <span
+                key={word}
+                className={styles.workTitleWord}
+                style={{ "--word-index": index }}
+              >
+                {word}
+              </span>
             ))}
+          </h1>
+          {/* <p className={styles.workCopy}>
+            Selected projects and the stories behind them.
+          </p> */}
+          <section className={styles.cardsGrid} aria-label="Work cards">
+            {cardsToRender.map((card, index) => {
+              const cardBody = (
+                <>
+                  <div className={styles.cardMedia}>
+                    {card.mediaUrl ? (
+                      isVideoMimeType(card.mediaMimeType) ? (
+                        <video
+                          src={card.mediaUrl}
+                          className={styles.cardMediaAsset}
+                          muted
+                          playsInline
+                          autoPlay
+                          loop
+                        />
+                      ) : (
+                        <img
+                          src={card.mediaUrl}
+                          alt={card.mediaAlt || card.title || "Work card media"}
+                          className={styles.cardMediaAsset}
+                          loading="lazy"
+                        />
+                      )
+                    ) : null}
+                  </div>
+                  <div className={styles.cardContent}>
+                    <div className={styles.cardCategoryList}>
+                      {(Array.isArray(card.categories) ? card.categories : [])
+                        .filter(Boolean)
+                        .map((category) => (
+                          <span
+                            key={`${card._id}-${category}`}
+                            className={styles.cardCategory}
+                          >
+                            {category}
+                          </span>
+                        ))}
+                    </div>
+                    <h2 className={styles.cardTitle}>{card.title}</h2>
+                  </div>
+                </>
+              );
+
+              if (hasExternalUrl(card.url)) {
+                return (
+                  <a
+                    key={card._id}
+                    href={card.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${styles.card} ${hasEntered ? styles.cardEnter : ""}`}
+                    style={{ "--card-index": index }}
+                  >
+                    {cardBody}
+                  </a>
+                );
+              }
+
+              return (
+                <article
+                  key={card._id}
+                  className={`${styles.card} ${hasEntered ? styles.cardEnter : ""}`}
+                  style={{ "--card-index": index }}
+                >
+                  {cardBody}
+                </article>
+              );
+            })}
           </section>
         </div>
       </main>

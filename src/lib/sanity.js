@@ -110,6 +110,7 @@ export function transformSanityMedia(mediaAsset) {
     name: mediaAsset.name,
     alt: mediaAsset.alt || mediaAsset.name,
     displayName: mediaAsset.displayName || "",
+    projectDescription: mediaAsset.projectDescription || "",
     width,
     height,
     invertColor: mediaAsset.invertColor === "yes",

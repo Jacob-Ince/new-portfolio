@@ -37,30 +37,39 @@ export default function AboutPage() {
                   <li>Design Studio</li>
                   <li>OMSE</li>
                   <li>Levi&apos;s</li>
-                  <li>office of overview</li>
-                  <li>balmain</li>
-                  <li>puma</li>
+                  <li>Office of Overview</li>
+                  <li>Balmain</li>
+                  <li>Puma</li>
                   <li>CNN</li>
                   <li>Boots</li>
                   <li>Peter &amp; Paul</li>
                   <li>Zandland</li>
                   <li>SharpEnd</li>
-                  <li>IO.TT</li>
-                  <li>Vector Digital</li>
-                  <li>Middle name</li>
+                  <li>io.tt</li>
+                  <li>Middle Name</li>
                   <li>Platform 13</li>
                   <li>UAL: Central Saint Martins</li>
                   <li>Madri</li>
                   <li>Jameson</li>
-                  <li>Clinique</li>
-                  <li>Aperol</li>
                   <li>Glen Grant</li>
+                  <li>Aperol</li>
+                  <li>Clinique</li>
+                </ul>
+              </div>
+              <div className={styles.textContent}>
+                <h1 className={styles.aboutTitle}>Connect</h1>
+                <ul
+                  className={`${styles.workedWithList} ${styles.connectList}`}
+                >
+                  <li>Are.na</li>
+                  <li>LinkedIn</li>
+                  <li>Instagram</li>
                 </ul>
               </div>
             </div>
             <div className={styles.imageWrapper}>
               <Image
-                src="/images/me.jpg"
+                src="/images/profile-zoomed.png"
                 alt="Jacob Ince"
                 width={400}
                 height={600}

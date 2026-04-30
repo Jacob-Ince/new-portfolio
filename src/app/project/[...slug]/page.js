@@ -61,7 +61,10 @@ export default function ProjectPage({ params }) {
   }, [projectName]);
 
   const projectDescriptionText =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua";
+    typeof project?.projectDescription === "string" &&
+    project.projectDescription.trim().length > 0
+      ? project.projectDescription.trim()
+      : "Project description coming soon.";
   const descriptionWords = projectDescriptionText.split(/\s+/).filter(Boolean);
   const renderedDescriptionLines =
     desktopDescriptionLines.length > 0
@@ -85,21 +88,30 @@ export default function ProjectPage({ params }) {
       projectTypeCount > 1
         ? (projectTypeCount - 1) * MOBILE_LIST_ITEM_STAGGER_MS
         : 0;
-    const mobileDescriptionDelay = projectTypeCount > 0
-      ? MOBILE_SEQUENCE_START_MS + MOBILE_SEQUENCE_STEP_MS + 120 + listItemsStaggerSpanMs
-      : MOBILE_SEQUENCE_START_MS + MOBILE_SEQUENCE_STEP_MS;
+    const mobileDescriptionDelay =
+      projectTypeCount > 0
+        ? MOBILE_SEQUENCE_START_MS +
+          MOBILE_SEQUENCE_STEP_MS +
+          120 +
+          listItemsStaggerSpanMs
+        : MOBILE_SEQUENCE_START_MS + MOBILE_SEQUENCE_STEP_MS;
     const maxDescriptionLines = Math.max(
       desktopDescriptionLines.length,
       mobileDescriptionLines.length,
       1,
     );
     const descriptionLinesDuration = 160 + (maxDescriptionLines - 1) * 90 + 500;
-    const hideOverlayDelay = Math.max(1400, mobileDescriptionDelay + descriptionLinesDuration + 120);
+    const hideOverlayDelay = Math.max(
+      1400,
+      mobileDescriptionDelay + descriptionLinesDuration + 120,
+    );
 
     const splitDescriptionIntoRenderedLines = (container) => {
       if (!container) return;
 
-      const wordNodes = Array.from(container.querySelectorAll("[data-line-word]"));
+      const wordNodes = Array.from(
+        container.querySelectorAll("[data-line-word]"),
+      );
       if (wordNodes.length === 0) return;
 
       const lines = [];
@@ -206,14 +218,18 @@ export default function ProjectPage({ params }) {
               <div className={styles.textContent}>
                 <p
                   className={styles.mobileSequenceDisplayName}
-                  style={{ "--mobile-enter-delay": `${mobileDisplayNameDelay}ms` }}
+                  style={{
+                    "--mobile-enter-delay": `${mobileDisplayNameDelay}ms`,
+                  }}
                 >
                   {displayName}
                 </p>
                 {projectTypes.length > 0 && (
                   <div
                     className={`${styles.listMetaExtras} ${styles.mobileSequenceListMeta}`}
-                    style={{ "--mobile-enter-delay": `${mobileListMetaDelay}ms` }}
+                    style={{
+                      "--mobile-enter-delay": `${mobileListMetaDelay}ms`,
+                    }}
                   >
                     <div className={styles.listTypeList} aria-hidden="true">
                       {projectTypes
@@ -224,7 +240,9 @@ export default function ProjectPage({ params }) {
                             className={`${styles.listTypeItem} ${styles.mobileSequenceListTypeItem}`}
                             style={{
                               "--mobile-list-item-delay": `${
-                                mobileListMetaDelay + 80 + index * MOBILE_LIST_ITEM_STAGGER_MS
+                                mobileListMetaDelay +
+                                80 +
+                                index * MOBILE_LIST_ITEM_STAGGER_MS
                               }ms`,
                             }}
                           >
@@ -255,7 +273,10 @@ export default function ProjectPage({ params }) {
                 >
                   {projectDescriptionText}
                   {showDescriptionOverlay && (
-                    <span className={styles.descriptionOverlay} aria-hidden="true">
+                    <span
+                      className={styles.descriptionOverlay}
+                      aria-hidden="true"
+                    >
                       <span className={styles.descriptionMeasure}>
                         {descriptionWords.map((word, index) => (
                           <span

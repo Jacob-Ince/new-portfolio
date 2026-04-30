@@ -122,7 +122,7 @@
     sans-serif;
   font-size: 12px;
   font-weight: 400;
-  text-transform: lowercase;
+  text-transform: capitalize;
   color: black;
 }
 
@@ -250,7 +250,8 @@
   transform: translateY(115%);
   animation: descriptionLineIn 500ms ease-out forwards;
   animation-delay: calc(
-    var(--description-line-delay-offset, 0ms) + 160ms + (var(--line-index, 0) * 90ms)
+    var(--description-line-delay-offset, 0ms) + 160ms +
+      (var(--line-index, 0) * 90ms)
   );
 }
 
@@ -341,6 +342,9 @@
     opacity: 0;
     transform: translateY(12px);
     animation: textFadeInUp 420ms ease-out forwards;
-    animation-delay: var(--mobile-list-item-delay, var(--mobile-enter-delay, 0ms));
+    animation-delay: var(
+      --mobile-list-item-delay,
+      var(--mobile-enter-delay, 0ms)
+    );
   }
 }

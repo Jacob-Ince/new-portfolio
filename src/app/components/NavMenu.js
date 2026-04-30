@@ -20,6 +20,8 @@ export default function NavMenu({
   children,
   viewMode = "grid",
   onViewModeChange,
+  footerClassName = "",
+  footerStyle,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuClosing, setIsMenuClosing] = useState(false);
@@ -384,10 +386,10 @@ export default function NavMenu({
         <div className={styles.mobileMenuFooter}>
           <div className={styles.mobileMenuFooterLeft}>
             <p className={styles.footerTitle}>
-              <b> get in touch</b>
+              <b> Get in Touch</b>
             </p>
             <p className={styles.footerTitle}>hello@jacobince.com</p>
-            <p className={styles.footerTitle}>london, uk</p>
+            <p className={styles.footerTitle}>London, UK</p>
           </div>
           <div className={styles.mobileMenuFooterLinks}>
             <a
@@ -396,7 +398,7 @@ export default function NavMenu({
               rel="noopener noreferrer"
               className={styles.footerLink}
             >
-              are.na
+              Are.na
             </a>
             <a
               href="https://linkedin.com/in/jacobince"
@@ -404,7 +406,7 @@ export default function NavMenu({
               rel="noopener noreferrer"
               className={styles.footerLink}
             >
-              linkedin
+              Linkedin
             </a>
             <a
               href="https://www.instagram.com/aka_goblin/"
@@ -412,20 +414,23 @@ export default function NavMenu({
               rel="noopener noreferrer"
               className={styles.footerLink}
             >
-              instagram
+              Instagram
             </a>
           </div>
         </div>
       </div>
       {children}
-      <footer className={styles.footer}>
+      <footer
+        className={`${styles.footer} ${footerClassName}`.trim()}
+        style={footerStyle}
+      >
         <div className={styles.footerLeft}>
           <p className={styles.footerTitle}>
             {" "}
-            <b> get in touch</b>
+            <b> Get in Touch</b>
           </p>
           <p className={styles.footerTitle}>hello@jacobince.com</p>
-          <p className={styles.footerTitle}>london, uk</p>
+          <p className={styles.footerTitle}>London, UK</p>
         </div>
         <div className={styles.footerLinks}>
           <a
@@ -434,7 +439,7 @@ export default function NavMenu({
             rel="noopener noreferrer"
             className={styles.footerLink}
           >
-            are.na
+            Are.na
           </a>
           <a
             href="https://linkedin.com/in/jacobince"
@@ -442,7 +447,7 @@ export default function NavMenu({
             rel="noopener noreferrer"
             className={styles.footerLink}
           >
-            linkedin
+            Linkedin
           </a>
           <a
             href="https://www.instagram.com/aka_goblin/"
@@ -450,7 +455,7 @@ export default function NavMenu({
             rel="noopener noreferrer"
             className={styles.footerLink}
           >
-            instagram
+            Instagram
           </a>
         </div>
       </footer>

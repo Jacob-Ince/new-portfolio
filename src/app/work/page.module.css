@@ -1,6 +1,6 @@
 .workMain {
-  min-height: calc(100vh - 120px);
-  padding: clamp(5rem, 10vw, 9rem) 0 4rem;
+  min-height: calc(100vh - 140px);
+  padding: clamp(5rem, 10vw, 9rem) 0 3rem;
 }
 
 .workContainer {
@@ -9,11 +9,24 @@
 }
 
 .workTitle {
-  margin: 0 0 0.8rem;
-  font-size: 32px;
+  margin: 0 0 2.5rem;
+  display: inline-flex;
+  gap: 0.25em;
+  font-size: 20px;
   line-height: 0.95;
   font-weight: 500;
   /* text-transform: lowercase; */
+}
+
+.workTitleWord {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.workTitleEnter .workTitleWord {
+  animation: workTitleIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(0.12s + (var(--word-index, 0) * 0.12s));
 }
 
 .workCopy {
@@ -30,7 +43,18 @@
 }
 
 .card {
+  display: block;
   background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardEnter {
+  animation-name: workCardIn;
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  animation-fill-mode: both;
+  animation-delay: calc(0.95s + (var(--card-index, 0) * 0.12s));
 }
 
 .cardMedia {
@@ -40,7 +64,7 @@
   justify-content: flex-start;
   width: 100%;
   aspect-ratio: 4 / 3;
-  min-height: 240px;
+  min-height: clamp(170px, 22vh, 240px);
   padding: 1.1rem;
   background: linear-gradient(135deg, #f7f7f7 0%, #ededed 100%);
   overflow: hidden;
@@ -52,6 +76,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    filter 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.card:hover .cardMediaAsset {
+  filter: blur(6px);
+  transform: scale(1.08);
 }
 
 .cardContent {
@@ -82,6 +116,44 @@
   line-height: 1.2;
 }
 
+@keyframes workTitleIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes workCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footerEnter {
+  animation: workFooterIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--work-footer-delay, 1700ms);
+}
+
+@keyframes workFooterIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .workMain {
     min-height: calc(100vh - 90px);
@@ -91,5 +163,24 @@
   .cardsGrid {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+}
+
+@media (min-width: 769px) {
+  .workMain {
+    flex: 1;
+    min-height: 0;
+    box-sizing: border-box;
+    padding: clamp(8rem, 11vw, 6rem) 0 0.25rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .workTitleWord,
+  .cardEnter,
+  .footerEnter {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

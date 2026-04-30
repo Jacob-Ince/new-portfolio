@@ -11,6 +11,7 @@ export const mediaAssetsQuery = groq`
     "assetRef": coalesce(asset.asset._ref, asset._ref),
     alt,
     displayName,
+    projectDescription,
     width,
     height,
     "assetWidth": coalesce(asset.asset->metadata.dimensions.width, asset->metadata.dimensions.width),
@@ -32,6 +33,7 @@ export const mediaAssetByNameQuery = groq`
     "assetRef": coalesce(asset.asset._ref, asset._ref),
     alt,
     displayName,
+    projectDescription,
     width,
     height,
     "assetWidth": coalesce(asset.asset->metadata.dimensions.width, asset->metadata.dimensions.width),
@@ -47,6 +49,7 @@ export const workCardsQuery = groq`
   *[_type == "workCard" && !(_id in path("drafts.**"))] | order(orderRank asc, _createdAt asc) {
     _id,
     title,
+    url,
     "categories": coalesce(categories, select(defined(category) => [category], [])),
     media,
     "mediaUrl": coalesce(media.asset->url, media->url),
