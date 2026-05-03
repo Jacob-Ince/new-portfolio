@@ -1,6 +1,6 @@
 .projectMain {
   min-height: 100vh;
-  padding: 2rem 0rem 0rem 1rem;
+  padding: 2rem 1rem 0 1rem;
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -9,7 +9,6 @@
     Helvetica,
     Arial,
     sans-serif;
-  text-transform: uppercase;
   color: black;
 }
 
@@ -22,13 +21,20 @@
 
 .projectContent {
   display: grid;
-  grid-template-columns: 575px minmax(0, 1fr);
-  column-gap: 4rem;
+  grid-template-columns: minmax(0, clamp(420px, 44vw, 575px)) minmax(0, 1fr);
+  column-gap: clamp(1.75rem, 4vw, 4rem);
   align-items: start;
 }
 
+.textContainer {
+  min-width: 0;
+  max-width: clamp(420px, 44vw, 575px);
+}
+
 .mediaWrapper {
-  width: 440px;
+  width: 100%;
+  max-width: clamp(300px, 34vw, 440px);
+  justify-self: start;
   position: relative;
   margin-top: 2rem;
   opacity: 0;
@@ -122,7 +128,6 @@
     sans-serif;
   font-size: 12px;
   font-weight: 400;
-  text-transform: capitalize;
   color: black;
 }
 
@@ -150,7 +155,15 @@
   animation: none;
 }
 
-.mobileSequenceDisplayName,
+.mobileSequenceDisplayName {
+  --mobile-enter-delay: 0ms;
+  margin: 0;
+  font-size: 18px;
+  line-height: 0.95;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
 .mobileSequenceListMeta,
 .mobileSequenceDescription,
 .mobileSequenceMedia,
@@ -171,6 +184,7 @@
 .listTypeList {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
@@ -183,7 +197,6 @@
 .listHoverTitle {
   font-size: 12px;
   color: black;
-  text-transform: lowercase;
   letter-spacing: 0.01em;
   position: static;
   margin-left: 6px;
@@ -235,8 +248,9 @@
     sans-serif;
   font-size: 12px;
   font-weight: 400;
-  text-transform: lowercase;
+  /* text-transform: lowercase; */
   color: black;
+  overflow-wrap: anywhere;
 }
 
 .descriptionLineMask {
@@ -294,12 +308,14 @@
 
   .projectContent {
     grid-template-columns: 1fr;
+    row-gap: 1rem;
   }
 
   .mediaWrapper {
     flex: 0 0 auto;
     width: 100%;
-    max-width: 400px;
+    max-width: 340px;
+    justify-self: center;
     margin: 0 auto;
     opacity: 1;
     transform: none;
@@ -307,7 +323,7 @@
   }
 
   .textContent {
-    flex-direction: column;
+    flex-direction: row;
     gap: 0.5rem;
     margin: 1rem 0;
   }

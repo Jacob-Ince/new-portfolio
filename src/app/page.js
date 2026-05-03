@@ -88,6 +88,10 @@ export default function Home() {
     window.addEventListener("resize", checkMobile);
     setMounted(true);
 
+    if (sessionStorage.getItem("splashSeen")) {
+      setIsSplashVisible(false);
+    }
+
     return () => {
       window.removeEventListener("resize", checkMobile);
     };
@@ -339,6 +343,7 @@ export default function Home() {
   }, []);
 
   const handleSplashRevealComplete = useCallback(() => {
+    sessionStorage.setItem("splashSeen", "1");
     setIsSplashVisible(false);
   }, []);
 

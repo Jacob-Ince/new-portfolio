@@ -157,12 +157,16 @@
 @media (max-width: 768px) {
   .workMain {
     min-height: calc(100vh - 90px);
-    padding: 6rem 0 3rem;
+    padding: 4rem 0 3rem;
   }
 
   .cardsGrid {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .card {
+    margin-bottom: 2rem;
   }
 }
 
