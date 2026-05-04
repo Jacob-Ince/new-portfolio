@@ -12,8 +12,8 @@ const ubuntu = Inter({
 });
 
 export const metadata = {
-  title: "JAC.OB",
-  description: "A web development portfolio by jacob ince",
+  title: "jac.ob",
+  description: "A Web Development Portfolio by Jacob Ince",
   other: {
     google: "notranslate",
   },
