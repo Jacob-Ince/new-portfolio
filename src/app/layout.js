@@ -14,6 +14,10 @@ const ubuntu = Inter({
 export const metadata = {
   title: "jac.ob",
   description: "A Web Development Portfolio by Jacob Ince",
+  metadataBase: new URL("https://www.jacobince.com"),
+  alternates: {
+    canonical: "/",
+  },
   other: {
     google: "notranslate",
   },
