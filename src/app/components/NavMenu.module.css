@@ -578,7 +578,7 @@
   content: "";
   position: absolute;
   inset: -1px -3px;
-  background: #4ade80;
+  background: rgba(13, 255, 0, 0.9);
   transform: scaleX(0);
   transform-origin: left center;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
