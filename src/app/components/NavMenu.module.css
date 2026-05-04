@@ -566,6 +566,30 @@
   letter-spacing: -0.3px;
 }
 
+.footerEmail {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  isolation: isolate;
+}
+
+.footerEmail::before {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  background: #4ade80;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: 1px;
+}
+
+.footerEmail:hover::before {
+  transform: scaleX(1);
+}
+
 .footerLinks {
   display: flex;
   gap: 0.25rem;

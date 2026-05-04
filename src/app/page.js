@@ -458,22 +458,9 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    const requestedView = new URLSearchParams(window.location.search).get(
-      "view",
-    );
-    if (requestedView === "grid" || requestedView === "list") {
-      setViewMode(requestedView);
-    }
-  }, []);
-
   const handleViewModeChange = useCallback((nextViewMode) => {
     setViewMode((currentViewMode) => {
       if (currentViewMode === nextViewMode) return currentViewMode;
-
-      const nextUrl = new URL(window.location.href);
-      nextUrl.searchParams.set("view", nextViewMode);
-      window.history.replaceState(window.history.state, "", nextUrl);
 
       const nextTransition = nextViewMode === "list" ? "toList" : "toGrid";
       setViewTransition(nextTransition);
