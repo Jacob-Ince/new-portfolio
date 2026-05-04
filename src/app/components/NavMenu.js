@@ -388,7 +388,7 @@ export default function NavMenu({
             <p className={styles.footerTitle}>
               <b> Get in Touch</b>
             </p>
-            <p className={styles.footerTitle}>hello@jacobince.com</p>
+            <a href="mailto:hello@jacobince.com" target="_blank" rel="noopener noreferrer" className={styles.footerTitle}>hello@jacobince.com</a>
             <p className={styles.footerTitle}>London, UK</p>
           </div>
           <div className={styles.mobileMenuFooterLinks}>
@@ -429,7 +429,7 @@ export default function NavMenu({
             {" "}
             <b> Get in Touch</b>
           </p>
-          <p className={styles.footerTitle}>hello@jacobince.com</p>
+          <a href="mailto:hello@jacobince.com" target="_blank" rel="noopener noreferrer" className={styles.footerTitle}>hello@jacobince.com</a>
           <p className={styles.footerTitle}>London, UK</p>
         </div>
         <div className={styles.footerLinks}>

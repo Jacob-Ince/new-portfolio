@@ -15,7 +15,6 @@
     Helvetica,
     Arial,
     sans-serif;
-  /* text-transform: uppercase; */
 }
 
 .navbar {
@@ -98,10 +97,9 @@
   position: relative;
   overflow: visible;
   display: inline-block;
-  transform: translateY(0);
-  transition: transform 0.3s ease;
   line-height: 1;
   height: 1em;
+  width: fit-content;
 }
 
 .navbarLinks {
@@ -139,10 +137,9 @@
   position: relative;
   overflow: visible;
   display: inline-block;
-  transform: translateY(0);
-  transition: transform 0.3s ease;
   line-height: 1;
   height: 1em;
+  width: fit-content;
 }
 
 /* Spread links across grid - positioned at different column starts */
@@ -177,9 +174,12 @@
   display: inline-block;
   line-height: 1;
   white-space: nowrap;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
 }
 
-.navbarLink:hover {
+.navbarLink:hover .originalText,
+.navbarLogo:hover .originalText {
   transform: translateY(-1px);
 }
 
