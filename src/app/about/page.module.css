@@ -1,3 +1,12 @@
+@keyframes slideInUp {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
 .aboutMain {
   min-height: 100vh;
   padding: 4rem 4rem 3rem 2.25rem;
@@ -43,6 +52,13 @@
   display: block;
 }
 
+.pixelCanvas {
+  width: 100%;
+  height: auto;
+  display: block;
+  image-rendering: pixelated;
+}
+
 .textContainer {
   display: flex;
   flex-direction: column;
@@ -50,10 +66,11 @@
   min-width: 0;
   width: min(100%, clamp(360px, 48vw, 620px));
 }
+
 .textContent {
   display: flex;
   flex-direction: row;
-  /* gap: 1rem; */
+  align-items: flex-start;
   margin-top: 2rem;
   line-height: 1.6;
   font-family:
@@ -66,8 +83,21 @@
   color: black;
 }
 
-.aboutTitle {
+/* Title mask — clips the h1 so it slides up from behind the edge */
+.titleMask {
   flex: 0 0 100px;
+  overflow: hidden;
+  align-self: flex-start;
+}
+
+.titleMask > * {
+  transform: translateY(105%);
+  animation: slideInUp 420ms ease-out forwards;
+  animation-delay: var(--item-delay, 0ms);
+}
+
+.aboutTitle {
+  margin: 0;
   font-family:
     Helvetica Neue,
     Helvetica,
@@ -79,14 +109,51 @@
   color: black;
 }
 
-.textContent p {
+/* Bio paragraph */
+.bioParagraph {
   flex: 1;
   margin: 0;
   max-width: clamp(280px, 34vw, 454px);
   margin-left: clamp(1.25rem, 4vw, 4rem);
   overflow-wrap: anywhere;
+  position: relative;
 }
 
+.bioHasOverlay {
+  color: transparent;
+}
+
+.bioOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: black;
+}
+
+.bioMeasure {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.bioMeasureWord {
+  display: inline;
+}
+
+.bioLineMask {
+  display: block;
+  overflow: hidden;
+}
+
+.bioLine {
+  display: block;
+  transform: translateY(105%);
+  animation: slideInUp 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--line-delay, 0ms);
+}
+
+/* List items — each li is its own clip */
 .textContent ul {
   flex: 1;
   margin: 0;
@@ -107,20 +174,34 @@
   row-gap: 0;
 }
 
-.textContent li {
+.animatedLi {
   margin: 0;
   padding: 0;
   width: fit-content;
+  overflow: hidden;
 }
 
-.textContent li a {
+.animatedLi a {
+  display: block;
   color: inherit;
   text-decoration: none;
   transition: color 0.3s ease;
+  transform: translateY(105%);
+  animation: slideInUp 360ms ease-out forwards;
+  animation-delay: var(--li-delay, 0ms);
 }
 
-.textContent li:hover {
+.animatedLi:hover a {
   color: rgba(10, 194, 0, 0.9);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titleMask > *,
+  .bioLine,
+  .animatedLi a {
+    transform: none;
+    animation: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -153,8 +234,45 @@
     order: 1;
   }
 
-  .aboutTitle {
+  .titleMask {
     flex: 0 0 auto;
+    overflow: visible;
+  }
+
+  .titleMask > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .bioHasOverlay {
+    color: black;
+  }
+
+  .bioOverlay {
+    display: none;
+  }
+
+  .bioLineMask {
+    overflow: visible;
+  }
+
+  .bioLine {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .animatedLi {
+    overflow: visible;
+    width: calc(50% - 0.75rem);
+  }
+
+  .animatedLi a {
+    display: inline;
+    opacity: 1;
+    transform: none;
+    animation: none;
   }
 
   .textContent ul {
@@ -170,17 +288,13 @@
     max-width: 100%;
   }
 
-  .textContent li {
-    width: calc(50% - 0.75rem);
-  }
-
   .connectList {
     display: flex;
     flex-direction: column;
     gap: 0;
   }
 
-  .connectList li {
+  .connectList .animatedLi {
     width: auto;
   }
 }
