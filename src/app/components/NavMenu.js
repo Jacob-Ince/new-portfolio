@@ -388,7 +388,14 @@ export default function NavMenu({
             <p className={styles.footerTitle}>
               <b> Get in Touch</b>
             </p>
-            <a href="mailto:hello@jacobince.com" target="_blank" rel="noopener noreferrer" className={styles.footerTitle}>hello@jacobince.com</a>
+            <a
+              href="mailto:hello@jacobince.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerTitle}
+            >
+              hello@jacobince.com
+            </a>
             <p className={styles.footerTitle}>London, UK</p>
           </div>
           <ul className={styles.mobileMenuFooterLinks}>
@@ -435,7 +442,14 @@ export default function NavMenu({
             {" "}
             <b> Get in Touch</b>
           </p>
-          <a href="mailto:hello@jacobince.com" target="_blank" rel="noopener noreferrer" className={`${styles.footerTitle} ${styles.footerEmail}`}>hello@jacobince.com</a>
+          <a
+            href="mailto:hello@jacobince.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`${styles.footerTitle} ${styles.footerEmail}`}
+          >
+            hello@jacobince.com
+          </a>
           <p className={styles.footerTitle}>London, UK</p>
         </div>
         <ul className={styles.footerLinks}>
