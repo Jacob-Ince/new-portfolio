@@ -18,9 +18,23 @@ export const metadata = {
   alternates: {
     canonical: "/",
   },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "standard",
+      "max-snippet": -1,
+    },
+  },
   other: {
     google: "notranslate",
   },
+};
+
+export const viewport = {
+  themeColor: "#10F200",
 };
 
 export default function RootLayout({ children }) {
