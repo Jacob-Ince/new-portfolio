@@ -391,32 +391,38 @@ export default function NavMenu({
             <a href="mailto:hello@jacobince.com" target="_blank" rel="noopener noreferrer" className={styles.footerTitle}>hello@jacobince.com</a>
             <p className={styles.footerTitle}>London, UK</p>
           </div>
-          <div className={styles.mobileMenuFooterLinks}>
-            <a
-              href="https://www.are.na/jacob-ince/channels"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.footerLink}
-            >
-              Are.na
-            </a>
-            <a
-              href="https://linkedin.com/in/jacobince"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.footerLink}
-            >
-              Linkedin
-            </a>
-            <a
-              href="https://www.instagram.com/aka_goblin/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={styles.footerLink}
-            >
-              Instagram
-            </a>
-          </div>
+          <ul className={styles.mobileMenuFooterLinks}>
+            <li>
+              <a
+                href="https://www.are.na/jacob-ince/channels"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.footerLink}
+              >
+                Are.na
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://linkedin.com/in/jacobince"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.footerLink}
+              >
+                LinkedIn
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/aka_goblin/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.footerLink}
+              >
+                Instagram
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
       {children}
@@ -432,32 +438,38 @@ export default function NavMenu({
           <a href="mailto:hello@jacobince.com" target="_blank" rel="noopener noreferrer" className={`${styles.footerTitle} ${styles.footerEmail}`}>hello@jacobince.com</a>
           <p className={styles.footerTitle}>London, UK</p>
         </div>
-        <div className={styles.footerLinks}>
-          <a
-            href="https://www.are.na/jacob-ince/channels"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            Are.na
-          </a>
-          <a
-            href="https://linkedin.com/in/jacobince"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            Linkedin
-          </a>
-          <a
-            href="https://www.instagram.com/aka_goblin/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.footerLink}
-          >
-            Instagram
-          </a>
-        </div>
+        <ul className={styles.footerLinks}>
+          <li>
+            <a
+              href="https://www.are.na/jacob-ince/channels"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              Are.na
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://linkedin.com/in/jacobince"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.instagram.com/aka_goblin/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.footerLink}
+            >
+              Instagram
+            </a>
+          </li>
+        </ul>
       </footer>
     </div>
   );

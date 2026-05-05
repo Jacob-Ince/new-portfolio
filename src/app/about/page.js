@@ -96,7 +96,12 @@ export default function AboutPage() {
       const connectTitle = workedWithDone + 40;
       const connectBase = connectTitle + 80;
 
-      setSectionDelays({ workedWithTitle, workedWithBase, connectTitle, connectBase });
+      setSectionDelays({
+        workedWithTitle,
+        workedWithBase,
+        connectTitle,
+        connectBase,
+      });
 
       const t = setTimeout(() => setShowBioOverlay(false), bioDone + 40);
       return () => clearTimeout(t);
@@ -109,7 +114,6 @@ export default function AboutPage() {
         <div className={styles.aboutContainer}>
           <div className={styles.aboutContent}>
             <div className={styles.textContainer}>
-
               {/* About */}
               <div className={styles.textContent}>
                 <div
@@ -127,7 +131,11 @@ export default function AboutPage() {
                     <span className={styles.bioOverlay} aria-hidden="true">
                       <span className={styles.bioMeasure}>
                         {bioWords.map((word, i) => (
-                          <span key={i} data-word={word} className={styles.bioMeasureWord}>
+                          <span
+                            key={i}
+                            data-word={word}
+                            className={styles.bioMeasureWord}
+                          >
                             {word}{" "}
                           </span>
                         ))}
@@ -153,7 +161,9 @@ export default function AboutPage() {
               <div className={styles.textContent}>
                 <div
                   className={styles.titleMask}
-                  style={{ "--item-delay": `${sectionDelays.workedWithTitle}ms` }}
+                  style={{
+                    "--item-delay": `${sectionDelays.workedWithTitle}ms`,
+                  }}
                 >
                   <h1 className={styles.aboutTitle}>Worked With</h1>
                 </div>
@@ -166,7 +176,11 @@ export default function AboutPage() {
                         "--li-delay": `${sectionDelays.workedWithBase + i * WW_LI_STAGGER}ms`,
                       }}
                     >
-                      <a href={client.url} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={client.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {client.name}
                       </a>
                     </li>
@@ -182,7 +196,9 @@ export default function AboutPage() {
                 >
                   <h1 className={styles.aboutTitle}>Connect</h1>
                 </div>
-                <ul className={`${styles.workedWithList} ${styles.connectList}`}>
+                <ul
+                  className={`${styles.workedWithList} ${styles.connectList}`}
+                >
                   {connects.map((connect, i) => (
                     <li
                       key={connect.name}
@@ -191,14 +207,17 @@ export default function AboutPage() {
                         "--li-delay": `${sectionDelays.connectBase + i * CONNECT_LI_STAGGER}ms`,
                       }}
                     >
-                      <a href={connect.url} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={connect.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {connect.name}
                       </a>
                     </li>
                   ))}
                 </ul>
               </div>
-
             </div>
             <div className={styles.imageWrapper}>
               <PixelatedImage
