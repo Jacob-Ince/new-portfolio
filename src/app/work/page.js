@@ -111,6 +111,9 @@ export default function WorkPage() {
                         />
                       )
                     ) : null}
+                    <span className={styles.cardViewBadge} aria-hidden="true">
+                      view
+                    </span>
                   </div>
                   <div className={styles.cardContent}>
                     <div className={styles.cardCategoryList}>

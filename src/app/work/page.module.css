@@ -83,9 +83,39 @@
     transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.card:hover .cardMediaAsset {
+.cardMedia:hover .cardMediaAsset {
   filter: blur(6px);
   transform: scale(1.08);
+}
+
+.cardViewBadge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  padding: 4px 6px;
+  background: rgba(13, 255, 0, 0.9);
+  color: #000;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cardMedia:hover .cardViewBadge {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
 }
 
 .cardContent {
@@ -186,5 +216,11 @@
     animation: none;
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .cardViewBadge {
+    display: none;
   }
 }

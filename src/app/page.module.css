@@ -454,35 +454,6 @@
   filter: invert(1) blur(6px) !important;
 }
 
-.viewCursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate3d(-9999px, -9999px, 0);
-  padding: 4px 6px;
-  /* border-radius: 999px; */
-  background: rgba(13, 255, 0, 0.9);
-  color: #000000;
-  font-family:
-    Helvetica Neue,
-    Helvetica,
-    Arial,
-    sans-serif;
-  font-size: 12px;
-  font-weight: 400;
-  line-height: 1;
-  letter-spacing: 0.01em;
-  text-transform: lowercase;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.18s ease-out;
-  z-index: 9999;
-}
-
-.viewCursorVisible {
-  opacity: 1;
-}
-
 .gridCursorArea {
   width: 100%;
 }
@@ -572,11 +543,6 @@
 
 /* Hide mediaText by default, reveal on hover from top down */
 @media (hover: hover) and (pointer: fine) {
-  .gridCursorArea:hover,
-  .gridCursorArea:hover * {
-    cursor: none !important;
-  }
-
   .mediaMeta {
     clip-path: inset(0 0 100% 0);
     transition: clip-path 0.3s ease-out;
@@ -588,10 +554,6 @@
 }
 
 @media (hover: none), (pointer: coarse) {
-  .viewCursor {
-    display: none;
-  }
-
   .listHoverPreview {
     display: none;
   }
@@ -784,6 +746,42 @@
   overflow: hidden;
   background-color: #f0f0f0;
   z-index: 1;
+}
+
+.mediaViewBadge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  padding: 4px 6px;
+  background: rgba(13, 255, 0, 0.9);
+  color: #000;
+  font-family:
+    Helvetica Neue,
+    Helvetica,
+    Arial,
+    sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  text-transform: lowercase;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gridItem:hover .mediaViewBadge {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .mediaViewBadge {
+    display: none;
+  }
 }
 
 .loadingPlaceholder {

@@ -39,7 +39,6 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState("grid");
   const [viewTransition, setViewTransition] = useState(null);
-  const [isViewCursorVisible, setIsViewCursorVisible] = useState(false);
   const [hoveredListPhoto, setHoveredListPhoto] = useState(null);
   const [listHoverDimensions, setListHoverDimensions] = useState({
     width: 290,
@@ -47,15 +46,11 @@ export default function Home() {
   });
   const videoRefs = useRef({});
   const observerRef = useRef(null);
-  const viewCursorRef = useRef(null);
   const listHoverPreviewRef = useRef(null);
   const listHoverTargetPosRef = useRef({ x: 0, y: 0 });
   const listHoverCurrentPosRef = useRef({ x: 0, y: 0 });
   const listHoverRafRef = useRef(null);
   const preloadedPreviewSrcsRef = useRef(new Set());
-  const cursorTargetPosRef = useRef({ x: 0, y: 0 });
-  const cursorCurrentPosRef = useRef({ x: 0, y: 0 });
-  const cursorRafRef = useRef(null);
   const viewTransitionResetTimerRef = useRef(null);
 
   // Fetch media assets from Sanity
@@ -277,71 +272,6 @@ export default function Home() {
     return `${src}${separator}w=720&fit=max&auto=format&q=70`;
   }, []);
 
-  const applyViewCursorPosition = useCallback((x, y) => {
-    if (!viewCursorRef.current) return;
-    viewCursorRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
-  }, []);
-
-  const animateViewCursor = useCallback(() => {
-    const smoothing = 0.15;
-    const target = cursorTargetPosRef.current;
-    const current = cursorCurrentPosRef.current;
-
-    current.x += (target.x - current.x) * smoothing;
-    current.y += (target.y - current.y) * smoothing;
-
-    applyViewCursorPosition(current.x, current.y);
-
-    const dx = Math.abs(target.x - current.x);
-    const dy = Math.abs(target.y - current.y);
-
-    if (dx < 0.1 && dy < 0.1) {
-      cursorRafRef.current = null;
-      return;
-    }
-
-    cursorRafRef.current = requestAnimationFrame(animateViewCursor);
-  }, [applyViewCursorPosition]);
-
-  const updateViewCursorPosition = useCallback(
-    (event) => {
-      cursorTargetPosRef.current = { x: event.clientX, y: event.clientY };
-
-      if (!cursorRafRef.current) {
-        cursorRafRef.current = requestAnimationFrame(animateViewCursor);
-      }
-    },
-    [animateViewCursor],
-  );
-
-  const handleGridCursorAreaMouseEnter = useCallback(
-    (event) => {
-      if (isMobile || viewMode !== "grid") return;
-      const nextPosition = { x: event.clientX, y: event.clientY };
-      cursorTargetPosRef.current = nextPosition;
-      cursorCurrentPosRef.current = nextPosition;
-      applyViewCursorPosition(nextPosition.x, nextPosition.y);
-      setIsViewCursorVisible(true);
-    },
-    [applyViewCursorPosition, isMobile, viewMode],
-  );
-
-  const handleGridCursorAreaMouseMove = useCallback(
-    (event) => {
-      if (isMobile || viewMode !== "grid") return;
-      updateViewCursorPosition(event);
-    },
-    [isMobile, updateViewCursorPosition, viewMode],
-  );
-
-  const handleGridCursorAreaMouseLeave = useCallback(() => {
-    setIsViewCursorVisible(false);
-    if (cursorRafRef.current) {
-      cancelAnimationFrame(cursorRafRef.current);
-      cursorRafRef.current = null;
-    }
-  }, []);
-
   const handleSplashRevealComplete = useCallback(() => {
     sessionStorage.setItem("splashSeen", "1");
     setIsSplashVisible(false);
@@ -479,22 +409,9 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    if (viewMode !== "grid") {
-      setIsViewCursorVisible(false);
-      if (cursorRafRef.current) {
-        cancelAnimationFrame(cursorRafRef.current);
-        cursorRafRef.current = null;
-      }
-    }
-  }, [viewMode]);
-
-  useEffect(() => {
     return () => {
       if (viewTransitionResetTimerRef.current) {
         clearTimeout(viewTransitionResetTimerRef.current);
-      }
-      if (cursorRafRef.current) {
-        cancelAnimationFrame(cursorRafRef.current);
       }
       if (listHoverRafRef.current) {
         cancelAnimationFrame(listHoverRafRef.current);
@@ -564,6 +481,9 @@ export default function Home() {
                   <source src={photo.src} type={videoType} />
                   Your browser does not support the video tag.
                 </video>
+                <span className={styles.mediaViewBadge} aria-hidden="true">
+                  view
+                </span>
               </div>
             ) : (
               <div className={styles.mediaWrapper}>
@@ -590,6 +510,9 @@ export default function Home() {
                       : "(max-width: 350px) 100vw, (max-width: 600px) 100vw, (max-width: 900px) 50vw, (max-width: 1200px) 33vw, 25vw"
                   }
                 />
+                <span className={styles.mediaViewBadge} aria-hidden="true">
+                  view
+                </span>
               </div>
             )}
             <div className={styles.mediaMeta}>
@@ -849,12 +772,7 @@ export default function Home() {
           />
         </div>
         {viewMode === "grid" ? (
-          <div
-            className={styles.gridCursorArea}
-            onMouseEnter={handleGridCursorAreaMouseEnter}
-            onMouseMove={handleGridCursorAreaMouseMove}
-            onMouseLeave={handleGridCursorAreaMouseLeave}
-          >
+          <div className={styles.gridCursorArea}>
             <ResponsiveMasonry
               columnsCountBreakPoints={{
                 0: 2,
@@ -908,15 +826,6 @@ export default function Home() {
           </div>
         )}
       </main>
-      <div
-        ref={viewCursorRef}
-        className={`${styles.viewCursor} ${
-          isViewCursorVisible ? styles.viewCursorVisible : ""
-        }`}
-        aria-hidden="true"
-      >
-        view
-      </div>
       <Splash
         isVisible={isSplashVisible}
         isReadyToReveal={isSplashReadyToReveal}
