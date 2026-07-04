@@ -253,8 +253,8 @@
 
   .imageWrapper {
     flex: 0 0 auto;
-    width: 100%;
-    max-width: 400px;
+    width: min(92%, 360px);
+    max-width: 300px;
     margin: 0 auto;
     order: 3;
   }
