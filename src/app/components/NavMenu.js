@@ -27,6 +27,7 @@ export default function NavMenu({
   const [isMenuClosing, setIsMenuClosing] = useState(false);
   const [scrollPercentage, setScrollPercentage] = useState(0);
   const [shouldAnimateNavbar, setShouldAnimateNavbar] = useState(false);
+  const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const isHomePage = pathname === "/";
@@ -34,6 +35,7 @@ export default function NavMenu({
   const isListViewActive = isHomePage && viewMode === "list";
   const closeTimeoutRef = useRef(null);
   const navAnimationTimeoutRef = useRef(null);
+  const lastScrollYRef = useRef(0);
   const logoRef = useRef(null);
   const navLinkRefs = useRef([]);
 
@@ -114,6 +116,47 @@ export default function NavMenu({
       }
     };
   }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isHomePage) {
+      setIsNavbarHidden(false);
+      lastScrollYRef.current = 0;
+      return undefined;
+    }
+
+    const SCROLL_DELTA_THRESHOLD = 4;
+    const REVEAL_TOP_OFFSET = 16;
+
+    const handleNavbarVisibilityOnScroll = () => {
+      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
+      const previousScrollY = lastScrollYRef.current;
+
+      if (isMenuOpen || currentScrollY <= REVEAL_TOP_OFFSET) {
+        setIsNavbarHidden(false);
+        lastScrollYRef.current = currentScrollY;
+        return;
+      }
+
+      if (currentScrollY > previousScrollY + SCROLL_DELTA_THRESHOLD) {
+        setIsNavbarHidden(true);
+      } else if (currentScrollY < previousScrollY - SCROLL_DELTA_THRESHOLD) {
+        setIsNavbarHidden(false);
+      }
+
+      lastScrollYRef.current = currentScrollY;
+    };
+
+    lastScrollYRef.current = window.scrollY || document.documentElement.scrollTop;
+    handleNavbarVisibilityOnScroll();
+
+    window.addEventListener("scroll", handleNavbarVisibilityOnScroll, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("scroll", handleNavbarVisibilityOnScroll);
+    };
+  }, [isHomePage, isMenuOpen]);
 
   useEffect(() => {
     const logoElement = logoRef.current;
@@ -238,7 +281,7 @@ export default function NavMenu({
       <nav
         className={`${styles.navbar} ${
           shouldAnimateNavbar ? styles.navbarAnimateIn : ""
-        }`}
+        } ${isNavbarHidden ? styles.navbarHidden : ""}`}
       >
         <button
           className={`${styles.menuButton} ${isMenuOpen ? styles.active : ""}`}
