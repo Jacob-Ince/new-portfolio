@@ -13,11 +13,11 @@ const ubuntu = Inter({
 
 export const metadata = {
   title: {
-    default: "jac.ob",
-    template: "%s — jac.ob",
+    default: "Jacob Ince - Creative Developer",
+    template: "%s | Jacob Ince",
   },
   description:
-    "Portfolio of Jacob Ince, a London-based front-end developer creating interactive web experiences across development, design, motion, and 3D.",
+    "Portfolio of Jacob Ince, a London-based creative developer building interactive websites and digital experiences for brands, agencies and ambitious businesses",
   metadataBase: new URL("https://www.jacobince.com"),
   alternates: {
     canonical: "/",

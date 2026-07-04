@@ -1,7 +1,7 @@
 export const metadata = {
   title: "About",
   description:
-    "Portfolio of Jacob Ince, a London-based front-end developer creating interactive web experiences across development, design, motion, and 3D.",
+    "Portfolio of Jacob Ince, a London-based creative developer building interactive websites and digital experiences for brands, agencies and ambitious businesses",
   alternates: {
     canonical: "/about",
   },
