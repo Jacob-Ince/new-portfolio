@@ -6,10 +6,11 @@ import PixelatedImage from "../components/PixelatedImage";
 import { useLayoutEffect, useRef, useState } from "react";
 
 const BIO_TEXT =
-  "A front-end developer working at the intersection of design and creative technology. I build interactive, visually engaging experiences with a focus on detail, performance and storytelling through code, blending smooth interfaces with expressive visuals.";
+  "A design engineer based in London, currently working at Midnight. From startups to established global brands, bringing together an aesthetic eye for user experience and technical depth to shape thoughtful, considered work.";
+const BIO_UNDERLINE_TEXT = "Midnight";
+const MIDNIGHT_URL = "https://midnight.agency/";
 
 const clients = [
-  { name: "Midnight Studio", url: "https://midnight.agency/" },
   { name: "Justified Studio", url: "https://justified.studio/" },
   { name: "Further", url: "https://www.further.group/" },
   { name: "OMSE", url: "https://www.omse.co/" },
@@ -22,7 +23,6 @@ const clients = [
   { name: "Peter & Paul", url: "https://www.peterandpaul.co.uk/" },
   { name: "Zandland", url: "https://www.zand.land/" },
   { name: "SharpEnd", url: "https://sharpend.com/" },
-  { name: "io.tt", url: "https://io.tt/" },
   { name: "Middle Name", url: "https://middlename.co.uk/" },
   { name: "Platform 13", url: "https://www.platform13.net/" },
   { name: "UAL", url: "https://www.arts.ac.uk/" },
@@ -58,6 +58,34 @@ export default function AboutPage() {
   });
 
   const bioWords = BIO_TEXT.split(/\s+/).filter(Boolean);
+  const renderBioText = (text, withLink = false) => {
+    const parts = text.split(BIO_UNDERLINE_TEXT);
+    return parts.flatMap((part, index) =>
+      index === parts.length - 1
+        ? [part]
+        : [
+            part,
+            withLink ? (
+              <a
+                key={`${BIO_UNDERLINE_TEXT}-${index}`}
+                href={MIDNIGHT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.bioUnderline}
+              >
+                {BIO_UNDERLINE_TEXT}
+              </a>
+            ) : (
+              <span
+                key={`${BIO_UNDERLINE_TEXT}-${index}`}
+                className={styles.bioUnderline}
+              >
+                {BIO_UNDERLINE_TEXT}
+              </span>
+            ),
+          ],
+    );
+  };
 
   useLayoutEffect(() => {
     const container = bioRef.current;
@@ -126,7 +154,7 @@ export default function AboutPage() {
                   ref={bioRef}
                   className={`${styles.bioParagraph} ${showBioOverlay ? styles.bioHasOverlay : ""}`}
                 >
-                  {BIO_TEXT}
+                  {renderBioText(BIO_TEXT, true)}
                   {showBioOverlay && (
                     <span className={styles.bioOverlay} aria-hidden="true">
                       <span className={styles.bioMeasure}>
@@ -148,7 +176,7 @@ export default function AboutPage() {
                               "--line-delay": `${BIO_LINE_BASE + i * BIO_LINE_STAGGER}ms`,
                             }}
                           >
-                            {line}
+                            {renderBioText(line)}
                           </span>
                         </span>
                       ))}

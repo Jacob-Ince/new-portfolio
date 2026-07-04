@@ -119,6 +119,30 @@
   position: relative;
 }
 
+.bioUnderline {
+  position: relative;
+  display: inline-block;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  isolation: isolate;
+}
+
+.bioUnderline::before {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  background: rgba(13, 255, 0, 0.9);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: 1px;
+}
+
+.bioUnderline:hover::before {
+  transform: scaleX(1);
+}
+
 .bioHasOverlay {
   color: transparent;
 }
@@ -183,16 +207,29 @@
 
 .animatedLi a {
   display: block;
+  position: relative;
   color: inherit;
   text-decoration: none;
-  transition: color 0.3s ease;
+  isolation: isolate;
   transform: translateY(105%);
   animation: slideInUp 360ms ease-out forwards;
   animation-delay: var(--li-delay, 0ms);
 }
 
-.animatedLi:hover a {
-  color: rgba(10, 194, 0, 0.9);
+.workedWithList .animatedLi a::before {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  background: rgba(13, 255, 0, 0.9);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: 1px;
+}
+
+.workedWithList .animatedLi:hover a::before {
+  transform: scaleX(1);
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -610,15 +610,29 @@
 }
 
 .footerLink {
+  position: relative;
+  display: inline-block;
   font-size: 14px;
   color: black;
   text-decoration: none;
   line-height: 1;
+  isolation: isolate;
 }
 
-.footerLink:hover {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+.footerLink::before {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  background: rgba(13, 255, 0, 0.9);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: 1px;
+}
+
+.footerLink:hover::before {
+  transform: scaleX(1);
 }
 
 @media (max-width: 768px) {
