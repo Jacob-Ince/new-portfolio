@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import styles from "./NavMenu.module.css";
 import { createLogoGlitch, createHoverScramble } from "./animations";
 
@@ -29,7 +29,6 @@ export default function NavMenu({
   const [shouldAnimateNavbar, setShouldAnimateNavbar] = useState(false);
   const [isNavbarHidden, setIsNavbarHidden] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const isHomePage = pathname === "/";
   const isGridViewActive = isHomePage && viewMode === "grid";
   const isListViewActive = isHomePage && viewMode === "list";
@@ -250,15 +249,6 @@ export default function NavMenu({
     }
   };
 
-  const handleViewModeButtonClick = (nextViewMode) => {
-    if (isHomePage) {
-      onViewModeChange?.(nextViewMode);
-      return;
-    }
-
-    router.push("/");
-  };
-
   const handleDesktopLabClick = (event) => {
     setIsMenuOpen(false);
 
@@ -337,24 +327,44 @@ export default function NavMenu({
           </Link>
         </div>
         <div className={styles.navbarControls}>
-          <button
-            type="button"
-            className={`${styles.iconButton} ${styles.squareButton} ${
-              isGridViewActive ? styles.iconButtonActive : ""
-            }`}
-            aria-label="Square icon"
-            aria-pressed={isGridViewActive}
-            onClick={() => handleViewModeButtonClick("grid")}
-          />
-          <button
-            type="button"
-            className={`${styles.iconButton} ${styles.listButton} ${
-              isListViewActive ? styles.iconButtonActive : ""
-            }`}
-            aria-label="List view"
-            aria-pressed={isListViewActive}
-            onClick={() => handleViewModeButtonClick("list")}
-          />
+          {isHomePage ? (
+            <button
+              type="button"
+              className={`${styles.iconButton} ${styles.squareButton} ${
+                isGridViewActive ? styles.iconButtonActive : ""
+              }`}
+              aria-label="Square icon"
+              aria-pressed={isGridViewActive}
+              onClick={() => onViewModeChange?.("grid")}
+            />
+          ) : (
+            <Link
+              href="/"
+              className={`${styles.iconButton} ${styles.squareButton} ${
+                isGridViewActive ? styles.iconButtonActive : ""
+              }`}
+              aria-label="Square icon"
+            />
+          )}
+          {isHomePage ? (
+            <button
+              type="button"
+              className={`${styles.iconButton} ${styles.listButton} ${
+                isListViewActive ? styles.iconButtonActive : ""
+              }`}
+              aria-label="List view"
+              aria-pressed={isListViewActive}
+              onClick={() => onViewModeChange?.("list")}
+            />
+          ) : (
+            <Link
+              href="/?view=list"
+              className={`${styles.iconButton} ${styles.listButton} ${
+                isListViewActive ? styles.iconButtonActive : ""
+              }`}
+              aria-label="List view"
+            />
+          )}
           <div className={styles.scrollPercentage}>
             <span className={styles.originalText}>{scrollPercentage}%</span>
           </div>

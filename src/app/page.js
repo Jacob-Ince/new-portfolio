@@ -4,6 +4,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import NavMenu from "./components/NavMenu";
 import Splash from "./components/Splash";
 import Link from "next/link";
@@ -29,6 +30,9 @@ const normalizeProjectType = (type) => {
 };
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const urlViewMode = searchParams.get("view");
+  const initialViewMode = urlViewMode === "list" ? "list" : "grid";
   const [mounted, setMounted] = useState(false);
   const [loadedItems, setLoadedItems] = useState(new Set());
   const [isSplashVisible, setIsSplashVisible] = useState(true);
@@ -37,8 +41,11 @@ export default function Home() {
   const [isMobile, setIsMobile] = useState(false);
   const [photosData, setPhotosData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState("grid");
+  const [viewMode, setViewMode] = useState(initialViewMode);
   const [viewTransition, setViewTransition] = useState(null);
+  const [isInitialListEntryPending, setIsInitialListEntryPending] = useState(
+    urlViewMode === "list",
+  );
   const [hoveredListPhoto, setHoveredListPhoto] = useState(null);
   const [listHoverDimensions, setListHoverDimensions] = useState({
     width: 290,
@@ -52,6 +59,7 @@ export default function Home() {
   const listHoverRafRef = useRef(null);
   const preloadedPreviewSrcsRef = useRef(new Set());
   const viewTransitionResetTimerRef = useRef(null);
+  const handledUrlViewModeRef = useRef(null);
 
   // Fetch media assets from Sanity
   useEffect(() => {
@@ -71,6 +79,96 @@ export default function Home() {
 
     fetchMediaAssets();
   }, []);
+
+  useEffect(() => {
+    if (urlViewMode !== "list" && urlViewMode !== "grid") return;
+    const NAVBAR_ENTER_DELAY_MS = 220;
+    const NAVBAR_ENTER_DURATION_MS = 450;
+    const LIST_STAGGER_START_DELAY_MS =
+      NAVBAR_ENTER_DELAY_MS + NAVBAR_ENTER_DURATION_MS;
+    let listStaggerDelayTimeoutId = null;
+    let transitionIdleHandler = null;
+    const cleanup = () => {
+      if (listStaggerDelayTimeoutId) {
+        window.clearTimeout(listStaggerDelayTimeoutId);
+        listStaggerDelayTimeoutId = null;
+      }
+      if (transitionIdleHandler) {
+        window.removeEventListener("page-transition-idle", transitionIdleHandler);
+        transitionIdleHandler = null;
+      }
+    };
+
+    const triggerViewTransition = (nextTransition) => {
+      setViewTransition(nextTransition);
+
+      if (viewTransitionResetTimerRef.current) {
+        clearTimeout(viewTransitionResetTimerRef.current);
+      }
+
+      viewTransitionResetTimerRef.current = setTimeout(() => {
+        setViewTransition(null);
+        viewTransitionResetTimerRef.current = null;
+      }, 1400);
+    };
+
+    const runAfterRouteReveal = (callback) => {
+      if (document.documentElement.dataset.pageTransition === "active") {
+        transitionIdleHandler = () => {
+          callback();
+        };
+
+        window.addEventListener("page-transition-idle", transitionIdleHandler, {
+          once: true,
+        });
+        return;
+      }
+
+      callback();
+    };
+
+    // Initial route arrival at /?view=list: keep list links hidden until
+    // after route reveal + nav enter delay, then run one stagger reveal.
+    if (handledUrlViewModeRef.current === null && urlViewMode === "list") {
+      setIsInitialListEntryPending(true);
+      runAfterRouteReveal(() => {
+        listStaggerDelayTimeoutId = window.setTimeout(() => {
+          if (handledUrlViewModeRef.current === "list") return;
+          setIsInitialListEntryPending(false);
+          handledUrlViewModeRef.current = "list";
+          triggerViewTransition("toList");
+          listStaggerDelayTimeoutId = null;
+        }, LIST_STAGGER_START_DELAY_MS);
+      });
+      return cleanup;
+    }
+
+    if (handledUrlViewModeRef.current === null) {
+      handledUrlViewModeRef.current = urlViewMode;
+      setIsInitialListEntryPending(false);
+      return cleanup;
+    }
+
+    if (handledUrlViewModeRef.current === urlViewMode) return cleanup;
+
+    const applyViewModeFromUrl = () => {
+      handledUrlViewModeRef.current = urlViewMode;
+      setIsInitialListEntryPending(false);
+      const nextTransition = urlViewMode === "list" ? "toList" : "toGrid";
+      triggerViewTransition(nextTransition);
+
+      setViewMode((currentViewMode) => {
+        if (currentViewMode === urlViewMode) return currentViewMode;
+        return urlViewMode;
+      });
+    };
+
+    runAfterRouteReveal(() => {
+      applyViewModeFromUrl();
+    });
+
+    return cleanup;
+  }, [urlViewMode, viewMode]);
 
   // Initial setup effect
   useEffect(() => {
@@ -578,6 +676,8 @@ export default function Home() {
           href={`/project/${encodeURIComponent(photo.name)}`}
           className={`${styles.listLink} ${
             viewTransition === "toList" ? styles.listLinkStaggerIn : ""
+          } ${
+            isInitialListEntryPending ? styles.listLinkInitialHidden : ""
           }`}
           onMouseEnter={(event) => handleListItemMouseEnter(photo, event)}
           onMouseMove={handleListItemMouseMove}

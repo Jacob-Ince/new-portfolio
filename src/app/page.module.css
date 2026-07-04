@@ -158,6 +158,11 @@
   animation-delay: calc(var(--stagger-index, 0) * 36ms);
 }
 
+.listLinkInitialHidden {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
 .listMeta {
   display: flex;
   flex: 1;
