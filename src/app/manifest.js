@@ -2,7 +2,8 @@ export default function manifest() {
   return {
     name: "jac.ob — Jacob Ince",
     short_name: "jac.ob",
-    description: "A Web Development Portfolio by Jacob Ince",
+    description:
+      "Portfolio of Jacob Ince, a London-based front-end developer creating interactive web experiences across development, design, motion, and 3D.",
     start_url: "/",
     display: "standalone",
     background_color: "#000000",

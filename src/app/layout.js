@@ -17,7 +17,7 @@ export const metadata = {
     template: "%s — jac.ob",
   },
   description:
-    "Jacob Ince is a London-based web developer working at the intersection of visual storytelling and engineering.",
+    "Portfolio of Jacob Ince, a London-based front-end developer creating interactive web experiences across development, design, motion, and 3D.",
   metadataBase: new URL("https://www.jacobince.com"),
   alternates: {
     canonical: "/",
