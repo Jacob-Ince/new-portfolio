@@ -7,6 +7,17 @@
   }
 }
 
+@keyframes fadeInUpSoft {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .aboutMain {
   min-height: 100vh;
   padding: 4rem 4rem 3rem 2.25rem;
@@ -273,13 +284,7 @@
 
   .titleMask {
     flex: 0 0 auto;
-    overflow: visible;
-  }
-
-  .titleMask > * {
-    opacity: 1;
-    transform: none;
-    animation: none;
+    overflow: hidden;
   }
 
   .bioHasOverlay {
@@ -290,26 +295,23 @@
     display: none;
   }
 
-  .bioLineMask {
-    overflow: visible;
-  }
-
-  .bioLine {
-    opacity: 1;
-    transform: none;
-    animation: none;
+  .bioParagraph {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUpSoft 420ms ease-out forwards;
+    animation-delay: 120ms;
   }
 
   .animatedLi {
-    overflow: visible;
+    overflow: hidden;
     width: calc(50% - 0.75rem);
   }
 
   .animatedLi a {
-    display: inline;
-    opacity: 1;
-    transform: none;
-    animation: none;
+    display: block;
+    transform: translateY(105%);
+    animation: slideInUp 360ms ease-out forwards;
+    animation-delay: var(--li-delay, 0ms);
   }
 
   .textContent ul {

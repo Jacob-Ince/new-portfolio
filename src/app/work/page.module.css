@@ -9,7 +9,7 @@
 }
 
 .workTitle {
-  margin: 0 0 2.5rem;
+  margin: 0 0 3.5rem;
   display: inline-flex;
   gap: 0.25em;
   font-size: 20px;
@@ -38,8 +38,9 @@
 
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 10px;
+  row-gap: 30px;
 }
 
 .card {
@@ -47,6 +48,17 @@
   background: #fff;
   color: inherit;
   text-decoration: none;
+}
+
+.cardMediaLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.cardMediaLink:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 2px;
 }
 
 .cardEnter {
@@ -146,6 +158,55 @@
   line-height: 1.2;
 }
 
+.cardCredit {
+  margin: 0.5rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #5a5a5a;
+  letter-spacing: 0.01em;
+}
+
+.cardCreditStudio,
+.cardCreditBuiltAt {
+  display: block;
+}
+
+.cardCreditLink {
+  position: relative;
+  display: inline-block;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(90, 90, 90, 0.6);
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  line-height: 1;
+  isolation: isolate;
+}
+
+.cardCreditLink::before {
+  content: "";
+  position: absolute;
+  inset: -1px -3px;
+  background: rgba(13, 255, 0, 0.9);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: -1;
+  border-radius: 1px;
+}
+
+.cardCreditLink:hover::before {
+  transform: scaleX(1);
+}
+
+.cardCreditLink:focus-visible {
+  outline: 1px solid #000;
+  outline-offset: 2px;
+}
+
 @keyframes workTitleIn {
   from {
     opacity: 0;
@@ -190,6 +251,10 @@
     padding: 4rem 0 3rem;
   }
 
+  .workTitle {
+    margin: 0 0 2.5rem;
+  }
+
   .cardsGrid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -206,6 +271,10 @@
     min-height: 0;
     box-sizing: border-box;
     padding: clamp(8rem, 11vw, 6rem) 0 0.25rem;
+  }
+
+  .cardsGrid {
+    padding-bottom: 2rem;
   }
 }
 

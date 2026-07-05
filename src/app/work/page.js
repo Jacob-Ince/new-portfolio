@@ -59,6 +59,8 @@ export default function WorkPage() {
     typeof mimeType === "string" && mimeType.toLowerCase().startsWith("video/");
   const hasExternalUrl = (url) =>
     typeof url === "string" && /^https?:\/\//i.test(url.trim());
+  const getCreditValue = (value) =>
+    typeof value === "string" && value.trim().length > 0 ? value.trim() : null;
 
   return (
     <NavMenu
@@ -89,32 +91,60 @@ export default function WorkPage() {
           </p> */}
           <section className={styles.cardsGrid} aria-label="Work cards">
             {cardsToRender.map((card, index) => {
-              const cardBody = (
-                <>
-                  <div className={styles.cardMedia}>
-                    {card.mediaUrl ? (
-                      isVideoMimeType(card.mediaMimeType) ? (
-                        <video
-                          src={card.mediaUrl}
-                          className={styles.cardMediaAsset}
-                          muted
-                          playsInline
-                          autoPlay
-                          loop
-                        />
-                      ) : (
-                        <img
-                          src={card.mediaUrl}
-                          alt={card.mediaAlt || card.title || "Work card media"}
-                          className={styles.cardMediaAsset}
-                          loading="lazy"
-                        />
-                      )
-                    ) : null}
-                    <span className={styles.cardViewBadge} aria-hidden="true">
-                      view
-                    </span>
-                  </div>
+              const designStudio = getCreditValue(card.designStudio);
+              const builtAtStudio = getCreditValue(card.builtAtStudio);
+              const designStudioUrl = hasExternalUrl(card.designStudioUrl)
+                ? card.designStudioUrl.trim()
+                : null;
+              const builtAtStudioUrl = hasExternalUrl(card.builtAtStudioUrl)
+                ? card.builtAtStudioUrl.trim()
+                : null;
+              const mediaContent = (
+                <div className={styles.cardMedia}>
+                  {card.mediaUrl ? (
+                    isVideoMimeType(card.mediaMimeType) ? (
+                      <video
+                        src={card.mediaUrl}
+                        className={styles.cardMediaAsset}
+                        muted
+                        playsInline
+                        autoPlay
+                        loop
+                      />
+                    ) : (
+                      <img
+                        src={card.mediaUrl}
+                        alt={card.mediaAlt || card.title || "Work card media"}
+                        className={styles.cardMediaAsset}
+                        loading="lazy"
+                      />
+                    )
+                  ) : null}
+                  <span className={styles.cardViewBadge} aria-hidden="true">
+                    view
+                  </span>
+                </div>
+              );
+
+              return (
+                <article
+                  key={card._id}
+                  className={`${styles.card} ${hasEntered ? styles.cardEnter : ""}`}
+                  style={{ "--card-index": index }}
+                >
+                  {hasExternalUrl(card.url) ? (
+                    <a
+                      href={card.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.cardMediaLink}
+                      aria-label={`Open ${card.title || "project"}`}
+                    >
+                      {mediaContent}
+                    </a>
+                  ) : (
+                    mediaContent
+                  )}
                   <div className={styles.cardContent}>
                     <div className={styles.cardCategoryList}>
                       {(Array.isArray(card.categories) ? card.categories : [])
@@ -129,32 +159,45 @@ export default function WorkPage() {
                         ))}
                     </div>
                     <h2 className={styles.cardTitle}>{card.title}</h2>
+                    {designStudio || builtAtStudio ? (
+                      <p className={styles.cardCredit}>
+                        {designStudio ? (
+                          <span className={styles.cardCreditStudio}>
+                            Design by{" "}
+                            {designStudioUrl ? (
+                              <a
+                                href={designStudioUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.cardCreditLink}
+                              >
+                                {designStudio}
+                              </a>
+                            ) : (
+                              designStudio
+                            )}
+                          </span>
+                        ) : null}
+                        {builtAtStudio ? (
+                          <span className={styles.cardCreditBuiltAt}>
+                            Built at{" "}
+                            {builtAtStudioUrl ? (
+                              <a
+                                href={builtAtStudioUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={styles.cardCreditLink}
+                              >
+                                {builtAtStudio}
+                              </a>
+                            ) : (
+                              builtAtStudio
+                            )}
+                          </span>
+                        ) : null}
+                      </p>
+                    ) : null}
                   </div>
-                </>
-              );
-
-              if (hasExternalUrl(card.url)) {
-                return (
-                  <a
-                    key={card._id}
-                    href={card.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`${styles.card} ${hasEntered ? styles.cardEnter : ""}`}
-                    style={{ "--card-index": index }}
-                  >
-                    {cardBody}
-                  </a>
-                );
-              }
-
-              return (
-                <article
-                  key={card._id}
-                  className={`${styles.card} ${hasEntered ? styles.cardEnter : ""}`}
-                  style={{ "--card-index": index }}
-                >
-                  {cardBody}
                 </article>
               );
             })}

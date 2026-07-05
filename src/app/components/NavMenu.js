@@ -258,6 +258,13 @@ export default function NavMenu({
     onViewModeChange?.("grid");
   };
 
+  const handleLogoClick = (event) => {
+    if (!isHomePage || viewMode !== "list") return;
+
+    event.preventDefault();
+    onViewModeChange?.("grid");
+  };
+
   const handleMobileLabClick = (event) => {
     if (isHomePage) {
       event.preventDefault();
@@ -285,6 +292,8 @@ export default function NavMenu({
             href="/"
             ref={logoRef}
             className={`${styles.navbarLogo} ${styles.linkLogo}`}
+            data-no-transition={isHomePage ? "true" : undefined}
+            onClick={handleLogoClick}
           >
             <span className={styles.originalText}>jac.ob</span>
           </Link>

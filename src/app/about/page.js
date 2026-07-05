@@ -34,6 +34,7 @@ const clients = [
 ];
 
 const connects = [
+  { name: "Email", url: "mailto:hello@jacobince.com" },
   { name: "Are.na", url: "https://www.are.na/jacob-ince/channels" },
   { name: "Linkedin", url: "https://linkedin.com/in/jacobince" },
   { name: "Instagram", url: "https://www.instagram.com/aka_goblin/" },

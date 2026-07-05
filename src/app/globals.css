@@ -32,6 +32,10 @@ body {
   overflow-x: hidden;
 }
 
+html {
+  background: var(--background);
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

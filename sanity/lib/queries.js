@@ -56,6 +56,10 @@ export const workCardsQuery = groq`
     "mediaRef": coalesce(media.asset._ref, media._ref),
     "mediaMimeType": coalesce(media.asset->mimeType, media->mimeType),
     mediaAlt,
+    designStudio,
+    designStudioUrl,
+    builtAtStudio,
+    builtAtStudioUrl,
     orderRank
   }
 `;

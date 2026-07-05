@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./Splash.module.css";
 
 const WORDMARK = "jac.ob";
+const WORDMARK_CHARS = WORDMARK.split("");
 const FADE_STEP_DURATION = 170;
 const CONVERGE_DELAY = 260;
 const CONVERGE_DURATION = 700;
@@ -18,7 +19,7 @@ export default function Splash({
 }) {
   const [characterPoints, setCharacterPoints] = useState([]);
   const [targetPoints, setTargetPoints] = useState([]);
-  const [visibleCount, setVisibleCount] = useState(0);
+  const [isAnimatingIn, setIsAnimatingIn] = useState(false);
   const [isConverging, setIsConverging] = useState(false);
   const [hasConverged, setHasConverged] = useState(false);
   const overlayRef = useRef(null);
@@ -34,11 +35,11 @@ export default function Splash({
     };
 
     clearAnimationTimers();
-    setVisibleCount(0);
+    setIsAnimatingIn(false);
     setIsConverging(false);
     setHasConverged(false);
 
-    const randomPoints = WORDMARK.split("").map(() => ({
+    const randomPoints = WORDMARK_CHARS.map(() => ({
       x:
         EDGE_PADDING +
         Math.random() * Math.max(1, window.innerWidth - EDGE_PADDING * 2),
@@ -47,6 +48,11 @@ export default function Splash({
         Math.random() * Math.max(1, window.innerHeight - EDGE_PADDING * 2),
     }));
     setCharacterPoints(randomPoints);
+
+    const startFadeInTimer = setTimeout(() => {
+      setIsAnimatingIn(true);
+    }, 20);
+    animationTimersRef.current.push(startFadeInTimer);
 
     const measureTargetPoints = () => {
       const nextTargets = targetCharRefs.current.map((node) => {
@@ -64,13 +70,6 @@ export default function Splash({
 
     const rafId = window.requestAnimationFrame(measureTargetPoints);
 
-    WORDMARK.split("").forEach((_, index) => {
-      const fadeTimer = setTimeout(() => {
-        setVisibleCount(index + 1);
-      }, index * FADE_STEP_DURATION);
-      animationTimersRef.current.push(fadeTimer);
-    });
-
     const convergeTimer = setTimeout(
       () => {
         setIsConverging(true);
@@ -79,7 +78,7 @@ export default function Splash({
         }, CONVERGE_DURATION);
         animationTimersRef.current.push(completeTimer);
       },
-      WORDMARK.length * FADE_STEP_DURATION + CONVERGE_DELAY,
+      WORDMARK_CHARS.length * FADE_STEP_DURATION + CONVERGE_DELAY,
     );
     animationTimersRef.current.push(convergeTimer);
 
@@ -129,7 +128,7 @@ export default function Splash({
   return (
     <div ref={overlayRef} className={styles.overlay} translate="no">
       <p className={styles.targetWord} aria-hidden="true">
-        {WORDMARK.split("").map((char, index) => (
+        {WORDMARK_CHARS.map((char, index) => (
           <span
             key={`target-${index}`}
             ref={(node) => {
@@ -143,23 +142,24 @@ export default function Splash({
       </p>
 
       <div className={styles.charLayer} lang="en" translate="no">
-        {WORDMARK.split("").map((char, index) => {
+        {WORDMARK_CHARS.map((char, index) => {
           const fromPoint = characterPoints[index] ?? targetPoints[index];
           const toPoint = targetPoints[index] ?? fromPoint;
-          const point = isConverging ? toPoint : fromPoint;
-          if (!point) return null;
+          if (!fromPoint || !toPoint) return null;
 
           return (
             <span
               key={`char-${index}`}
-              className={styles.char}
+              className={`${styles.char} ${
+                isAnimatingIn ? styles.charVisible : ""
+              } ${isConverging ? styles.charConverging : ""}`}
               style={{
-                left: `${point.x}px`,
-                top: `${point.y}px`,
-                opacity: index < visibleCount ? 1 : 0,
-                transitionDuration: isConverging
-                  ? `${CONVERGE_DURATION}ms`
-                  : "220ms",
+                "--from-x": `${fromPoint.x}px`,
+                "--from-y": `${fromPoint.y}px`,
+                "--to-x": `${toPoint.x}px`,
+                "--to-y": `${toPoint.y}px`,
+                "--fade-delay": `${index * FADE_STEP_DURATION}ms`,
+                transitionDuration: `${CONVERGE_DURATION}ms, 220ms`,
               }}
             >
               {char}

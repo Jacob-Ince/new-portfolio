@@ -11,7 +11,13 @@ export const structure: StructureResolver = (S, context) =>
         S,
         context,
       }),
+      orderableDocumentListDeskItem({
+        type: 'workCard',
+        title: 'Work',
+        S,
+        context,
+      }),
       ...S.documentTypeListItems().filter(
-        (listItem) => !['mediaAsset'].includes(listItem.getId())
+        (listItem) => !['mediaAsset', 'workCard'].includes(listItem.getId())
       ),
     ])

@@ -56,6 +56,42 @@ export const workCardSchema = defineType({
           allowRelative: false,
         }),
     }),
+    defineField({
+      name: "designStudio",
+      title: "Design Studio Name",
+      type: "string",
+      description: 'Displayed as "Designed by [studio]" under the card title.',
+    }),
+    defineField({
+      name: "designStudioUrl",
+      title: "Design Studio URL",
+      type: "url",
+      description: "Optional link for the design studio credit.",
+      hidden: ({ document }) => !document?.designStudio,
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+          allowRelative: false,
+        }),
+    }),
+    defineField({
+      name: "builtAtStudio",
+      title: "Built At Studio Name",
+      type: "string",
+      description: 'Displayed as "Built at [studio]" under the card title.',
+    }),
+    defineField({
+      name: "builtAtStudioUrl",
+      title: "Built At Studio URL",
+      type: "url",
+      description: "Optional link for the built-at studio credit.",
+      hidden: ({ document }) => !document?.builtAtStudio,
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+          allowRelative: false,
+        }),
+    }),
     orderRankField({ type: "workCard" }),
   ],
   preview: {
