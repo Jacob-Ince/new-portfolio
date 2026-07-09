@@ -59,6 +59,10 @@ export default function AboutPage() {
   });
 
   const bioWords = BIO_TEXT.split(/\s+/).filter(Boolean);
+  const mobileImageDelayMs =
+    sectionDelays.connectBase +
+    (connects.length - 1) * CONNECT_LI_STAGGER +
+    260;
   const renderBioText = (text, withLink = false) => {
     const parts = text.split(BIO_UNDERLINE_TEXT);
     return parts.flatMap((part, index) =>
@@ -248,7 +252,10 @@ export default function AboutPage() {
                 </ul>
               </div>
             </div>
-            <div className={styles.imageWrapper}>
+            <div
+              className={styles.imageWrapper}
+              style={{ "--image-delay": `${mobileImageDelayMs}ms` }}
+            >
               <PixelatedImage
                 src="/images/profile-zoomed.png"
                 alt="Jacob Ince"

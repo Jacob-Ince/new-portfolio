@@ -94,7 +94,10 @@ export default function Home() {
         listStaggerDelayTimeoutId = null;
       }
       if (transitionIdleHandler) {
-        window.removeEventListener("page-transition-idle", transitionIdleHandler);
+        window.removeEventListener(
+          "page-transition-idle",
+          transitionIdleHandler,
+        );
         transitionIdleHandler = null;
       }
     };
@@ -127,8 +130,6 @@ export default function Home() {
       callback();
     };
 
-    // Initial route arrival at /?view=list: keep list links hidden until
-    // after route reveal + nav enter delay, then run one stagger reveal.
     if (handledUrlViewModeRef.current === null && urlViewMode === "list") {
       setIsInitialListEntryPending(true);
       runAfterRouteReveal(() => {
@@ -170,9 +171,7 @@ export default function Home() {
     return cleanup;
   }, [urlViewMode, viewMode]);
 
-  // Initial setup effect
   useEffect(() => {
-    // Check if device is mobile
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -190,7 +189,6 @@ export default function Home() {
     };
   }, []);
 
-  // Setup intersection observer for videos
   useEffect(() => {
     if (!mounted) return;
 
@@ -207,12 +205,10 @@ export default function Home() {
               video.readyState,
             );
 
-            // Start loading video data immediately when it comes into view
             if (video.preload === "metadata") {
               video.preload = "auto";
             }
 
-            // Try to play the video if it's ready
             if (video.readyState >= 2) {
               console.log(
                 `Video ${videoId} ready to play, attempting playback`,
@@ -238,7 +234,6 @@ export default function Home() {
       },
     );
 
-    // Pause all videos when page becomes hidden
     const handleVisibilityChange = () => {
       if (document.hidden) {
         Object.values(videoRefs.current).forEach((video) => {
@@ -249,7 +244,6 @@ export default function Home() {
         return;
       }
 
-      // Resume videos that are back in view when returning to the tab
       Object.values(videoRefs.current).forEach((video) => {
         if (!video) return;
 
@@ -270,7 +264,6 @@ export default function Home() {
       });
     };
 
-    // Additional safety measure: pause videos that are out of view on scroll
     const handleScroll = () => {
       Object.values(videoRefs.current).forEach((video) => {
         if (video && !video.paused) {
@@ -652,16 +645,45 @@ export default function Home() {
     [handleLoad, isMobile, observeVideo, playVideo, viewTransition],
   );
 
-  // Apply loaded state directly to DOM so masonry children stay stable.
-  // Re-run when returning to grid view because those DOM nodes remount.
-  useEffect(() => {
+  const applyLoadedStateToGridItems = useCallback(() => {
     if (viewMode !== "grid") return;
 
     loadedItems.forEach((id) => {
       const el = document.querySelector(`[data-photo-id="${id}"]`);
       if (el) el.dataset.loaded = "true";
     });
-  }, [loadedItems, viewMode, photosData.length]);
+  }, [loadedItems, viewMode]);
+
+  useEffect(() => {
+    applyLoadedStateToGridItems();
+  }, [applyLoadedStateToGridItems, photosData.length]);
+
+  useEffect(() => {
+    if (viewMode !== "grid") return;
+
+    let frame1 = null;
+    let frame2 = null;
+
+    const reapplyAfterLayout = () => {
+      if (frame1) cancelAnimationFrame(frame1);
+      if (frame2) cancelAnimationFrame(frame2);
+
+      frame1 = requestAnimationFrame(() => {
+        applyLoadedStateToGridItems();
+        frame2 = requestAnimationFrame(() => {
+          applyLoadedStateToGridItems();
+        });
+      });
+    };
+
+    window.addEventListener("resize", reapplyAfterLayout, { passive: true });
+
+    return () => {
+      window.removeEventListener("resize", reapplyAfterLayout);
+      if (frame1) cancelAnimationFrame(frame1);
+      if (frame2) cancelAnimationFrame(frame2);
+    };
+  }, [applyLoadedStateToGridItems, viewMode]);
 
   const renderListItem = (photo, index) => {
     if (!photo?.src) return null;
@@ -676,9 +698,7 @@ export default function Home() {
           href={`/project/${encodeURIComponent(photo.name)}`}
           className={`${styles.listLink} ${
             viewTransition === "toList" ? styles.listLinkStaggerIn : ""
-          } ${
-            isInitialListEntryPending ? styles.listLinkInitialHidden : ""
-          }`}
+          } ${isInitialListEntryPending ? styles.listLinkInitialHidden : ""}`}
           onMouseEnter={(event) => handleListItemMouseEnter(photo, event)}
           onMouseMove={handleListItemMouseMove}
           onMouseLeave={handleListItemMouseLeave}
@@ -783,9 +803,6 @@ export default function Home() {
     ? 0
     : Math.min(splashBatchSize, sortedPhotos.length);
 
-  // Stable masonry children — only recomputed when data or column count changes,
-  // never when loadedItems changes. This prevents masonry from remeasuring
-  // mid-flight and locking in wrong column heights on back navigation.
   const masonryItems = useMemo(
     () =>
       sortedPhotos.map((photo, index) =>
@@ -839,7 +856,6 @@ export default function Home() {
     mounted,
   ]);
 
-  // Keep the splash in place during initial hydration.
   if (!mounted) {
     return <Splash isVisible isReadyToReveal={false} />;
   }
