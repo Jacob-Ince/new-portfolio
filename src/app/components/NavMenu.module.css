@@ -566,6 +566,12 @@
   justify-content: space-between;
 }
 
+.footerHidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .footerTitle {
   margin: 0;
   font-size: 14px;

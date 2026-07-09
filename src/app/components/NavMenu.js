@@ -22,6 +22,7 @@ export default function NavMenu({
   onViewModeChange,
   footerClassName = "",
   footerStyle,
+  hideFooter = false,
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuClosing, setIsMenuClosing] = useState(false);
@@ -496,8 +497,9 @@ export default function NavMenu({
       </div>
       {children}
       <footer
-        className={`${styles.footer} ${footerClassName}`.trim()}
+        className={`${styles.footer} ${hideFooter ? styles.footerHidden : ""} ${footerClassName}`.trim()}
         style={footerStyle}
+        aria-hidden={hideFooter ? "true" : undefined}
       >
         <div className={styles.footerLeft}>
           <p className={styles.footerTitle}>

@@ -861,7 +861,11 @@ export default function Home() {
   }
 
   return (
-    <NavMenu viewMode={viewMode} onViewModeChange={handleViewModeChange}>
+    <NavMenu
+      viewMode={viewMode}
+      onViewModeChange={handleViewModeChange}
+      hideFooter={loading}
+    >
       <main className={styles.main}>
         <div
           className={styles.mobileViewToggle}
