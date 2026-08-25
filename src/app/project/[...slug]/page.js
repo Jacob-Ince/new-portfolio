@@ -368,6 +368,7 @@ export default function ProjectPage({ params }) {
                   loop
                   muted
                   playsInline
+                  preload="metadata"
                   controls={false}
                   controlsList="nodownload noplaybackrate noremoteplayback"
                   disablePictureInPicture

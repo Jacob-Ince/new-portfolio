@@ -1,317 +1,672 @@
 [
   {
     "id": 1,
-    "type": "image",
-    "src": "/images/lute-icon.png",
-    "name": "lute-icon.png",
-    "alt": "lute-icon.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/Another-Archive.mp4",
+    "name": "Another Archive",
+    "alt": "Another-Archive.MP4",
+    "displayName": "",
+    "projectDescription": "An ongoing visual archive. Objects, images and moments I've been collecting as references. Fragments assembled without any particular hierarchy.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
+    "orderRank": "0|090006:"
   },
   {
     "id": 2,
     "type": "image",
-    "src": "/images/profile-zoomed.png",
-    "name": "profile-zoomed.png",
-    "alt": "profile-zoomed.png",
+    "src": "/fallback-media/images/Feather-Dive.jpg",
+    "name": "Feather Dive",
+    "alt": "files.jpg",
+    "displayName": "",
+    "projectDescription": "A single form suspended in open space. Exploring solitude and the feeling of being untethered.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|0i000c:"
   },
   {
     "id": 3,
     "type": "image",
-    "src": "/images/profile.png",
-    "name": "profile.png",
-    "alt": "profile.png",
+    "src": "/fallback-media/images/Stone-Focus.png",
+    "name": "Stone Focus",
+    "alt": "stone.png",
+    "displayName": "",
+    "projectDescription": "A 3D study of organic form and tactile texture. Exploring how something computer-generated could still feel weighty and hand-crafted.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design",
+      "3D"
+    ],
+    "orderRank": "0|0jor0c:"
   },
   {
     "id": 4,
-    "type": "image",
-    "src": "/images/stacked-symbols.png",
-    "name": "stacked-symbols.png",
-    "alt": "stacked-symbols.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/Soft-Substance.mp4",
+    "name": "Soft Substance",
+    "alt": "Soft Substance",
+    "displayName": "",
+    "projectDescription": "A material study built in Spline to explore soft, viscous behavior for a project with Clé de Peau. Focusing on an off-white lavender tone and diffused lighting to make the morphing form feel like luxury skincare cream in motion.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|0k900d:"
   },
   {
     "id": 5,
-    "type": "image",
-    "src": "/images/30years.png",
-    "name": "30years.png",
-    "alt": "30years.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/morph.mp4",
+    "name": "morph",
+    "alt": "shape-morph-2.mp4",
+    "displayName": "",
+    "projectDescription": "A discovery-phase motion study exploring how an icon can continuously transform while keeping a coherent visual identity. I built four SVG states and tested interpolation between dissimilar paths to reduce jumps and inversions, aiming for a seamless loop with a distinct shape-shifting character.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": true,
+    "projectTypes": [
+      "dev"
+    ],
+    "orderRank": "0|0ke29c:"
   },
   {
     "id": 6,
     "type": "image",
-    "src": "/images/demo-hoodie-test.png",
-    "name": "demo-hoodie-test.png",
-    "alt": "demo-hoodie-test.png",
-    "width": 800,
-    "height": 600
+    "src": "/fallback-media/images/Gulp.png",
+    "name": "Gulp",
+    "alt": "gulp",
+    "displayName": "Gulp",
+    "projectDescription": "A playful little character I drew while exploring bold, candy-bright shapes. Just a single neon-green silhouette sitting somewhere between a teddy bear and a gummy.",
+    "width": 200,
+    "height": 398,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|0t9017:"
   },
   {
     "id": 7,
-    "type": "image",
-    "src": "/images/chain-male-715.png",
-    "name": "chain-male-715.png",
-    "alt": "chain-male-715.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/Connext.mp4",
+    "name": "Connext",
+    "alt": "climb.MP4",
+    "displayName": "",
+    "projectDescription": "Connection and progression, where each part relies on the next to hold the structure together. Built to explore how linked elements can communicate support and momentum in a simple system.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": true,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|100020:"
   },
   {
     "id": 8,
-    "type": "image",
-    "src": "/images/XN-materials.png",
-    "name": "XN-materials.png",
-    "alt": "XN-materials.png",
+    "type": "video",
+    "src": "/fallback-media/videos/forever-faster.mp4",
+    "name": "forever faster",
+    "alt": "forever faster",
+    "displayName": "",
+    "projectDescription": "A motion piece built around speed and endurance as a visual language. Blurred athletic imagery and continuous movement, with the iconic Puma logo anchored in the centre, depicting effortless performance.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
+    "orderRank": "0|100028:"
   },
   {
     "id": 9,
-    "type": "image",
-    "src": "/images/stone.png",
-    "name": "stone.png",
-    "alt": "stone.png",
+    "type": "video",
+    "src": "/fallback-media/videos/ASCII-TouchDesiner.mp4",
+    "name": "ASCII TouchDesiner",
+    "alt": "ASCII-TouchDesiner",
+    "displayName": "",
+    "projectDescription": "Originally produced for a live music projection, this piece explores the relationship between raw organic texture and digital coded language. It builds a visual tempo that sits between physical presence and digital noise.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "design",
+      "motion"
+    ],
+    "orderRank": "0|10002d:"
   },
   {
     "id": 10,
     "type": "image",
-    "src": "/images/lab-tech.jpg",
-    "name": "lab-tech.jpg",
-    "alt": "lab-tech.jpg",
+    "src": "/fallback-media/images/symbols.png",
+    "name": "symbols",
+    "alt": "stacked-symbols.png",
+    "displayName": "",
+    "projectDescription": "A vertical stack of glyphs. Reads as an alphabet of abstract marks rather than a logo set.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10002f:"
   },
   {
     "id": 11,
-    "type": "image",
-    "src": "/images/me-3d.jpg",
-    "name": "me-3d.jpg",
-    "alt": "me-3d.jpg",
+    "type": "video",
+    "src": "/fallback-media/videos/metal-network.mp4",
+    "name": "metal network",
+    "alt": "metal network",
+    "displayName": "",
+    "projectDescription": "A 3D object inspired by blind drawings and tire marks found at roadsides. Beginning as an illustration, it was rebuilt as a form-driven object to test translation between 2D and 3D. It focuses on reflective behavior in motion, using rapid rotation and shifting light to emphasise surface and structure.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|10002m:"
   },
   {
     "id": 12,
     "type": "video",
-    "src": "/videos/715-rock%20(1).mp4",
-    "name": "715-rock (1).mp4",
-    "alt": "715-rock (1).mp4",
-    "width": 1280,
-    "height": 720
+    "src": "/fallback-media/videos/Raindrops.mp4",
+    "name": "Raindrops",
+    "alt": "raindrops",
+    "displayName": "Raindrops",
+    "projectDescription": "A WebGL rain effect simulating droplets on a glass surface, with realistic physics, a slow-creeping condensation layer and an interactive wipe gesture that clears the fog.",
+    "width": 720,
+    "height": 1280,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "3D"
+    ],
+    "orderRank": "0|10002o:"
   },
   {
     "id": 13,
-    "type": "video",
-    "src": "/videos/bolt.mp4",
-    "name": "bolt.mp4",
-    "alt": "bolt.mp4",
-    "width": 1280,
-    "height": 720
+    "type": "image",
+    "src": "/fallback-media/images/costume.png",
+    "name": "costume",
+    "alt": "costume design",
+    "displayName": "",
+    "projectDescription": "An editorial styling project where I built an experimental outfit from translucent plastic, hydration tubing, and tactical webbing. A take on what utility-wear might look like a few decades out.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10002r:"
   },
   {
     "id": 14,
-    "type": "image",
-    "src": "/images/b&w-3D-blob.png",
-    "name": "b&w-3D-blob.png",
-    "alt": "b&w-3D-blob.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/715-stone.mp4",
+    "name": "715 stone",
+    "alt": "715 stone.mp4",
+    "displayName": "",
+    "projectDescription": "Rooted in memory, using a marked stone as a symbol of place and identity. The “715” references the house number where I grew up, while the object itself nods to skipping stones, small gestures that carry distance and momentum.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|10002t:"
   },
   {
     "id": 15,
-    "type": "image",
-    "src": "/images/blue-poster.png",
-    "name": "blue-poster.png",
-    "alt": "blue-poster.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/byte-marks.mp4",
+    "name": "byte-marks",
+    "alt": "byte-marks",
+    "displayName": "byte-marks",
+    "projectDescription": "A short clip made for a Touchdesigner showreel I'm working on. ",
+    "width": 356,
+    "height": 435,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "design"
+    ],
+    "orderRank": "0|10002u:"
   },
   {
     "id": 16,
     "type": "image",
-    "src": "/images/boxer.PNG",
-    "name": "boxer.PNG",
-    "alt": "boxer.PNG",
+    "src": "/fallback-media/images/ballerina.jpg",
+    "name": "ballerina",
+    "alt": "ballerina.png",
+    "displayName": "",
+    "projectDescription": "A grainy, washed-out portrait of a ballerina mid-pose. I leaned hard into the over-exposure and film grain to push it somewhere between a photograph and a fading memory.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|100040:"
   },
   {
     "id": 17,
     "type": "image",
-    "src": "/images/me.jpg",
-    "name": "me.jpg",
-    "alt": "me.jpg",
+    "src": "/fallback-media/images/XN-materials.png",
+    "name": "XN-materials",
+    "alt": "XN-materials.png",
+    "displayName": "",
+    "projectDescription": "Branding and a spec sheet I designed for XN-Materials, a fictional technical apparel brand. Heavy monospaced type, a single saturated green, and the clinical detail you'd find on a real garment tag.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|100048:"
   },
   {
     "id": 18,
     "type": "video",
-    "src": "/videos/715-BOA-squares.mp4",
-    "name": "715-BOA-squares.mp4",
-    "alt": "715-BOA-squares.mp4",
+    "src": "/fallback-media/videos/Root-Structure.mp4",
+    "name": "Root Structure",
+    "alt": "metal-network-v1.1.MP4",
+    "displayName": "",
+    "projectDescription": "Inspired by organic networks and plant root structures, this piece began as an illustration before being rebuilt as a form-driven object to test translation between 2D and 3D. This variation explores reflective behaviour in motion through shape and colour treatment.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|10004o:"
   },
   {
     "id": 19,
-    "type": "image",
-    "src": "/images/3D-blob-dots.png",
-    "name": "3D-blob-dots.png",
-    "alt": "3D-blob-dots.png",
-    "width": 800,
-    "height": 600
+    "type": "video",
+    "src": "/fallback-media/videos/Fabric-Field.mp4",
+    "name": "Fabric Field",
+    "alt": "net-mesh-compressed.mp4",
+    "displayName": "",
+    "projectDescription": "An interactive material exploring a woven digital surface that responds to cursor movement in real time. The goal was to test whether fabric physics could be translated digitally, to make the structure feel reactive, elastic and alive.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "3d"
+    ],
+    "orderRank": "0|100054:"
   },
   {
     "id": 20,
     "type": "video",
-    "src": "/videos/BOA-TEST.mp4",
-    "name": "BOA-TEST.mp4",
-    "alt": "BOA-TEST.mp4",
+    "src": "/fallback-media/videos/Nike-AR-Reveal.mp4",
+    "name": "Nike AR Reveal",
+    "alt": "augmented.mp4",
+    "displayName": "",
+    "projectDescription": "An augmented reality project using an 8thWall business card as an image anchor to trigger a layered brand experience. The card transitions into my Nike design across its surface, with a pair of 3D Nike shoes rendering into the composition. This shows how digital product storytelling can unfold in a physical space.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "3d"
+    ],
+    "orderRank": "0|10005k:"
   },
   {
     "id": 21,
     "type": "image",
-    "src": "/images/orange-symbols.png",
-    "name": "orange-symbols.png",
-    "alt": "orange-symbols.png",
+    "src": "/fallback-media/images/30-years.png",
+    "name": "30 years",
+    "alt": "30years.png",
+    "displayName": "",
+    "projectDescription": "An editorial spread I designed celebrating 715 Studio's 30-year anniversary. Built around an oversized custom display typeface, with large numerals anchoring a quiet, archival-feeling layout.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10006w:"
   },
   {
     "id": 22,
-    "type": "video",
-    "src": "/videos/Linear-Cards.mp4",
-    "name": "Linear-Cards.mp4",
-    "alt": "Linear-Cards.mp4",
-    "width": 1280,
-    "height": 720
+    "type": "image",
+    "src": "/fallback-media/images/hoodie.png",
+    "name": "hoodie",
+    "alt": "hoodie.png",
+    "displayName": "",
+    "projectDescription": "A simple apparel concept — a royal blue hoodie with a pink Old English \"DEMO\" graphic across the chest. A quick exercise in pairing classic blackletter with a high-saturation palette.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10007c:"
   },
   {
     "id": 23,
     "type": "video",
-    "src": "/videos/face-mesh-compressed.mp4",
-    "name": "face-mesh-compressed.mp4",
-    "alt": "face-mesh-compressed.mp4",
-    "width": 1280,
-    "height": 720
+    "src": "/fallback-media/videos/growth.mp4",
+    "name": "growth",
+    "alt": "growth",
+    "displayName": "growth",
+    "projectDescription": "A time-lapse composition of blooming flowers processed through an ASCII filter. Exploring growth through a hybrid visual language, where nature is reframed through digital structure.",
+    "width": 400,
+    "height": 200,
+    "invertColor": false,
+    "projectTypes": [
+      "design",
+      "dev"
+    ],
+    "orderRank": "0|10007k:"
   },
   {
     "id": 24,
     "type": "image",
-    "src": "/images/tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
-    "name": "tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
-    "alt": "tumblr_b2dbdfc17e8f9e3988b513ec6a88de82_2f0550b2_2048.jpg",
+    "src": "/fallback-media/images/M3.jpg",
+    "name": "M3",
+    "alt": "me in three.jpg",
+    "displayName": "",
+    "projectDescription": "A photogrammetry scan I made of myself in a cap and hoodie. I scanned my own head to learn the workflow and came out with a slightly haunted self-portrait.",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "3D"
+    ],
+    "orderRank": "0|10007s:"
   },
   {
     "id": 25,
-    "type": "video",
-    "src": "/videos/cursor-animation.mp4",
-    "name": "cursor-animation.mp4",
-    "alt": "cursor-animation.mp4",
-    "width": 1280,
-    "height": 720
+    "type": "image",
+    "src": "/fallback-media/images/blue.png",
+    "name": "blue",
+    "alt": "blue.png",
+    "displayName": "",
+    "projectDescription": "A digital archive card I designed using a custom pixel typeface. The orange-on-blue palette and CRT-style lettering nod to old asset-management interfaces and inventory tags.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|100088:"
   },
   {
     "id": 26,
     "type": "image",
-    "src": "/images/files.jpg",
-    "name": "files.jpg",
-    "alt": "files.jpg",
+    "src": "/fallback-media/images/boxer.png",
+    "name": "boxer",
+    "alt": "boxer.PNG",
+    "displayName": "",
+    "projectDescription": "A black-and-white riso-style poster pulling together a boxer, a modernist building, and a set of keys, all sliced through with neon-green geometry. Made for a fictional press called \"Testpress\".",
     "width": 800,
-    "height": 600
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10008o:"
   },
   {
     "id": 27,
     "type": "video",
-    "src": "/videos/floppy-disk.mp4",
-    "name": "floppy-disk.mp4",
-    "alt": "floppy-disk.mp4",
+    "src": "/fallback-media/videos/bolt.mp4",
+    "name": "bolt",
+    "alt": "bolt.mp4",
+    "displayName": "",
+    "projectDescription": "Depicting the importance of foundational tools that join materials together, bringing attention to overlooked elements that enable stability, assembly, and long-term structure.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": true,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|10008w:"
   },
   {
     "id": 28,
     "type": "video",
-    "src": "/videos/hoop.mp4",
-    "name": "hoop.mp4",
-    "alt": "hoop.mp4",
+    "src": "/fallback-media/videos/BOA.mp4",
+    "name": "BOA",
+    "alt": "BOA.mp4",
+    "displayName": "",
+    "projectDescription": "Spatial typography set in a navigable 3D environment. Exploring fragmentation and depth through interaction, shifting the type from something read to something experienced.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|100094:"
+  },
+  {
+    "id": 29,
+    "type": "image",
+    "src": "/fallback-media/images/symbols-v2.png",
+    "name": "symbols v2",
+    "alt": "symbols.png",
+    "displayName": "",
+    "projectDescription": "Four custom occult-feeling glyphs I drew, set in saturated orange against a brushed-metal background. A small piece exploring symbolic shorthand and ornament.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10009k:"
   },
   {
     "id": 30,
     "type": "video",
-    "src": "/videos/modern-solutions.mp4",
-    "name": "modern-solutions.mp4",
-    "alt": "modern-solutions.mp4",
+    "src": "/fallback-media/videos/face-mesh.mp4",
+    "name": "face-mesh",
+    "alt": "face-mesh-compressed.mp4",
+    "displayName": "",
+    "projectDescription": "Built from a webcam input, warped through a reactive mesh overlay to distort the video in real time. Originally developed while exploring directions for a live event projection, it was inspired by signal jamming (the disruption of wireless communication) and translated into visual interference.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev"
+    ],
+    "orderRank": "0|1000a0:"
   },
   {
     "id": 31,
     "type": "video",
-    "src": "/videos/modulink-text-stretch.mp4",
-    "name": "modulink-text-stretch.mp4",
-    "alt": "modulink-text-stretch.mp4",
+    "src": "/fallback-media/videos/floppy-disk.mp4",
+    "name": "floppy-disk",
+    "alt": "floppy-disk.mp4",
+    "displayName": "",
+    "projectDescription": "A 3D piece centered on early digital memory and personal origin. The “715” printed on the floppy references the house number where I grew up and first started coding, turning a legacy storage object into a marker of where the work began.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|1000ag:"
   },
   {
     "id": 32,
     "type": "video",
-    "src": "/videos/mood=bored.MP4",
-    "name": "mood=bored.MP4",
-    "alt": "mood=bored.MP4",
+    "src": "/fallback-media/videos/modulink.mp4",
+    "name": "modulink",
+    "alt": "modulink.mp4",
+    "displayName": "",
+    "projectDescription": "Built over camcorder footage to give the piece a lo-fi, unstable base, this work uses motion and pacing to test how typography can behave like a signal, exploring the tension between control and disruption.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "motion"
+    ],
+    "orderRank": "0|1000aw:"
+  },
+  {
+    "id": 33,
+    "type": "video",
+    "src": "/fallback-media/videos/pixelate.mp4",
+    "name": "pixelate",
+    "alt": "pixelate.mp4",
+    "displayName": "",
+    "projectDescription": "Showcasing reveal and conceal transitions through linear masking and cell based pixelation, creating a rhythm between clarity and disruption.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "design"
+    ],
+    "orderRank": "0|1000bc:"
   },
   {
     "id": 34,
-    "type": "video",
-    "src": "/videos/nike-ar.mp4",
-    "name": "nike-ar.mp4",
-    "alt": "nike-ar.mp4",
-    "width": 1280,
-    "height": 720
+    "type": "image",
+    "src": "/fallback-media/images/Chainmail.png",
+    "name": "Chainmail",
+    "alt": "chain-male.png",
+    "displayName": "Chainmail",
+    "projectDescription": "A studio shot of a real chainmail coif paired with a pixelated \"715\" floating inside the face opening. A wordplay-driven crossover between medieval armour and digital type.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|1000c8:"
   },
   {
     "id": 35,
-    "type": "video",
-    "src": "/videos/pixelate.mp4",
-    "name": "pixelate.mp4",
-    "alt": "pixelate.mp4",
-    "width": 1280,
-    "height": 720
+    "type": "image",
+    "src": "/fallback-media/images/lab-tech.jpg",
+    "name": "lab-tech",
+    "alt": "lab-tech.jpg",
+    "displayName": "",
+    "projectDescription": "A technical 3D model of a small mechanical rig — something between a sample handler and a press. Pure functional geometry rendered clean and isometric.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|1000d4:"
   },
   {
     "id": 36,
     "type": "video",
-    "src": "/videos/shape-morph-2.mp4",
-    "name": "shape-morph-2.mp4",
-    "alt": "shape-morph-2.mp4",
+    "src": "/fallback-media/videos/715-BOA.mp4",
+    "name": "715-BOA",
+    "alt": "715-BOA-squares.mp4",
+    "displayName": "",
+    "projectDescription": "Built to frame five concepts within a 3x3 system. Motion acts as a quiet organising layer, allowing the composition to continuously reconfigure while keeping a clear and restrained visual order.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
+    "orderRank": "0|1000e0:"
   },
   {
     "id": 37,
+    "type": "image",
+    "src": "/fallback-media/images/blob-dots.png",
+    "name": "blob-dots",
+    "alt": "blob-dots.png",
+    "displayName": "",
+    "projectDescription": "A 3D experiment combining a soft, organic shape with a stippled, leopard-like dot pattern. I was playing with how surface treatment can completely change the read of a familiar form.",
+    "width": 800,
+    "height": 600,
+    "invertColor": false,
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|1000eg:"
+  },
+  {
+    "id": 38,
     "type": "video",
-    "src": "/videos/text-interaction.mp4",
-    "name": "text-interaction.mp4",
-    "alt": "text-interaction.mp4",
+    "src": "/fallback-media/videos/hoop.mp4",
+    "name": "hoop",
+    "alt": "hoop.mp4",
+    "displayName": "",
+    "projectDescription": "An interactive data visualisation concept where individual points assemble into a larger rotating form. Built to explore scale and perception, it lets users move through the structure and zoom between macro shape and micro detail.",
     "width": 1280,
-    "height": 720
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev"
+    ],
+    "orderRank": "0|1000ew:"
+  },
+  {
+    "id": 39,
+    "type": "video",
+    "src": "/fallback-media/videos/modern-solutions.mp4",
+    "name": "modern-solutions",
+    "alt": "modern-solutions.mp4",
+    "displayName": "",
+    "projectDescription": "A quiet provocation questioning whether fundamental human desire can ever truly be fulfilled by contemporary systems, no matter how advanced they appear.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev"
+    ],
+    "orderRank": "0|1000fc:"
+  },
+  {
+    "id": 40,
+    "type": "video",
+    "src": "/fallback-media/videos/text-interaction.mp4",
+    "name": "text-interaction",
+    "alt": "text-interaction.mp4",
+    "displayName": "",
+    "projectDescription": "A verse from a poem set loose in a physics-driven environment. Reacting to cursor movement, turning language from something linear and fixed into something spatial and alive.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "dev",
+      "motion"
+    ],
+    "orderRank": "0|1000fs:"
+  },
+  {
+    "id": 41,
+    "type": "video",
+    "src": "/fallback-media/videos/Lute-Studio.mp4",
+    "name": "Lute:Studio",
+    "alt": "Lute-Cards.mp4",
+    "displayName": "",
+    "projectDescription": "A first concept for Lute Studio, a studio direction I’d like to fully build in the future. It captures early visual thinking around identity, typography, and interface references, organised and reshuffled to test direction before anything is final.",
+    "width": 1280,
+    "height": 720,
+    "invertColor": false,
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
+    "orderRank": "0|ii007v:"
   }
 ]

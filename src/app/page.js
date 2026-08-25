@@ -8,7 +8,8 @@ import { useSearchParams } from "next/navigation";
 import NavMenu from "./components/NavMenu";
 import Splash from "./components/Splash";
 import Link from "next/link";
-import { getAllMediaAssets, transformSanityMedia } from "../lib/sanity";
+import fallbackMediaList from "./media-list.json";
+import { transformSanityMedia } from "../lib/sanity";
 
 const projectTypeClassMap = {
   dev: "typeDotDev",
@@ -30,6 +31,13 @@ const normalizeProjectType = (type) => {
 };
 
 export default function Home() {
+  const initialPhotosData = useMemo(
+    () =>
+      (Array.isArray(fallbackMediaList) ? fallbackMediaList : [])
+        .map(transformSanityMedia)
+        .filter(Boolean),
+    [],
+  );
   const searchParams = useSearchParams();
   const urlViewMode = searchParams.get("view");
   const initialViewMode = urlViewMode === "list" ? "list" : "grid";
@@ -39,8 +47,8 @@ export default function Home() {
   const [isSplashReadyToReveal, setIsSplashReadyToReveal] = useState(false);
   const [hasSplashMinimumElapsed, setHasSplashMinimumElapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [photosData, setPhotosData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [photosData] = useState(initialPhotosData);
+  const [loading] = useState(false);
   const [viewMode, setViewMode] = useState(initialViewMode);
   const [viewTransition, setViewTransition] = useState(null);
   const [isInitialListEntryPending, setIsInitialListEntryPending] = useState(
@@ -60,25 +68,6 @@ export default function Home() {
   const preloadedPreviewSrcsRef = useRef(new Set());
   const viewTransitionResetTimerRef = useRef(null);
   const handledUrlViewModeRef = useRef(null);
-
-  // Fetch media assets from Sanity
-  useEffect(() => {
-    async function fetchMediaAssets() {
-      try {
-        const assets = await getAllMediaAssets();
-        const transformed = assets.map(transformSanityMedia).filter(Boolean);
-        setPhotosData(transformed);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching media assets:", error);
-        // Fallback to empty array or handle error
-        setPhotosData([]);
-        setLoading(false);
-      }
-    }
-
-    fetchMediaAssets();
-  }, []);
 
   useEffect(() => {
     if (urlViewMode !== "list" && urlViewMode !== "grid") return;
@@ -360,7 +349,7 @@ export default function Home() {
     if (typeof src !== "string" || src.length === 0) return "";
     if (!src.includes("cdn.sanity.io/images/")) return src;
     const separator = src.includes("?") ? "&" : "?";
-    return `${src}${separator}w=720&fit=max&auto=format&q=70`;
+    return `${src}${separator}w=480&fit=max&auto=format&q=60`;
   }, []);
 
   const handleSplashRevealComplete = useCallback(() => {
@@ -517,8 +506,9 @@ export default function Home() {
         ? photo.projectTypes.map(normalizeProjectType).filter(Boolean)
         : [];
       const displayName = photo.displayName || photo.name;
+      const mediaSrc = photo.tileSrc || photo.src;
       const videoType =
-        photo.type === "video" ? getVideoMimeType(photo.src) : undefined;
+        photo.type === "video" ? getVideoMimeType(mediaSrc) : undefined;
 
       return (
         <Link
@@ -549,7 +539,7 @@ export default function Home() {
                   playsInline
                   autoPlay
                   loop
-                  preload={shouldPrioritizeForSplash ? "auto" : "metadata"}
+                  preload="metadata"
                   onLoadedData={() => {
                     handleLoad(photo.id);
                   }}
@@ -569,7 +559,7 @@ export default function Home() {
                     filter: photo.invertColor ? "invert(1)" : "none",
                   }}
                 >
-                  <source src={photo.src} type={videoType} />
+                  <source src={mediaSrc} type={videoType} />
                   Your browser does not support the video tag.
                 </video>
                 <span className={styles.mediaViewBadge} aria-hidden="true">
@@ -579,7 +569,7 @@ export default function Home() {
             ) : (
               <div className={styles.mediaWrapper}>
                 <Image
-                  src={photo.src}
+                  src={mediaSrc}
                   alt={photo.alt || "Image"}
                   width={photo.width}
                   height={photo.height}
@@ -774,26 +764,18 @@ export default function Home() {
 
   useEffect(() => {
     if (!mounted || isMobile || sortedPhotos.length === 0) return;
-    const warmupCandidates = sortedPhotos.slice(0, 12);
+    const warmupCandidates = sortedPhotos.slice(0, 4);
 
     warmupCandidates.forEach((photo) => {
-      if (!photo?.src) return;
-      if (preloadedPreviewSrcsRef.current.has(photo.src)) return;
-      preloadedPreviewSrcsRef.current.add(photo.src);
+      const previewSrc = photo.tileSrc || photo.src;
+      if (!previewSrc) return;
+      if (preloadedPreviewSrcsRef.current.has(previewSrc)) return;
+      preloadedPreviewSrcsRef.current.add(previewSrc);
 
       if (photo.type === "image") {
         const image = new window.Image();
         image.decoding = "async";
-        image.src = getListPreviewImageSrc(photo.src);
-        return;
-      }
-
-      if (photo.type === "video") {
-        const video = document.createElement("video");
-        video.preload = "metadata";
-        video.muted = true;
-        video.src = photo.src;
-        video.load();
+        image.src = getListPreviewImageSrc(previewSrc);
       }
     });
   }, [getListPreviewImageSrc, isMobile, mounted, sortedPhotos]);
@@ -925,17 +907,19 @@ export default function Home() {
               {hoveredListPhoto?.type === "video" ? (
                 <video
                   key={hoveredListPhoto.id}
-                  src={hoveredListPhoto.src}
+                  src={hoveredListPhoto.tileSrc || hoveredListPhoto.src}
                   className={styles.listHoverPreviewMedia}
                   muted
                   playsInline
                   autoPlay
                   loop
-                  preload="metadata"
+                  preload="none"
                 />
               ) : hoveredListPhoto?.src ? (
                 <img
-                  src={getListPreviewImageSrc(hoveredListPhoto.src)}
+                  src={getListPreviewImageSrc(
+                    hoveredListPhoto.tileSrc || hoveredListPhoto.src,
+                  )}
                   alt={hoveredListPhoto.alt || hoveredListPhoto.name || ""}
                   className={styles.listHoverPreviewMedia}
                   loading="eager"

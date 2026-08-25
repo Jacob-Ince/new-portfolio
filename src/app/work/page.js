@@ -1,209 +1,64 @@
-"use client";
+import WorkPageClient from "./WorkPageClient";
+import fallbackCards from "./work-cards-fallback.json";
+import { client } from "../../../sanity/lib/client";
+import { workCardsQuery } from "../../../sanity/lib/queries";
 
-import { useEffect, useState } from "react";
-import NavMenu from "../components/NavMenu";
-import styles from "./page.module.css";
-import { getAllWorkCards } from "../../lib/sanity";
+export const revalidate = 300;
 
-const fallbackCards = [
-  {
-    _id: "fallback-01",
-    title: "placeholder project one",
-    categories: ["brand", "digital"],
-  },
-  {
-    _id: "fallback-02",
-    title: "placeholder project two",
-    categories: ["campaign", "strategy"],
-  },
-  {
-    _id: "fallback-03",
-    title: "placeholder project three",
-    categories: ["web", "experience"],
-  },
-  {
-    _id: "fallback-04",
-    title: "placeholder project four",
-    categories: ["content", "motion"],
-  },
-];
+function normalizeLookup(value) {
+  return typeof value === "string" ? value.trim().toLowerCase() : "";
+}
 
-export default function WorkPage() {
-  const [cards, setCards] = useState([]);
-  const [hasEntered, setHasEntered] = useState(false);
-  const workTitleWords = ["Selected", "Work"];
+const fallbackMediaById = new Map(
+  fallbackCards
+    .filter(
+      (card) =>
+        card &&
+        typeof card._id === "string" &&
+        typeof card.mediaUrl === "string" &&
+        card.mediaUrl.length > 0,
+    )
+    .map((card) => [card._id, card.mediaUrl]),
+);
 
-  useEffect(() => {
-    async function fetchCards() {
-      const data = await getAllWorkCards();
-      setCards(Array.isArray(data) ? data : []);
-    }
+const fallbackMediaByTitle = new Map(
+  fallbackCards
+    .filter(
+      (card) =>
+        card &&
+        typeof card.title === "string" &&
+        typeof card.mediaUrl === "string" &&
+        card.mediaUrl.length > 0,
+    )
+    .map((card) => [normalizeLookup(card.title), card.mediaUrl]),
+);
 
-    fetchCards();
-  }, []);
+function attachTileMedia(cards) {
+  return cards.map((card) => {
+    const tileMediaUrl =
+      fallbackMediaById.get(card._id) ||
+      fallbackMediaByTitle.get(normalizeLookup(card.title)) ||
+      card.mediaUrl ||
+      "";
 
-  useEffect(() => {
-    const frameId = window.requestAnimationFrame(() => {
-      setHasEntered(true);
-    });
-
-    return () => {
-      window.cancelAnimationFrame(frameId);
+    return {
+      ...card,
+      tileMediaUrl,
     };
-  }, []);
+  });
+}
 
-  const cardsToRender = cards.length > 0 ? cards : fallbackCards;
-  const footerAnimationDelayMs =
-    950 + Math.max(cardsToRender.length - 1, 0) * 120 + 550 + 140;
-  const isVideoMimeType = (mimeType) =>
-    typeof mimeType === "string" && mimeType.toLowerCase().startsWith("video/");
-  const hasExternalUrl = (url) =>
-    typeof url === "string" && /^https?:\/\//i.test(url.trim());
-  const getCreditValue = (value) =>
-    typeof value === "string" && value.trim().length > 0 ? value.trim() : null;
+async function getWorkCardsServer() {
+  try {
+    const data = await client.withConfig({ useCdn: true }).fetch(workCardsQuery);
+    const cards = Array.isArray(data) && data.length > 0 ? data : fallbackCards;
+    return attachTileMedia(cards);
+  } catch {
+    return attachTileMedia(fallbackCards);
+  }
+}
 
-  return (
-    <NavMenu
-      footerClassName={hasEntered ? styles.footerEnter : ""}
-      footerStyle={
-        hasEntered
-          ? { "--work-footer-delay": `${footerAnimationDelayMs}ms` }
-          : undefined
-      }
-    >
-      <main className={styles.workMain}>
-        <div className={styles.workContainer}>
-          <h1
-            className={`${styles.workTitle} ${hasEntered ? styles.workTitleEnter : ""}`}
-          >
-            {workTitleWords.map((word, index) => (
-              <span
-                key={word}
-                className={styles.workTitleWord}
-                style={{ "--word-index": index }}
-              >
-                {word}
-              </span>
-            ))}
-          </h1>
-          {/* <p className={styles.workCopy}>
-            Selected projects and the stories behind them.
-          </p> */}
-          <section className={styles.cardsGrid} aria-label="Work cards">
-            {cardsToRender.map((card, index) => {
-              const designStudio = getCreditValue(card.designStudio);
-              const builtAtStudio = getCreditValue(card.builtAtStudio);
-              const designStudioUrl = hasExternalUrl(card.designStudioUrl)
-                ? card.designStudioUrl.trim()
-                : null;
-              const builtAtStudioUrl = hasExternalUrl(card.builtAtStudioUrl)
-                ? card.builtAtStudioUrl.trim()
-                : null;
-              const mediaContent = (
-                <div className={styles.cardMedia}>
-                  {card.mediaUrl ? (
-                    isVideoMimeType(card.mediaMimeType) ? (
-                      <video
-                        src={card.mediaUrl}
-                        className={styles.cardMediaAsset}
-                        muted
-                        playsInline
-                        autoPlay
-                        loop
-                      />
-                    ) : (
-                      <img
-                        src={card.mediaUrl}
-                        alt={card.mediaAlt || card.title || "Work card media"}
-                        className={styles.cardMediaAsset}
-                        loading="lazy"
-                      />
-                    )
-                  ) : null}
-                  <span className={styles.cardViewBadge} aria-hidden="true">
-                    view
-                  </span>
-                </div>
-              );
-
-              return (
-                <article
-                  key={card._id}
-                  className={`${styles.card} ${hasEntered ? styles.cardEnter : ""}`}
-                  style={{ "--card-index": index }}
-                >
-                  {hasExternalUrl(card.url) ? (
-                    <a
-                      href={card.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.cardMediaLink}
-                      aria-label={`Open ${card.title || "project"}`}
-                    >
-                      {mediaContent}
-                    </a>
-                  ) : (
-                    mediaContent
-                  )}
-                  <div className={styles.cardContent}>
-                    <div className={styles.cardCategoryList}>
-                      {(Array.isArray(card.categories) ? card.categories : [])
-                        .filter(Boolean)
-                        .map((category) => (
-                          <span
-                            key={`${card._id}-${category}`}
-                            className={styles.cardCategory}
-                          >
-                            {category}
-                          </span>
-                        ))}
-                    </div>
-                    <h2 className={styles.cardTitle}>{card.title}</h2>
-                    {designStudio || builtAtStudio ? (
-                      <p className={styles.cardCredit}>
-                        {designStudio ? (
-                          <span className={styles.cardCreditStudio}>
-                            Design by{" "}
-                            {designStudioUrl ? (
-                              <a
-                                href={designStudioUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.cardCreditLink}
-                              >
-                                {designStudio}
-                              </a>
-                            ) : (
-                              designStudio
-                            )}
-                          </span>
-                        ) : null}
-                        {builtAtStudio ? (
-                          <span className={styles.cardCreditBuiltAt}>
-                            Built at{" "}
-                            {builtAtStudioUrl ? (
-                              <a
-                                href={builtAtStudioUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={styles.cardCreditLink}
-                              >
-                                {builtAtStudio}
-                              </a>
-                            ) : (
-                              builtAtStudio
-                            )}
-                          </span>
-                        ) : null}
-                      </p>
-                    ) : null}
-                  </div>
-                </article>
-              );
-            })}
-          </section>
-        </div>
-      </main>
-    </NavMenu>
-  );
+export default async function WorkPage() {
+  const initialCards = await getWorkCardsServer();
+  return <WorkPageClient initialCards={initialCards} />;
 }
