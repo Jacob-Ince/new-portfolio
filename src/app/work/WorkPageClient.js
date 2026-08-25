@@ -4,6 +4,84 @@ import { useEffect, useState } from "react";
 import NavMenu from "../components/NavMenu";
 import styles from "./page.module.css";
 
+function getVideoMimeType(src) {
+  if (!src) return undefined;
+  const ext = src.split(".").pop()?.toLowerCase();
+  if (!ext) return undefined;
+  if (ext === "mp4") return "video/mp4";
+  if (ext === "m4v") return "video/x-m4v";
+  if (ext === "webm") return "video/webm";
+  if (ext === "mov") return "video/quicktime";
+  return undefined;
+}
+
+function DeferredAutoplayVideo({ id, src, className }) {
+  const [isNearViewport, setIsNearViewport] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(false);
+
+  useEffect(() => {
+    const container = document.querySelector(`[data-work-video-id="${id}"]`);
+    if (!container) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const isIntersecting = Boolean(entry?.isIntersecting);
+        if (isIntersecting) setIsNearViewport(true);
+        setIsInViewport(isIntersecting);
+      },
+      {
+        rootMargin: "320px 0px",
+        threshold: 0.01,
+      },
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [id]);
+
+  useEffect(() => {
+    const video = document.querySelector(
+      `[data-work-video-el="${id}"]`,
+    );
+    if (!video) return;
+
+    if (!isInViewport) {
+      video.pause();
+      return;
+    }
+
+    if (!isNearViewport) return;
+
+    if (video.readyState >= 2) {
+      video.play().catch(() => {});
+    }
+  }, [id, isInViewport, isNearViewport]);
+
+  const mimeType = getVideoMimeType(src);
+
+  return (
+    <div data-work-video-id={id} className={className}>
+      <video
+        data-work-video-el={id}
+        className={className}
+        muted
+        playsInline
+        autoPlay
+        loop
+        preload={isNearViewport ? "metadata" : "none"}
+        onCanPlay={(event) => {
+          if (isInViewport) {
+            event.currentTarget.play().catch(() => {});
+          }
+        }}
+        src={isNearViewport ? src : undefined}
+      >
+        {isNearViewport ? <source src={src} type={mimeType} /> : null}
+      </video>
+    </div>
+  );
+}
+
 export default function WorkPageClient({ initialCards = [] }) {
   const [cards] = useState(Array.isArray(initialCards) ? initialCards : []);
   const [hasEntered, setHasEntered] = useState(false);
@@ -71,14 +149,10 @@ export default function WorkPageClient({ initialCards = [] }) {
                 <div className={styles.cardMedia}>
                   {cardMediaUrl ? (
                     isVideoMimeType(card.mediaMimeType) ? (
-                      <video
+                      <DeferredAutoplayVideo
+                        id={card._id}
                         src={cardMediaUrl}
                         className={styles.cardMediaAsset}
-                        muted
-                        playsInline
-                        autoPlay
-                        loop
-                        preload="metadata"
                       />
                     ) : (
                       <img

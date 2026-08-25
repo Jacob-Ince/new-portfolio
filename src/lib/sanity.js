@@ -22,7 +22,7 @@ function normalizeLookup(value) {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
-const preferLocalMirroredMedia = process.env.NEXT_PUBLIC_PREFER_LOCAL_MEDIA !== "false";
+const preferLocalMirroredMedia = process.env.NEXT_PUBLIC_PREFER_LOCAL_MEDIA === "true";
 
 const mediaTileSrcByName = new Map(
   (Array.isArray(fallbackMediaList) ? fallbackMediaList : [])
@@ -198,7 +198,11 @@ export async function getMediaAssetByName(name) {
 
 // Fetch all work cards
 export async function getAllWorkCards() {
-  if (Array.isArray(fallbackWorkCards) && fallbackWorkCards.length > 0) {
+  if (
+    preferLocalMirroredMedia &&
+    Array.isArray(fallbackWorkCards) &&
+    fallbackWorkCards.length > 0
+  ) {
     return fallbackWorkCards.map(attachWorkCardTileSource);
   }
 

@@ -8,8 +8,7 @@ import { useSearchParams } from "next/navigation";
 import NavMenu from "./components/NavMenu";
 import Splash from "./components/Splash";
 import Link from "next/link";
-import fallbackMediaList from "./media-list.json";
-import { transformSanityMedia } from "../lib/sanity";
+import { getAllMediaAssets, transformSanityMedia } from "../lib/sanity";
 
 const projectTypeClassMap = {
   dev: "typeDotDev",
@@ -31,13 +30,6 @@ const normalizeProjectType = (type) => {
 };
 
 export default function Home() {
-  const initialPhotosData = useMemo(
-    () =>
-      (Array.isArray(fallbackMediaList) ? fallbackMediaList : [])
-        .map(transformSanityMedia)
-        .filter(Boolean),
-    [],
-  );
   const searchParams = useSearchParams();
   const urlViewMode = searchParams.get("view");
   const initialViewMode = urlViewMode === "list" ? "list" : "grid";
@@ -47,8 +39,8 @@ export default function Home() {
   const [isSplashReadyToReveal, setIsSplashReadyToReveal] = useState(false);
   const [hasSplashMinimumElapsed, setHasSplashMinimumElapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [photosData] = useState(initialPhotosData);
-  const [loading] = useState(false);
+  const [photosData, setPhotosData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState(initialViewMode);
   const [viewTransition, setViewTransition] = useState(null);
   const [isInitialListEntryPending, setIsInitialListEntryPending] = useState(
@@ -68,6 +60,23 @@ export default function Home() {
   const preloadedPreviewSrcsRef = useRef(new Set());
   const viewTransitionResetTimerRef = useRef(null);
   const handledUrlViewModeRef = useRef(null);
+
+  useEffect(() => {
+    async function fetchMediaAssets() {
+      try {
+        const assets = await getAllMediaAssets();
+        const transformed = assets.map(transformSanityMedia).filter(Boolean);
+        setPhotosData(transformed);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching media assets:", error);
+        setPhotosData([]);
+        setLoading(false);
+      }
+    }
+
+    fetchMediaAssets();
+  }, []);
 
   useEffect(() => {
     if (urlViewMode !== "list" && urlViewMode !== "grid") return;
@@ -506,7 +515,7 @@ export default function Home() {
         ? photo.projectTypes.map(normalizeProjectType).filter(Boolean)
         : [];
       const displayName = photo.displayName || photo.name;
-      const mediaSrc = photo.tileSrc || photo.src;
+      const mediaSrc = photo.type === "video" ? photo.src || photo.tileSrc : photo.tileSrc || photo.src;
       const videoType =
         photo.type === "video" ? getVideoMimeType(mediaSrc) : undefined;
 
@@ -907,7 +916,7 @@ export default function Home() {
               {hoveredListPhoto?.type === "video" ? (
                 <video
                   key={hoveredListPhoto.id}
-                  src={hoveredListPhoto.tileSrc || hoveredListPhoto.src}
+                  src={hoveredListPhoto.src || hoveredListPhoto.tileSrc}
                   className={styles.listHoverPreviewMedia}
                   muted
                   playsInline
