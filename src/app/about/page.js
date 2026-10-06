@@ -6,7 +6,7 @@ import PixelatedImage from "../components/PixelatedImage";
 import { useLayoutEffect, useRef, useState } from "react";
 
 const BIO_TEXT =
-  "A design engineer based in London, currently working at Midnight. From startups to established global brands, bringing together an aesthetic eye for user experience and technical depth to shape thoughtful, considered work.";
+  "A software developer based in London, currently working at Midnight. From startups to established global brands, bringing together an aesthetic eye for user experience and technical depth to shape thoughtful, considered work.";
 const BIO_UNDERLINE_TEXT = "Midnight";
 const MIDNIGHT_URL = "https://midnight.agency/";
 
