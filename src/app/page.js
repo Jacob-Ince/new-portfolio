@@ -198,19 +198,11 @@ export default function Home() {
           const videoId = video.dataset.videoId;
 
           if (entry.isIntersecting) {
-            console.log(
-              `Video ${videoId} is intersecting, readyState:`,
-              video.readyState,
-            );
-
             if (video.preload === "metadata") {
               video.preload = "auto";
             }
 
             if (video.readyState >= 2) {
-              console.log(
-                `Video ${videoId} ready to play, attempting playback`,
-              );
               playVideo(videoId);
             }
           } else {
@@ -220,7 +212,6 @@ export default function Home() {
               rect.bottom < -300 || rect.top > window.innerHeight + 300;
 
             if (isSignificantlyOutOfView) {
-              console.log(`Video ${videoId} paused - out of view`);
               video.pause();
             }
           }
@@ -255,9 +246,7 @@ export default function Home() {
         if (!isInViewport) return;
 
         if (video.readyState >= 2) {
-          video.play().catch((error) => {
-            console.warn("Failed to resume video after tab focus:", error);
-          });
+          video.play().catch(() => {});
         }
       });
     };
@@ -312,15 +301,7 @@ export default function Home() {
     if (video.readyState >= 2) {
       video
         .play()
-        .then(() => {
-          console.log(`Video ${videoId} playing successfully`);
-        })
-        .catch((error) => {
-          console.warn(
-            `Failed to play video ${videoId} (attempt ${retryCount + 1}):`,
-            error,
-          );
-
+        .catch(() => {
           // Retry after a short delay if we haven't exceeded max retries
           if (retryCount < 3) {
             setTimeout(() => {
@@ -515,7 +496,7 @@ export default function Home() {
         ? photo.projectTypes.map(normalizeProjectType).filter(Boolean)
         : [];
       const displayName = photo.displayName || photo.name;
-      const mediaSrc = photo.type === "video" ? photo.src || photo.tileSrc : photo.tileSrc || photo.src;
+      const mediaSrc = photo.type === "video" ? photo.tileSrc || photo.src : photo.tileSrc || photo.src;
       const videoType =
         photo.type === "video" ? getVideoMimeType(mediaSrc) : undefined;
 
@@ -641,7 +622,13 @@ export default function Home() {
         </Link>
       );
     },
-    [handleLoad, isMobile, observeVideo, playVideo, viewTransition],
+    [
+      handleLoad,
+      isMobile,
+      observeVideo,
+      playVideo,
+      viewTransition,
+    ],
   );
 
   const applyLoadedStateToGridItems = useCallback(() => {

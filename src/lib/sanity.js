@@ -22,19 +22,59 @@ function normalizeLookup(value) {
   return typeof value === "string" ? value.trim().toLowerCase() : "";
 }
 
-const preferLocalMirroredMedia = process.env.NEXT_PUBLIC_PREFER_LOCAL_MEDIA === "true";
+function getLookupKeys(value) {
+  const normalized = normalizeLookup(value);
+  if (!normalized) return [];
 
-const mediaTileSrcByName = new Map(
-  (Array.isArray(fallbackMediaList) ? fallbackMediaList : [])
-    .filter(
-      (item) =>
-        item &&
-        typeof item.name === "string" &&
-        typeof item.src === "string" &&
-        item.src.startsWith("/fallback-media/"),
-    )
-    .map((item) => [normalizeLookup(item.name), item.src]),
-);
+  const loose = normalized.replace(/[^a-z0-9]+/g, "");
+  if (!loose || loose === normalized) return [normalized];
+  return [normalized, loose];
+}
+
+function getPathNameCandidates(value) {
+  if (typeof value !== "string") return [];
+
+  const decoded = decodeURIComponent(
+    value.split("?")[0].split("#")[0].split("/").pop() || "",
+  );
+  if (!decoded) return [];
+
+  const stem = decoded.replace(/\.[^/.]+$/, "");
+  return stem && stem !== decoded ? [decoded, stem] : [decoded];
+}
+
+// Default to mirrored local media to reduce third-party CDN bandwidth.
+// Set NEXT_PUBLIC_PREFER_LOCAL_MEDIA=false to force Sanity-hosted media.
+const preferLocalMirroredMedia =
+  process.env.NEXT_PUBLIC_PREFER_LOCAL_MEDIA !== "false";
+
+const mediaTileSrcByName = (() => {
+  const lookupMap = new Map();
+  const mediaItems = Array.isArray(fallbackMediaList) ? fallbackMediaList : [];
+
+  mediaItems.forEach((item) => {
+    if (!item || typeof item.src !== "string" || !item.src.startsWith("/fallback-media/")) {
+      return;
+    }
+
+    const candidates = [
+      item.name,
+      item.displayName,
+      item.alt,
+      ...getPathNameCandidates(item.src),
+    ];
+
+    candidates.forEach((candidate) => {
+      getLookupKeys(candidate).forEach((key) => {
+        if (!lookupMap.has(key)) {
+          lookupMap.set(key, item.src);
+        }
+      });
+    });
+  });
+
+  return lookupMap;
+})();
 
 const workTileSrcById = new Map(
   (Array.isArray(fallbackWorkCards) ? fallbackWorkCards : [])
@@ -61,28 +101,44 @@ const workTileSrcByTitle = new Map(
 );
 
 function getTileSrcByMediaName(mediaName) {
-  const normalizedName = normalizeLookup(mediaName);
-  if (!normalizedName) return null;
-  return mediaTileSrcByName.get(normalizedName) || null;
+  const keys = getLookupKeys(mediaName);
+  for (const key of keys) {
+    const tileSrc = mediaTileSrcByName.get(key);
+    if (tileSrc) return tileSrc;
+  }
+  return null;
+}
+
+function getTileSrcByMediaCandidates(candidates) {
+  if (!Array.isArray(candidates)) return null;
+
+  for (const candidate of candidates) {
+    const tileSrc = getTileSrcByMediaName(candidate);
+    if (tileSrc) return tileSrc;
+  }
+
+  return null;
 }
 
 function getLocalMediaAssetByName(name) {
-  const normalizedTarget = normalizeLookup(name);
-  if (!normalizedTarget) return null;
+  const lookupKeys = getLookupKeys(name);
+  if (lookupKeys.length === 0) return null;
 
   return (
     (Array.isArray(fallbackMediaList) ? fallbackMediaList : []).find((asset) => {
       const candidateNames = [
         asset?.name,
         asset?.displayName,
+        asset?.alt,
         typeof asset?.src === "string"
           ? decodeURIComponent(asset.src.split("/").pop() || "")
           : "",
       ];
 
-      return candidateNames.some(
-        (candidate) => normalizeLookup(candidate) === normalizedTarget,
-      );
+      return candidateNames.some((candidate) => {
+        const candidateKeys = getLookupKeys(candidate);
+        return candidateKeys.some((candidateKey) => lookupKeys.includes(candidateKey));
+      });
     }) ?? null
   );
 }
@@ -262,9 +318,12 @@ export function transformSanityMedia(mediaAsset) {
         ? Number(mediaAsset.height)
         : 600;
 
-    const tileSrc = getTileSrcByMediaName(
-      mediaAsset.name || mediaAsset.displayName || mediaAsset.src,
-    );
+    const tileSrc = getTileSrcByMediaCandidates([
+      mediaAsset.name,
+      mediaAsset.displayName,
+      mediaAsset.alt,
+      mediaAsset.src,
+    ]);
 
     return {
       id: mediaAsset._id || mediaAsset.id || mediaAsset.name || mediaAsset.src,
@@ -340,7 +399,14 @@ export function transformSanityMedia(mediaAsset) {
         ? parsedDocHeight
         : 600;
 
-  const tileSrc = getTileSrcByMediaName(mediaAsset.name);
+  const tileSrc = getTileSrcByMediaCandidates([
+    mediaAsset.name,
+    mediaAsset.displayName,
+    mediaAsset.alt,
+    fileUrl,
+    mediaAsset.assetUrl,
+    mediaAsset.assetRef,
+  ]);
 
   return {
     // Use Sanity document id as the stable identity for React keys/state.
