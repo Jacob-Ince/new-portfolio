@@ -344,6 +344,7 @@ export default function Home() {
 
   const handleSplashRevealComplete = useCallback(() => {
     sessionStorage.setItem("splashSeen", "1");
+    window.dispatchEvent(new CustomEvent("splash:complete"));
     setIsSplashVisible(false);
   }, []);
 
