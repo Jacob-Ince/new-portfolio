@@ -10,7 +10,10 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["design", "motion"],
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
     "orderRank": "0|090006:"
   },
   {
@@ -24,7 +27,9 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
+    "projectTypes": [
+      "design"
+    ],
     "orderRank": "0|0i000c:"
   },
   {
@@ -38,7 +43,10 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design", "3D"],
+    "projectTypes": [
+      "design",
+      "3D"
+    ],
     "orderRank": "0|0jor0c:"
   },
   {
@@ -52,7 +60,9 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|0k900d:"
   },
   {
@@ -66,11 +76,29 @@
     "width": 1280,
     "height": 720,
     "invertColor": true,
-    "projectTypes": ["dev"],
+    "projectTypes": [
+      "dev"
+    ],
     "orderRank": "0|0ke29c:"
   },
   {
     "id": 6,
+    "type": "image",
+    "src": "/fallback-media/images/Legacy.jpeg",
+    "name": "Legacy",
+    "alt": "A silver heraldic shield with the number 715 engraved into it.",
+    "displayName": "Legacy",
+    "projectDescription": "A synthesis of historic craftsmanship and personal narrative, where 18th-century heraldry meets modern symbolism. The solid silver shield evokes protection, resilience, and fortitude. It serves as a symbolic guardian of the memory held within the central numerals.",
+    "width": 848,
+    "height": 1242,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|1000es:"
+  },
+  {
+    "id": 7,
     "type": "image",
     "src": "/fallback-media/images/Gulp.png",
     "name": "Gulp",
@@ -80,11 +108,13 @@
     "width": 200,
     "height": 398,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|0t9017:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|0mlspa:"
   },
   {
-    "id": 7,
+    "id": 8,
     "type": "video",
     "src": "/fallback-media/videos/Connext.mp4",
     "name": "Connext",
@@ -94,11 +124,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": true,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|100020:"
   },
   {
-    "id": 8,
+    "id": 9,
     "type": "video",
     "src": "/fallback-media/videos/forever-faster.mp4",
     "name": "forever faster",
@@ -108,11 +140,14 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design", "motion"],
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
     "orderRank": "0|100028:"
   },
   {
-    "id": 9,
+    "id": 10,
     "type": "video",
     "src": "/fallback-media/videos/ASCII-TouchDesiner.mp4",
     "name": "ASCII TouchDesiner",
@@ -122,11 +157,15 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["dev", "design", "motion"],
+    "projectTypes": [
+      "dev",
+      "design",
+      "motion"
+    ],
     "orderRank": "0|10002d:"
   },
   {
-    "id": 10,
+    "id": 11,
     "type": "image",
     "src": "/fallback-media/images/symbols.png",
     "name": "symbols",
@@ -136,11 +175,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
+    "projectTypes": [
+      "design"
+    ],
     "orderRank": "0|10002f:"
   },
   {
-    "id": 11,
+    "id": 12,
     "type": "video",
     "src": "/fallback-media/videos/metal-network.mp4",
     "name": "metal network",
@@ -150,11 +191,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|10002m:"
   },
   {
-    "id": 12,
+    "id": 13,
     "type": "video",
     "src": "/fallback-media/videos/Raindrops.mp4",
     "name": "Raindrops",
@@ -164,25 +207,30 @@
     "width": 720,
     "height": 1280,
     "invertColor": false,
-    "projectTypes": ["dev", "3D"],
+    "projectTypes": [
+      "dev",
+      "3D"
+    ],
     "orderRank": "0|10002o:"
   },
   {
-    "id": 13,
+    "id": 14,
     "type": "image",
     "src": "/fallback-media/images/costume.png",
     "name": "costume",
     "alt": "costume design",
     "displayName": "",
-    "projectDescription": "An editorial styling project where I designed an experimental outfit from translucent plastic, hydration tubing, and tactical webbing. A take on what utility-wear might look like a few decades out.",
+    "projectDescription": "An editorial styling project where I built an experimental outfit from translucent plastic, hydration tubing, and tactical webbing. A take on what utility-wear might look like a few decades out.",
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
+    "projectTypes": [
+      "design"
+    ],
     "orderRank": "0|10002r:"
   },
   {
-    "id": 14,
+    "id": 15,
     "type": "video",
     "src": "/fallback-media/videos/715-stone.mp4",
     "name": "715 stone",
@@ -192,11 +240,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|10002t:"
   },
   {
-    "id": 15,
+    "id": 16,
     "type": "video",
     "src": "/fallback-media/videos/byte-marks.mp4",
     "name": "byte-marks",
@@ -206,11 +256,14 @@
     "width": 356,
     "height": 435,
     "invertColor": false,
-    "projectTypes": ["dev", "design"],
+    "projectTypes": [
+      "dev",
+      "design"
+    ],
     "orderRank": "0|10002u:"
   },
   {
-    "id": 16,
+    "id": 17,
     "type": "image",
     "src": "/fallback-media/images/ballerina.jpg",
     "name": "ballerina",
@@ -220,11 +273,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|100040:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10003v:"
   },
   {
-    "id": 17,
+    "id": 18,
     "type": "image",
     "src": "/fallback-media/images/XN-materials.png",
     "name": "XN-materials",
@@ -234,11 +289,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|100048:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10003y:"
   },
   {
-    "id": 18,
+    "id": 19,
     "type": "video",
     "src": "/fallback-media/videos/Root-Structure.mp4",
     "name": "Root Structure",
@@ -248,11 +305,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["3d"],
-    "orderRank": "0|10004o:"
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|100044:"
   },
   {
-    "id": 19,
+    "id": 20,
     "type": "video",
     "src": "/fallback-media/videos/Fabric-Field.mp4",
     "name": "Fabric Field",
@@ -262,11 +321,14 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev", "3d"],
+    "projectTypes": [
+      "dev",
+      "3d"
+    ],
     "orderRank": "0|100054:"
   },
   {
-    "id": 20,
+    "id": 21,
     "type": "video",
     "src": "/fallback-media/videos/Nike-AR-Reveal.mp4",
     "name": "Nike AR Reveal",
@@ -276,11 +338,14 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev", "3d"],
+    "projectTypes": [
+      "dev",
+      "3d"
+    ],
     "orderRank": "0|10005k:"
   },
   {
-    "id": 21,
+    "id": 22,
     "type": "image",
     "src": "/fallback-media/images/30-years.png",
     "name": "30 years",
@@ -290,11 +355,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|10006w:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10007g:"
   },
   {
-    "id": 22,
+    "id": 23,
     "type": "image",
     "src": "/fallback-media/images/hoodie.png",
     "name": "hoodie",
@@ -304,11 +371,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
+    "projectTypes": [
+      "design"
+    ],
     "orderRank": "0|10007c:"
   },
   {
-    "id": 23,
+    "id": 24,
     "type": "video",
     "src": "/fallback-media/videos/growth.mp4",
     "name": "growth",
@@ -318,11 +387,14 @@
     "width": 400,
     "height": 200,
     "invertColor": false,
-    "projectTypes": ["design", "dev"],
+    "projectTypes": [
+      "design",
+      "dev"
+    ],
     "orderRank": "0|10007k:"
   },
   {
-    "id": 24,
+    "id": 25,
     "type": "image",
     "src": "/fallback-media/images/M3.jpg",
     "name": "M3",
@@ -332,11 +404,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["3D"],
+    "projectTypes": [
+      "3D"
+    ],
     "orderRank": "0|10007s:"
   },
   {
-    "id": 25,
+    "id": 26,
     "type": "image",
     "src": "/fallback-media/images/blue.png",
     "name": "blue",
@@ -346,11 +420,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|100088:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10008s:"
   },
   {
-    "id": 26,
+    "id": 27,
     "type": "image",
     "src": "/fallback-media/images/boxer.png",
     "name": "boxer",
@@ -360,11 +436,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|10008o:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10007o:"
   },
   {
-    "id": 27,
+    "id": 28,
     "type": "video",
     "src": "/fallback-media/videos/bolt.mp4",
     "name": "bolt",
@@ -374,11 +452,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": true,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|10008w:"
   },
   {
-    "id": 28,
+    "id": 29,
     "type": "video",
     "src": "/fallback-media/videos/BOA.mp4",
     "name": "BOA",
@@ -388,11 +468,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|100094:"
   },
   {
-    "id": 29,
+    "id": 30,
     "type": "image",
     "src": "/fallback-media/images/symbols-v2.png",
     "name": "symbols v2",
@@ -402,11 +484,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
-    "orderRank": "0|10009k:"
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|100090:"
   },
   {
-    "id": 30,
+    "id": 31,
     "type": "video",
     "src": "/fallback-media/videos/face-mesh.mp4",
     "name": "face-mesh",
@@ -416,11 +500,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev"],
+    "projectTypes": [
+      "dev"
+    ],
     "orderRank": "0|1000a0:"
   },
   {
-    "id": 31,
+    "id": 32,
     "type": "video",
     "src": "/fallback-media/videos/floppy-disk.mp4",
     "name": "floppy-disk",
@@ -430,11 +516,29 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["3d"],
-    "orderRank": "0|1000ag:"
+    "projectTypes": [
+      "3d"
+    ],
+    "orderRank": "0|1000a4:"
   },
   {
-    "id": 32,
+    "id": 33,
+    "type": "image",
+    "src": "/fallback-media/images/The-Helm-Pendant.jpeg",
+    "name": "The Helm Pendant ",
+    "alt": "The Helm Pendant ",
+    "displayName": "The Helm Pendant ",
+    "projectDescription": "Traditionally, pendants featuring heraldic shields signal military function, luck, or protective stewardship. By replacing classical imager with the embossed numbers of a childhood home, the piece transforms into a conceptual wearable sanctuary, anchoring cherished roots within protective armour.",
+    "width": 944,
+    "height": 1108,
+    "invertColor": false,
+    "projectTypes": [
+      "design"
+    ],
+    "orderRank": "0|10003z:"
+  },
+  {
+    "id": 34,
     "type": "video",
     "src": "/fallback-media/videos/modulink.mp4",
     "name": "modulink",
@@ -444,11 +548,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["motion"],
-    "orderRank": "0|1000aw:"
+    "projectTypes": [
+      "motion"
+    ],
+    "orderRank": "0|1000a8:"
   },
   {
-    "id": 33,
+    "id": 35,
     "type": "video",
     "src": "/fallback-media/videos/pixelate.mp4",
     "name": "pixelate",
@@ -458,11 +564,14 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev", "design"],
+    "projectTypes": [
+      "dev",
+      "design"
+    ],
     "orderRank": "0|1000bc:"
   },
   {
-    "id": 34,
+    "id": 36,
     "type": "image",
     "src": "/fallback-media/images/Chainmail.png",
     "name": "Chainmail",
@@ -472,11 +581,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["design"],
+    "projectTypes": [
+      "design"
+    ],
     "orderRank": "0|1000c8:"
   },
   {
-    "id": 35,
+    "id": 37,
     "type": "image",
     "src": "/fallback-media/images/lab-tech.jpg",
     "name": "lab-tech",
@@ -486,11 +597,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|1000d4:"
   },
   {
-    "id": 36,
+    "id": 38,
     "type": "video",
     "src": "/fallback-media/videos/715-BOA.mp4",
     "name": "715-BOA",
@@ -500,11 +613,14 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["design", "motion"],
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
     "orderRank": "0|1000e0:"
   },
   {
-    "id": 37,
+    "id": 39,
     "type": "image",
     "src": "/fallback-media/images/blob-dots.png",
     "name": "blob-dots",
@@ -514,11 +630,13 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": ["3d"],
+    "projectTypes": [
+      "3d"
+    ],
     "orderRank": "0|1000eg:"
   },
   {
-    "id": 38,
+    "id": 40,
     "type": "video",
     "src": "/fallback-media/videos/hoop.mp4",
     "name": "hoop",
@@ -528,11 +646,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev"],
+    "projectTypes": [
+      "dev"
+    ],
     "orderRank": "0|1000ew:"
   },
   {
-    "id": 39,
+    "id": 41,
     "type": "video",
     "src": "/fallback-media/videos/modern-solutions.mp4",
     "name": "modern-solutions",
@@ -542,11 +662,13 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev"],
-    "orderRank": "0|1000fc:"
+    "projectTypes": [
+      "dev"
+    ],
+    "orderRank": "0|1000co:"
   },
   {
-    "id": 40,
+    "id": 42,
     "type": "video",
     "src": "/fallback-media/videos/text-interaction.mp4",
     "name": "text-interaction",
@@ -556,11 +678,14 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["dev", "motion"],
+    "projectTypes": [
+      "dev",
+      "motion"
+    ],
     "orderRank": "0|1000fs:"
   },
   {
-    "id": 41,
+    "id": 43,
     "type": "video",
     "src": "/fallback-media/videos/Lute-Studio.mp4",
     "name": "Lute:Studio",
@@ -570,7 +695,10 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": ["design", "motion"],
+    "projectTypes": [
+      "design",
+      "motion"
+    ],
     "orderRank": "0|ii007v:"
   }
 ]

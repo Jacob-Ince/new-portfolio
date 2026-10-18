@@ -20,6 +20,21 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Adding an image to the home grid
+
+The home grid reads from `src/app/media-list.json` by default. Add the image in Sanity, then sync it into that file and `public/fallback-media`.
+
+1. Open Studio at [http://localhost:3000/studio](http://localhost:3000/studio) and create a **Media Asset**.
+2. Fill in **Name**, **Type** (`Image`), upload the file, **Alt text**, **Width**, and **Height**. Display name, description, invert color, and project types are optional. Drag the item in the Media Assets list to set its place in the grid.
+3. Publish it.
+4. From the project root, run:
+
+```bash
+npm run sync-fallbacks:mirror
+```
+
+That writes the published assets into `src/app/media-list.json` and copies the file into `public/fallback-media/images`. Refresh the dev server and the image appears in the grid.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
