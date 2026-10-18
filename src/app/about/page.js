@@ -6,11 +6,13 @@ import PixelatedImage from "../components/PixelatedImage";
 import { useLayoutEffect, useRef, useState } from "react";
 
 const BIO_TEXT =
-  "A software developer based in London, currently working at Midnight. From startups to established global brands, bringing together an aesthetic eye for user experience and technical depth to shape thoughtful, considered work.";
+  "A multidisciplinary creative based in London, currently working at Midnight. Bringing together an eye for visual design, an interest in culture and a technical background to shape thoughtful brand identities and digital experiences.";
 const BIO_UNDERLINE_TEXT = "Midnight";
 const MIDNIGHT_URL = "https://midnight.agency/";
 
 const clients = [
+  { name: "AKQA", url: "https://www.akqa.com/" },
+  { name: "Made Thought", url: "https://madethought.com/" },
   { name: "Justified Studio", url: "https://justified.studio/" },
   { name: "Further", url: "https://www.further.group/" },
   { name: "OMSE", url: "https://www.omse.co/" },
@@ -22,9 +24,7 @@ const clients = [
   { name: "Boots", url: "https://www.boots.com/" },
   { name: "Peter & Paul", url: "https://www.peterandpaul.co.uk/" },
   { name: "Zandland", url: "https://www.zand.land/" },
-  { name: "SharpEnd", url: "https://sharpend.com/" },
   { name: "Middle Name", url: "https://middlename.co.uk/" },
-  { name: "Platform 13", url: "https://www.platform13.net/" },
   { name: "UAL", url: "https://www.arts.ac.uk/" },
   { name: "Madrí", url: "https://www.madriexcepcional.com/" },
   { name: "Jameson", url: "https://www.jamesonwhiskey.com/" },

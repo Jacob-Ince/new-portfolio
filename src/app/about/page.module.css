@@ -124,7 +124,7 @@
 .bioParagraph {
   flex: 1;
   margin: 0;
-  max-width: clamp(280px, 34vw, 454px);
+  max-width: clamp(280px, 34vw, 450px);
   margin-left: clamp(1.25rem, 4vw, 4rem);
   overflow-wrap: anywhere;
   position: relative;
