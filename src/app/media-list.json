@@ -10,10 +10,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "design",
-      "motion"
-    ],
+    "projectTypes": ["design", "motion"],
     "orderRank": "0|090006:"
   },
   {
@@ -27,9 +24,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|0i000c:"
   },
   {
@@ -43,10 +38,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design",
-      "3D"
-    ],
+    "projectTypes": ["design", "3D"],
     "orderRank": "0|0jor0c:"
   },
   {
@@ -60,9 +52,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|0k900d:"
   },
   {
@@ -76,9 +66,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": true,
-    "projectTypes": [
-      "dev"
-    ],
+    "projectTypes": ["dev"],
     "orderRank": "0|0ke29c:"
   },
   {
@@ -92,9 +80,7 @@
     "width": 848,
     "height": 1242,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|1000es:"
   },
   {
@@ -108,9 +94,7 @@
     "width": 200,
     "height": 398,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|0mlspa:"
   },
   {
@@ -124,9 +108,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": true,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|100020:"
   },
   {
@@ -140,10 +122,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design",
-      "motion"
-    ],
+    "projectTypes": ["design", "motion"],
     "orderRank": "0|100028:"
   },
   {
@@ -157,11 +136,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "design",
-      "motion"
-    ],
+    "projectTypes": ["dev", "design", "motion"],
     "orderRank": "0|10002d:"
   },
   {
@@ -175,9 +150,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10002f:"
   },
   {
@@ -191,9 +164,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|10002m:"
   },
   {
@@ -207,10 +178,7 @@
     "width": 720,
     "height": 1280,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "3D"
-    ],
+    "projectTypes": ["dev", "3D"],
     "orderRank": "0|10002o:"
   },
   {
@@ -224,9 +192,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10002r:"
   },
   {
@@ -240,9 +206,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|10002t:"
   },
   {
@@ -256,10 +220,7 @@
     "width": 356,
     "height": 435,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "design"
-    ],
+    "projectTypes": ["dev", "design"],
     "orderRank": "0|10002u:"
   },
   {
@@ -273,9 +234,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10003v:"
   },
   {
@@ -285,13 +244,11 @@
     "name": "XN-materials",
     "alt": "XN-materials.png",
     "displayName": "",
-    "projectDescription": "Branding and a spec sheet I designed for XN-Materials, a fictional technical apparel brand. Heavy monospaced type, a single saturated green, and the clinical detail you'd find on a real garment tag.",
+    "projectDescription": "Branding and a spec sheet I designed for XN-Materials, a technical apparel brand. Heavy monospaced type, a single saturated green, and the clinical detail you'd find on a real garment tag.",
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10003y:"
   },
   {
@@ -305,9 +262,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|100044:"
   },
   {
@@ -321,10 +276,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "3d"
-    ],
+    "projectTypes": ["dev", "3d"],
     "orderRank": "0|100054:"
   },
   {
@@ -338,10 +290,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "3d"
-    ],
+    "projectTypes": ["dev", "3d"],
     "orderRank": "0|10005k:"
   },
   {
@@ -355,9 +304,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10007g:"
   },
   {
@@ -371,9 +318,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10007c:"
   },
   {
@@ -387,10 +332,7 @@
     "width": 400,
     "height": 200,
     "invertColor": false,
-    "projectTypes": [
-      "design",
-      "dev"
-    ],
+    "projectTypes": ["design", "dev"],
     "orderRank": "0|10007k:"
   },
   {
@@ -404,9 +346,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "3D"
-    ],
+    "projectTypes": ["3D"],
     "orderRank": "0|10007s:"
   },
   {
@@ -420,9 +360,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10008s:"
   },
   {
@@ -432,13 +370,11 @@
     "name": "boxer",
     "alt": "boxer.PNG",
     "displayName": "",
-    "projectDescription": "A black-and-white riso-style poster pulling together a boxer, a modernist building, and a set of keys, all sliced through with neon-green geometry. Made for a fictional press called \"Testpress\".",
+    "projectDescription": "A black-and-white riso-style poster pulling together a boxer, a modernist building, and a set of keys, all sliced through with neon-green geometry. Made for \"Testpress\" zine.",
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10007o:"
   },
   {
@@ -452,9 +388,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": true,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|10008w:"
   },
   {
@@ -468,9 +402,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|100094:"
   },
   {
@@ -484,9 +416,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|100090:"
   },
   {
@@ -500,9 +430,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev"
-    ],
+    "projectTypes": ["dev"],
     "orderRank": "0|1000a0:"
   },
   {
@@ -516,9 +444,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|1000a4:"
   },
   {
@@ -532,9 +458,7 @@
     "width": 944,
     "height": 1108,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|10003z:"
   },
   {
@@ -548,9 +472,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "motion"
-    ],
+    "projectTypes": ["motion"],
     "orderRank": "0|1000a8:"
   },
   {
@@ -564,10 +486,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "design"
-    ],
+    "projectTypes": ["dev", "design"],
     "orderRank": "0|1000bc:"
   },
   {
@@ -581,9 +500,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "design"
-    ],
+    "projectTypes": ["design"],
     "orderRank": "0|1000c8:"
   },
   {
@@ -597,9 +514,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|1000d4:"
   },
   {
@@ -613,10 +528,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "design",
-      "motion"
-    ],
+    "projectTypes": ["design", "motion"],
     "orderRank": "0|1000e0:"
   },
   {
@@ -630,9 +542,7 @@
     "width": 800,
     "height": 600,
     "invertColor": false,
-    "projectTypes": [
-      "3d"
-    ],
+    "projectTypes": ["3d"],
     "orderRank": "0|1000eg:"
   },
   {
@@ -646,9 +556,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev"
-    ],
+    "projectTypes": ["dev"],
     "orderRank": "0|1000ew:"
   },
   {
@@ -662,9 +570,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev"
-    ],
+    "projectTypes": ["dev"],
     "orderRank": "0|1000co:"
   },
   {
@@ -678,10 +584,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "dev",
-      "motion"
-    ],
+    "projectTypes": ["dev", "motion"],
     "orderRank": "0|1000fs:"
   },
   {
@@ -695,10 +598,7 @@
     "width": 1280,
     "height": 720,
     "invertColor": false,
-    "projectTypes": [
-      "design",
-      "motion"
-    ],
+    "projectTypes": ["design", "motion"],
     "orderRank": "0|ii007v:"
   }
 ]
