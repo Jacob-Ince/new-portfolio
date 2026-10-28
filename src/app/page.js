@@ -29,6 +29,35 @@ const normalizeProjectType = (type) => {
   return type.trim().toLowerCase();
 };
 
+const isVideoInViewport = (video) => {
+  const rect = video.getBoundingClientRect();
+  return (
+    rect.width > 0 &&
+    rect.height > 0 &&
+    rect.bottom > 0 &&
+    rect.top < window.innerHeight &&
+    rect.right > 0 &&
+    rect.left < window.innerWidth
+  );
+};
+
+// Production pages can be restored from Chrome's back/forward cache without
+// remounting React. Media stays paused, and cached files can miss canplay.
+const resumeVisibleVideos = (videoMap) => {
+  Object.values(videoMap).forEach((video) => {
+    if (!video || !video.isConnected || !video.paused) return;
+    if (!isVideoInViewport(video)) return;
+
+    video.muted = true;
+    if (video.preload === "metadata") {
+      video.preload = "auto";
+    }
+
+    const pending = video.play();
+    if (pending) pending.catch(() => {});
+  });
+};
+
 export default function Home() {
   const searchParams = useSearchParams();
   const urlViewMode = searchParams.get("view");
@@ -202,9 +231,8 @@ export default function Home() {
               video.preload = "auto";
             }
 
-            if (video.readyState >= 2) {
-              playVideo(videoId);
-            }
+            video.muted = true;
+            playVideo(videoId);
           } else {
             // Only pause if video is significantly out of view
             const rect = video.getBoundingClientRect();
@@ -223,6 +251,10 @@ export default function Home() {
       },
     );
 
+    Object.values(videoRefs.current).forEach((video) => {
+      if (video) observerRef.current.observe(video);
+    });
+
     const handleVisibilityChange = () => {
       if (document.hidden) {
         Object.values(videoRefs.current).forEach((video) => {
@@ -233,22 +265,17 @@ export default function Home() {
         return;
       }
 
-      Object.values(videoRefs.current).forEach((video) => {
-        if (!video) return;
+      resumeVisibleVideos(videoRefs.current);
+    };
 
-        const rect = video.getBoundingClientRect();
-        const isInViewport =
-          rect.bottom > 0 &&
-          rect.top < window.innerHeight &&
-          rect.right > 0 &&
-          rect.left < window.innerWidth;
+    let pageShowRetryId = null;
+    const handlePageShow = (event) => {
+      if (!event.persisted) return;
 
-        if (!isInViewport) return;
-
-        if (video.readyState >= 2) {
-          video.play().catch(() => {});
-        }
-      });
+      const resume = () => resumeVisibleVideos(videoRefs.current);
+      resume();
+      requestAnimationFrame(resume);
+      pageShowRetryId = window.setTimeout(resume, 150);
     };
 
     const handleScroll = () => {
@@ -266,9 +293,13 @@ export default function Home() {
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pageshow", handlePageShow);
     window.addEventListener("scroll", handleScroll, { passive: true });
+    resumeVisibleVideos(videoRefs.current);
 
     return () => {
+      if (pageShowRetryId) window.clearTimeout(pageShowRetryId);
+
       // Pause all videos on cleanup
       Object.values(videoRefs.current).forEach((video) => {
         if (video && !video.paused) {
@@ -282,9 +313,26 @@ export default function Home() {
       }
 
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      window.removeEventListener("pageshow", handlePageShow);
       window.removeEventListener("scroll", handleScroll);
     };
   }, [mounted]);
+
+  useEffect(() => {
+    if (!mounted || photosData.length === 0) return;
+
+    const frame = requestAnimationFrame(() => {
+      resumeVisibleVideos(videoRefs.current);
+    });
+    const timer = window.setTimeout(() => {
+      resumeVisibleVideos(videoRefs.current);
+    }, 250);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.clearTimeout(timer);
+    };
+  }, [mounted, photosData]);
 
   // Function to observe a video element
   const observeVideo = useCallback((videoElement) => {
@@ -296,25 +344,19 @@ export default function Home() {
   // Function to safely play a video with retry logic
   const playVideo = useCallback((videoId, retryCount = 0) => {
     const video = videoRefs.current[videoId];
-    if (!video) return;
+    if (!video || !video.isConnected) return;
 
-    if (video.readyState >= 2) {
-      video
-        .play()
-        .catch(() => {
-          // Retry after a short delay if we haven't exceeded max retries
-          if (retryCount < 3) {
-            setTimeout(() => {
-              playVideo(videoId, retryCount + 1);
-            }, 1000);
-          }
-        });
-    } else if (retryCount < 3) {
-      // Video not ready yet, retry after a delay
-      setTimeout(() => {
-        playVideo(videoId, retryCount + 1);
-      }, 500);
-    }
+    video.muted = true;
+    const pending = video.play();
+    if (!pending) return;
+
+    pending.catch(() => {
+      if (retryCount < 3) {
+        window.setTimeout(() => {
+          playVideo(videoId, retryCount + 1);
+        }, 500);
+      }
+    });
   }, []);
 
   const handleLoad = useCallback((id) => {
@@ -520,9 +562,20 @@ export default function Home() {
               <div className={styles.mediaWrapper}>
                 <video
                   ref={(el) => {
-                    if (el) {
-                      videoRefs.current[photo.id] = el;
-                      observeVideo(el);
+                    if (!el) {
+                      const current = videoRefs.current[photo.id];
+                      if (current && !current.isConnected) {
+                        delete videoRefs.current[photo.id];
+                      }
+                      return;
+                    }
+
+                    el.muted = true;
+                    videoRefs.current[photo.id] = el;
+                    observeVideo(el);
+                    if (el.readyState >= 2) {
+                      handleLoad(photo.id);
+                      playVideo(photo.id);
                     }
                   }}
                   data-video-id={photo.id}
@@ -533,6 +586,7 @@ export default function Home() {
                   preload="metadata"
                   onLoadedData={() => {
                     handleLoad(photo.id);
+                    playVideo(photo.id);
                   }}
                   onCanPlay={() => {
                     playVideo(photo.id);
